@@ -14,7 +14,7 @@ import { RecoilRoot } from "recoil";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#1A73E9",
     },
     secondary: {
       main: "#19857b",
