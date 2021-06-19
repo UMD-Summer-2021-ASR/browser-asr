@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./logo.svg";
-import "./App.css";
+import "./styles/App.css";
 import { AppBar, Typography, makeStyles } from "@material-ui/core";
 import Recorder from "./components/AudioRecorder";
 import { useRecoilValue } from "recoil";
@@ -22,13 +22,13 @@ function App() {
   return (
     <div>
       <div className={classes.root}>
-        <AppBar position="static">
+        {/* <AppBar position="static">
           <Typography variant="h6" color="inherit" className={classes.title}>
             Kaldi ASR
           </Typography>
-        </AppBar>
-        <Recorder />
-        <Typography>{text}</Typography>
+        </AppBar> */
+        /* <Recorder /> */
+        /* <Typography>{text}</Typography> */}
       </div>
     </div>
   );
