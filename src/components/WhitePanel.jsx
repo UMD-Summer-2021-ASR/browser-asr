@@ -1,6 +1,9 @@
 import "../styles/WhitePanel.css";
 import CheckIcon from '@material-ui/icons/Check';
 import GoogleLogin from 'react-google-login';
+import AnimatedCard from './AnimatedCard';
+import MagnifyingGlass from '../assets/magnifying-glass.png';
+import Microphone from '../assets/microphone.png';
 
 function LoginCardItem(props) {
     return (
@@ -29,6 +32,8 @@ function MainBody() {
             </div>
             <div class="gamemode-card">
                 <div class="card-title">Gamemodes</div>
+                <AnimatedCard src={MagnifyingGlass} title="PLAY" caption="Race against the clock in this fast-paced gamemode testing your trivia skills!"/>
+                <AnimatedCard src={Microphone} title = "RECORD" caption="Contribute to this game by recording questions for others to play!"/>
             </div>
         </div>
     );
