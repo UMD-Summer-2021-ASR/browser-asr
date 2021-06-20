@@ -8,15 +8,15 @@
     height: 6rem;
     transition-delay: 250ms;
     will-change: transform;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #ededed;
+
+    text-decoration: none;
 }
 
 .animated-card-title {
     font-size: 1.75rem;
     color: rgb(53, 53, 53);
     font-weight: 700;
+    will-change: transform;
     transition: transform 300ms;
 }
 
@@ -28,6 +28,7 @@
 .animated-card-img {
     max-height:100%;
     width: auto;
+    will-change: transform;
     transition: transform 300ms, opacity 300ms;
 }
 
@@ -37,11 +38,8 @@
     opacity: 0;
     color: rgb(91, 91, 91);
     font-weight: 300;
+    will-change: transform;
     transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
-}
-
-.animated-card-wrapper:hover {
-    border-color: #2046F5;
 }
 
 .animated-card-wrapper:hover .animated-card-img {
@@ -54,6 +52,6 @@
 }
 
 .animated-card-wrapper:hover .animated-card-caption {
-    transform: scale(1) translateY(-4rem);
+    transform: scale(1) translateY(-3.5rem);
     opacity: 1;
 }

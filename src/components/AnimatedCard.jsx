@@ -5,15 +5,13 @@ function AnimatedCard(props) {
     let enabled = true
     if(enabled) {
         return (
-            <div class="animated-card-wrapper">
+            <a class="animated-card-wrapper" href={props.href}>
                 <div class="animated-card-img-wrapper">
                     <img src={props.src} class="animated-card-img"/>
                 </div>
-                
-                
                 <div class="animated-card-title">{props.title}</div>
                 <div class="animated-card-caption">{props.caption}</div>
-            </div>
+            </a>
         );
     } else {
         return (
