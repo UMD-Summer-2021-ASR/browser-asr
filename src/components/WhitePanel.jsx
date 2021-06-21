@@ -33,8 +33,8 @@ function MainBody() {
             <div class="gamemode-card">
                 <div class="card-title">Gamemodes</div>
                 {/* set "enabled" property to false if not logged in*/}
-                <AnimatedCard src={MagnifyingGlass} title="PLAY" href="#" enabled={true} caption="Race against the clock in this fast-paced gamemode testing your trivia skills!"/>
-                <AnimatedCard src={Microphone} title = "RECORD" href="#" enabled={true} caption="Contribute to this game by recording questions for others to play!"/>
+                <AnimatedCard src={MagnifyingGlass} title="PLAY" href="#" enabled={false} caption="Race against the clock in this fast-paced gamemode testing your trivia skills!"/>
+                <AnimatedCard src={Microphone} title = "RECORD" href="#" enabled={false} caption="Contribute to this game by recording questions for others to play!"/>
             </div>
         </div>
     );
