@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 import { AUDIO_BLOB } from "../store";
+import "../styles/AudioRecorder.css";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,17 +58,17 @@ const Recorder = (props) => {
     audioSrc,
     timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
     startCallback: (e) => {
-      console.log("succ start", e);
+      console.log("start", e);
     },
     pauseCallback: (e) => {
-      console.log("succ pause", e);
+      console.log("pause", e);
     },
     stopCallback: (e) => {
       setAudioSrc(window.URL.createObjectURL(e));
       setAudio(e);
       console.log("Duration", duration);
       setDuration(0);
-      console.log("succ stop", e);
+      console.log("stop", e);
     },
     onRecordCallback: (e) => {
       console.log("recording", e);
@@ -85,7 +86,7 @@ const Recorder = (props) => {
     console.log(response.data);
   };
   return (
-    <div style={{ alignItems: "center", alignContent: "center" }}>
+    <div style={{ alignItems: "center", alignContent: "center" }} class="cntr">
       <AudioAnalyser
         {...audioProps}
         width={
@@ -96,7 +97,7 @@ const Recorder = (props) => {
         backgroundColor="#FFFFFF"
         strokeColor="#000000"
       ></AudioAnalyser>
-      <div className={classes.buttons}>
+      <div className={classes.buttons} class="btn-wrapper">
         {status !== "recording" && (
           <Button
             onClick={() => controlAudio("recording")}
@@ -158,7 +159,7 @@ const Recorder = (props) => {
             color="textSecondary"
             style={{ marginRight: "2px" }}
           />
-          You are only allowed to record upto 3 minutes.
+          Maximum duration: 3 minutes.
         </Typography>
       </div>
     </div>

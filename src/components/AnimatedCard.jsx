@@ -6,8 +6,7 @@ import 'react-tippy/dist/tippy.css'
 
 function AnimatedCard(props) {
     // text, image, caption, enabled/disabled
-    let enabled = props.enabled;
-    if(enabled) {
+    if(props.enabled) {
         return (
             <a class="animated-card-wrapper" href={props.href}>
                 <div class="animated-card-img-wrapper">

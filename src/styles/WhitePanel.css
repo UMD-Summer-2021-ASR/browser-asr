@@ -17,16 +17,29 @@
     border-style: solid;
 }
 
-.main-title {
+.home-title {
     font-weight: 900;
     color: #2046F5;
     font-size: 5rem;
     margin-top: 3rem;
 }
 
-.main-subtitle {
+.home-subtitle {
     color: #9B9B9B;
     font-size: 1.5rem;
+}
+
+.page-title {
+    font-weight: 900;
+    font-weight: 900;
+    color: #2046F5;
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+.page-subtitle {
+    color: #9B9B9B;
+    font-size: 0.75rem;
 }
 
 .main-body {
