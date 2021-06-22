@@ -67,7 +67,7 @@ class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
         this.screenChange = this.screenChange.bind(this);
-        this.state = {screen: 1}; // 0 = home, 1 = play, 2 = record
+        this.state = {screen: 2}; // 0 = home, 1 = play, 2 = record
     }
 
     screenChange(screenNumber) {

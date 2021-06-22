@@ -86,7 +86,17 @@ const Recorder = (props) => {
     console.log(response.data);
   };
   return (
-    <div style={{ alignItems: "center", alignContent: "center" }} class="cntr">
+    <div class="cntr">
+      <div class="transcript-box">
+      Most Shi'a disregard a hadith saying that ten members of this group, including Talhah [TAL-huh] and Sa'id ibn
+Zayd [sah-EED ib-un ZYDE], were granted entry into Jannah [JAN-nah] while on Earth. The Tabi'un [tah-bee-OON] are a
+generation after this group, whose members include the Mukathirun [moo-kahk-thee-ROON], or “reporters of many
+traditions,” who related hundreds of hadiths. This group comprises those who witnessed the prophet and
+converted to Islam before their deaths. The first four caliphs were part of—for 10 points—what group of friends
+of Muhammad?
+      </div>
+
+
       <AudioAnalyser
         {...audioProps}
         width={
@@ -96,8 +106,12 @@ const Recorder = (props) => {
         }
         backgroundColor="#FFFFFF"
         strokeColor="#000000"
+        class="audio-analyzer"
       ></AudioAnalyser>
+
+
       <div className={classes.buttons} class="btn-wrapper">
+
         {status !== "recording" && (
           <Button
             onClick={() => controlAudio("recording")}
@@ -115,6 +129,7 @@ const Recorder = (props) => {
                 (duration % 60)}
           </Button>
         )}
+
         {status === "recording" && (
           <Button
             onClick={() => controlAudio("paused")}
