@@ -3485,6 +3485,11 @@
   "resolved" "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz"
   "version" "4.1.1"
 
+"commander@^6.1.0":
+  "integrity" "sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA=="
+  "resolved" "https://registry.npmjs.org/commander/-/commander-6.2.1.tgz"
+  "version" "6.2.1"
+
 "common-tags@^1.8.0":
   "integrity" "sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw=="
   "resolved" "https://registry.npmjs.org/common-tags/-/common-tags-1.8.0.tgz"
@@ -5317,6 +5322,11 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
+
+"fs@^0.0.1-security":
+  "integrity" "sha1-invTcYa23d84E/I4WLV+yq9eQdQ="
+  "resolved" "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz"
+  "version" "0.0.1-security"
 
 "fsevents@^1.2.7":
   "integrity" "sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw=="
@@ -7750,6 +7760,13 @@
   "integrity" "sha512-Slf2s69+2/uAD79pVVQo8uSiC34+g8GWY8UH2Qtqv34ZfhYrxpYpfzs9Js9d6O0mbDmALuxaTlplnBTnSELcrw=="
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-1.1.70.tgz"
   "version" "1.1.70"
+
+"node-webvtt@^1.9.3":
+  "integrity" "sha512-hdzBajT+LHoaXZB/wBgMP9RCyWLT/baTw/hWa+RjoKcilpJ4rtI+0sn5MfsLJ/rYcEj6gy7VFC6KOgMxrqUT2g=="
+  "resolved" "https://registry.npmjs.org/node-webvtt/-/node-webvtt-1.9.3.tgz"
+  "version" "1.9.3"
+  dependencies:
+    "commander" "^6.1.0"
 
 "normalize-package-data@^2.3.2", "normalize-package-data@^2.5.0":
   "integrity" "sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA=="
@@ -11488,6 +11505,11 @@
   "integrity" "sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ=="
   "resolved" "https://registry.npmjs.org/vm-browserify/-/vm-browserify-1.1.2.tgz"
   "version" "1.1.2"
+
+"vtt-to-json@^0.1.1":
+  "integrity" "sha1-pnuydqDyRb1NcSZwFAKLZbH0Zag="
+  "resolved" "https://registry.npmjs.org/vtt-to-json/-/vtt-to-json-0.1.1.tgz"
+  "version" "0.1.1"
 
 "w3c-hr-time@^1.0.2":
   "integrity" "sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ=="
