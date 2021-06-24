@@ -29,12 +29,47 @@
     font-size: 1.5rem;
 }
 
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.page-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-right: 5%;
+}
+
+.page-back-button-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 5%;
+}
+
+.page-back-button {
+    border-radius: 50%;
+    background-color: #EDEDED;
+    padding: 0.2rem;
+    font-size: 2rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+}
+
+.page-back-button-text {
+    position: relative;
+    bottom: .13rem;
+}
+
 .page-title {
     font-weight: 900;
     font-weight: 900;
     color: #2046F5;
     font-size: 2rem;
-    margin-top: 1rem;
 }
 
 .page-subtitle {

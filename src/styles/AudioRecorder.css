@@ -15,6 +15,7 @@
     background-color: #ededed;
     border-radius: 0.375rem;
     padding: 0.75rem;
+    box-sizing: border-box;
 }
 
 .audio-analyzer {

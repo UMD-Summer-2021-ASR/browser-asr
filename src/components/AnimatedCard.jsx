@@ -6,9 +6,10 @@ import 'react-tippy/dist/tippy.css'
 
 function AnimatedCard(props) {
     // text, image, caption, enabled/disabled
-    if(props.enabled) {
+    let enabled = props.enabled;
+    if(enabled) {
         return (
-            <a class="animated-card-wrapper" href={props.href}>
+            <a class="animated-card-wrapper" onClick={props.screenChange} href="javascript:void(0)">
                 <div class="animated-card-img-wrapper">
                     <img src={props.src} class="animated-card-img"/>
                 </div>
@@ -25,7 +26,7 @@ function AnimatedCard(props) {
                 arrow={true}
                 duration={300}
             >
-                <a class="animated-card-wrapper" href="#">
+                <a class="animated-card-wrapper" href="javascript:void(0)">
                     <div class="animated-card-img-wrapper">
                         <img src={props.src} class="animated-card-img"/>
                     </div>
