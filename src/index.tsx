@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./styles/index.css";
 import App from "./App";
+import BigWhitePanel from "./components/WhitePanel";
 import reportWebVitals from "./reportWebVitals";
 import {
   createMuiTheme,
@@ -14,7 +15,7 @@ import { RecoilRoot } from "recoil";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#1A73E9",
     },
     secondary: {
       main: "#19857b",
@@ -33,8 +34,7 @@ ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
+          <BigWhitePanel/>
       </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,

@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 import { AUDIO_BLOB } from "../store";
+import "../styles/AudioRecorder.css";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,17 +58,17 @@ const Recorder = (props) => {
     audioSrc,
     timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
     startCallback: (e) => {
-      console.log("succ start", e);
+      console.log("start", e);
     },
     pauseCallback: (e) => {
-      console.log("succ pause", e);
+      console.log("pause", e);
     },
     stopCallback: (e) => {
       setAudioSrc(window.URL.createObjectURL(e));
       setAudio(e);
       console.log("Duration", duration);
       setDuration(0);
-      console.log("succ stop", e);
+      console.log("stop", e);
     },
     onRecordCallback: (e) => {
       console.log("recording", e);
@@ -85,7 +86,17 @@ const Recorder = (props) => {
     console.log(response.data);
   };
   return (
-    <div style={{ alignItems: "center", alignContent: "center" }}>
+    <div class="cntr">
+      <div class="transcript-box">
+      Most Shi'a disregard a hadith saying that ten members of this group, including Talhah [TAL-huh] and Sa'id ibn
+Zayd [sah-EED ib-un ZYDE], were granted entry into Jannah [JAN-nah] while on Earth. The Tabi'un [tah-bee-OON] are a
+generation after this group, whose members include the Mukathirun [moo-kahk-thee-ROON], or “reporters of many
+traditions,” who related hundreds of hadiths. This group comprises those who witnessed the prophet and
+converted to Islam before their deaths. The first four caliphs were part of—for 10 points—what group of friends
+of Muhammad?
+      </div>
+
+
       <AudioAnalyser
         {...audioProps}
         width={
@@ -95,8 +106,12 @@ const Recorder = (props) => {
         }
         backgroundColor="#FFFFFF"
         strokeColor="#000000"
+        class="audio-analyzer"
       ></AudioAnalyser>
-      <div className={classes.buttons}>
+
+
+      <div className={classes.buttons} class="btn-wrapper">
+
         {status !== "recording" && (
           <Button
             onClick={() => controlAudio("recording")}
@@ -114,6 +129,7 @@ const Recorder = (props) => {
                 (duration % 60)}
           </Button>
         )}
+
         {status === "recording" && (
           <Button
             onClick={() => controlAudio("paused")}
@@ -158,7 +174,7 @@ const Recorder = (props) => {
             color="textSecondary"
             style={{ marginRight: "2px" }}
           />
-          You are only allowed to record upto 3 minutes.
+          Maximum duration: 3 minutes.
         </Typography>
       </div>
     </div>

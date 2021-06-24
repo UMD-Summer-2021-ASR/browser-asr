@@ -1,0 +1,138 @@
+.big-white-panel-wrapper {
+    /* centers the big white panel */
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.big-white-panel {
+    width: 48rem;
+    height: 34rem;
+    background-color: white;
+    border-radius: 0.875rem;
+    border-color: lightgrey;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.home-title {
+    font-weight: 900;
+    color: #2046F5;
+    font-size: 5rem;
+    margin-top: 3rem;
+}
+
+.home-subtitle {
+    color: #9B9B9B;
+    font-size: 1.5rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.page-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-right: 5%;
+}
+
+.page-back-button-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 5%;
+}
+
+.page-back-button {
+    border-radius: 50%;
+    background-color: #EDEDED;
+    padding: 0.2rem;
+    font-size: 2rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+}
+
+.page-back-button-text {
+    position: relative;
+    bottom: .13rem;
+}
+
+.page-title {
+    font-weight: 900;
+    font-weight: 900;
+    color: #2046F5;
+    font-size: 2rem;
+}
+
+.page-subtitle {
+    color: #9B9B9B;
+    font-size: 0.75rem;
+}
+
+.main-body {
+    display: flex;
+    width: 100%;
+    height: 60%;
+    justify-content: space-evenly;
+    margin-top: 1.5rem;
+}
+
+.login-card {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.875rem;
+    /* border-color:#2046F5;
+    border-style: solid;
+    border-width: 1px; */
+    background-color: #eef0f6;
+    transition: box-shadow .3s;
+}
+
+.login-card-item {
+    display: flex;
+    padding: 0.5rem 1.5rem 0rem 1.5rem;
+    color: rgb(91, 91, 91);
+    align-items: center;
+    text-align: left;
+}
+
+.login-card:hover {
+    box-shadow: 0 0 11px #2046F5; 
+}
+
+#login-title:hover {
+    color: black; 
+}
+
+.google-login-wrapper {
+    padding: 1rem;
+}
+
+.mr-1 {
+    margin-right: 1rem;
+}
+
+.gamemode-card {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    margin-top: 1rem;
+    font-size: 1.75rem;
+    color: rgb(55, 55, 55);
+    font-weight: 800;
+}
