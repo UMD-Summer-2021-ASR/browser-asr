@@ -81,51 +81,36 @@ class BigWhitePanel extends React.Component {
     }
 
     render() {
-        if(this.state.screen === 0) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <HomeTitle/>
-                        <HomeBody
-                            screenChange={this.screenChange}
-                        />
-                    </div>
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    {this.state.screen === 0 &&
+                        [
+                            <HomeTitle/>,
+                            <HomeBody
+                                screenChange={this.screenChange}
+                            />
+                        ]
+                    }
+                    {this.state.screen === 1 &&
+                        [
+                            <PageTitle
+                                screenChange={() => this.screenChange(0)}
+                            />,
+                            <Player/>
+                        ]
+                    }
+                    {this.state.screen === 2 &&
+                        [
+                            <PageTitle
+                                screenChange={() => this.screenChange(0)}
+                            />,
+                            <Recorder/>
+                        ]
+                    }
                 </div>
-                
-            );
-        } else if(this.state.screen === 1) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <PageTitle
-                            screenChange={() => this.screenChange(0)}
-                        />
-                        <Player/>
-                    </div>
-                </div>
-            );
-        } else if(this.state.screen === 2) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <PageTitle
-                            screenChange={() => this.screenChange(0)}
-                        />
-                        <Recorder/>
-                    </div>
-                </div>
-            );
-        } else {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <HomeTitle/>
-                        <HomeBody/>
-                    </div>
-                </div>
-            );
-        }
-        
+            </div>
+        );
     }
 }
 
