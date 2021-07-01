@@ -5,6 +5,12 @@
     width: 100%;
 }
 
+.player-button-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 4rem;
+}
+
 
 .transcript-box {
     background-color: #EDEDED;
@@ -12,7 +18,7 @@
     height: 15rem;
     border-radius: 0.875rem;
     padding: 1rem;
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 .play-btn {
@@ -20,8 +26,9 @@
     color: white;
     padding: 0.5rem;
     border-radius: 0.375rem;
-    margin-top: 4rem;
+    
     font-size: 1.5rem;
     font-weight: 800;
     cursor: pointer;
+    margin-left: 1rem;
 }
