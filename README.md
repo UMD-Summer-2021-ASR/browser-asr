@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Quizzr.io Front-end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This repository contains the source code for the front-end portion of the Quizzr.io project, and it was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Certain components work with the back-end, but the connections to its endpoints have not been fully integrated yet. See the [quizzr-server](https://github.com/UMD-Summer-2021-ASR/quizzr-server) repository for more details on the back-end.
+Features:
+* A "play" option to answer questions. Currently, it only includes an option to play a sample audio file in sync with a transcript.
+* A "record" option to record reading transcripts aloud. Currently, it uses a placeholder transcript. Submitting a recording will send a POST request to `/upload` at port `5000`.
+
+## Installation
+To install this application, clone this repository onto your machine and run `npm install` inside the newly-cloned repository.
 
 ## Available Scripts
 
@@ -39,8 +46,12 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Connecting with the Back-end
+Note: This assumes that you have the back-end installed. Please refer to the back-end's documentation for its installation instructions.\
+To connect with the back-end, add a "proxy" entry in the package.json file with the value referring to the host name and port number of the Flask server (default 5000). In development mode, this would be "http://localhost:5000". Then, start up both the Flask and React app.
+
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can learn more about Create React App in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
