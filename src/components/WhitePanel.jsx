@@ -71,7 +71,7 @@ function PageTitle(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 0}; // 0 = home, 1 = play, 2 = record
+        this.state = {screen: 0}; // 0 = login, 1 = play, 2 = record
 
         this.screenChange = this.screenChange.bind(this);
     }
@@ -81,36 +81,40 @@ class BigWhitePanel extends React.Component {
     }
 
     render() {
-        return (
-            <div class="big-white-panel-wrapper">
-                <div class="big-white-panel">
-                    {this.state.screen === 0 &&
-                        [
-                            <HomeTitle/>,
-                            <HomeBody
-                                screenChange={this.screenChange}
-                            />
-                        ]
-                    }
-                    {this.state.screen === 1 &&
-                        [
-                            <PageTitle
-                                screenChange={() => this.screenChange(0)}
-                            />,
-                            <Player/>
-                        ]
-                    }
-                    {this.state.screen === 2 &&
-                        [
-                            <PageTitle
-                                screenChange={() => this.screenChange(0)}
-                            />,
-                            <Recorder/>
-                        ]
-                    }
+        if(this.state.screen === 0) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <HomeTitle/>
+                        <HomeBody
+                            screenChange={this.screenChange}
+                        />
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else if(this.state.screen === 1) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <PageTitle
+                            screenChange={() => this.screenChange(0)}
+                        />
+                        <Player/>
+                    </div>
+                </div>
+            );
+        } else if(this.state.screen === 2) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <PageTitle
+                            screenChange={() => this.screenChange(0)}
+                        />,
+                        <Recorder/>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 

@@ -1,4 +1,6 @@
 .animated-card-wrapper {
+    width: 12rem;
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,6 +40,7 @@
     opacity: 0;
     color: rgb(91, 91, 91);
     font-weight: 300;
+    font-size: 0.9rem;
     will-change: transform;
     transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
 }
