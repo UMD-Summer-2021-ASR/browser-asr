@@ -8,6 +8,7 @@ import MagnifyingGlass from '../assets/magnifying-glass.png';
 import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
+import axios from "axios";
 
 
 function LoginCardItem(props) {
@@ -23,7 +24,7 @@ function LoginCardItem(props) {
 function HomeBody(props) {
     return (
         <div class="main-body">
-            <div class="login-card">
+            {/* <div class="login-card">
                 <div class="card-title" id="login-title">Login</div>
                 <br/>
                 <LoginCardItem text="Unlimited games"/>
@@ -34,7 +35,7 @@ function HomeBody(props) {
                 <div class="google-login-wrapper">
                     <GoogleLogin theme="light"/>
                 </div>
-            </div>
+            </div> */}
             <div class="gamemode-card">
                 <div class="card-title">Gamemodes</div>
                 {/* set "enabled" property to false if not logged in*/}
@@ -71,9 +72,31 @@ function PageTitle(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 0}; // 0 = home, 1 = play, 2 = record
+        this.state = {screen: 0, transcript: ""}; // 0 = home, 1 = play, 2 = record
 
         this.screenChange = this.screenChange.bind(this);
+        axios.get('https://api.quizzr.shivammalhotra.dev/record/')
+            .then(response => {
+                this.setState({transcript: response.transcript});
+            })
+            .catch((error) => {
+                if (error.response) {
+                  // The request was made and the server responded with a status code
+                  // that falls out of the range of 2xx
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+                } else if (error.request) {
+                  // The request was made but no response was received
+                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                  // http.ClientRequest in node.js
+                  console.log(error.request);
+                } else {
+                  // Something happened in setting up the request that triggered an Error
+                  console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+        console.log(this.transcript);
     }
 
     screenChange(screenNumber) {
