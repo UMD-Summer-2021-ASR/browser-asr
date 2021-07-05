@@ -94,6 +94,8 @@
     border-style: solid;
     border-width: 1px;
     background-color: white;
+    box-shadow:  8px 8px 27px #cfcfcf,
+             -8px -8px 27px #ffffff;
     transition: box-shadow .3s;
     color: black;
 }
@@ -106,8 +108,7 @@
 }
 
 .login-card:hover {
-    box-shadow:  8px 8px 27px #cfcfcf,
-             -8px -8px 27px #ffffff;
+    box-shadow: none;
 }
 
 .google-login-wrapper {
