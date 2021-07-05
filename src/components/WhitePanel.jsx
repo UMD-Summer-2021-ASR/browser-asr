@@ -31,16 +31,8 @@ function HomeBody(props) {
                 <LoginCardItem text="Party mode"/>
                 <LoginCardItem text="Play with friends"/>
                 <LoginCardItem text="Contribute to ASR research"/>
-                <div class="google-login-wrapper">
-                    <GoogleLogin theme="light"/>
-                </div>
             </div>
-            <div class="gamemode-card">
-                <div class="card-title">Gamemodes</div>
-                {/* set "enabled" property to false if not logged in*/}
-                <AnimatedCard src={MagnifyingGlass} title="PLAY" screenChange={() => props.screenChange(1)} href="#" enabled={true} caption="Race against the clock in this fast-paced gamemode testing your trivia skills!"/>
-                <AnimatedCard src={Microphone} title = "RECORD" screenChange={() => props.screenChange(2)} href="#" enabled={true} caption="Contribute to this game by recording questions for others to play!"/>
-            </div>
+            {/* TODO ADD TUTORIAL SLIDES */}
         </div>
     );
 }
@@ -71,7 +63,7 @@ function PageTitle(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 0}; // 0 = login, 1 = play, 2 = record
+        this.state = {screen: 0}; // 0 = login, 1 = home, 2 = record
 
         this.screenChange = this.screenChange.bind(this);
     }
