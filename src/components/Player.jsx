@@ -1,18 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import useSound from "use-sound";
-import VTT1 from "../assets/id01.vtt";
-import VTT2 from "../assets/quizzr_q1.vtt";
-import VTT3 from "../assets/quizzr_q2.vtt";
-import VTT4 from "../assets/quizzr_q3.vtt";
-import VTT5 from "../assets/quizzr_q4.vtt";
-import VTT6 from "../assets/quizzr_q5.vtt";
-import wav1 from '../assets/id01.wav';
-import wav2 from '../assets/quizzr_q1.wav';
-import wav3 from '../assets/quizzr_q2.wav';
-import wav4 from '../assets/quizzr_q3.wav';
-import wav5 from '../assets/quizzr_q4.wav';
-import wav6 from '../assets/quizzr_q5.wav';
 import { gapi } from 'gapi-script';
 
 import "../styles/Player.css";
@@ -40,9 +28,7 @@ class Player extends React.Component {
         this.state = {gameState: 0, transcriptState: ""}; // 0 = begin, 1 = question is running, 2 = question is done
         this.transcript = []; // [i][0] = ms from start, [i][1] = word
         this.currentAudio = new Audio();
-        this.VTTs = [VTT1, VTT2, VTT3, VTT4, VTT5, VTT6];
-        this.Audios = [wav1, wav2, wav3, wav4, wav5, wav6];
-        this.currentQuestion = 0;
+        this.audioID = "";
         this.timeOuts = [];
     }
 
@@ -51,7 +37,7 @@ class Player extends React.Component {
             transcriptState: ""
         })
         for(let i = 0; i < transcript.length; i++) {
-            console.log(transcript[i][1] + transcript[i][0]);
+            // console.log(transcript[i][1] + transcript[i][0]);
             this.timeOuts.push(setTimeout(() => {this.setState({
                 transcriptState: this.state.transcriptState + transcript[i][1] + " "
             })}, transcript[i][0]));
@@ -63,13 +49,13 @@ class Player extends React.Component {
         return true;
     }
 
-    loadNextTranscript(VTTFile) {
-        // GET VTT
+    loadNextTranscript() {
         this.transcript = [];
-        return fetch(VTTFile)
-            .then(response => response.text())
+        return fetch('https://api.quizzr.shivammalhotra.dev/answer/')
+            .then(response => response.json())
             .then(text => {
-                let lines = text.split("\n");
+                let lines = text.vtt.split("\n");
+                this.audioID = text.id;
                 for(let i = 2; i < lines.length-1; i+=3) {
                     if(lines[i+1].charAt(0) === "<") {
                         let lineSplit = lines[i+1].split(">");
@@ -84,18 +70,17 @@ class Player extends React.Component {
             });
     }
 
-    loadNextAudio(audioFile) {
-        this.currentAudio = new Audio(audioFile);
+    loadNextAudio() {
+        let API_KEY = ""; // insert google API key here
+        let path = "https://www.googleapis.com/drive/v2/files/" + this.audioID + "?key=" + API_KEY + "&alt=media";
+        this.currentAudio = new Audio(path);
     }
 
     loadNextQuestion() {
-        this.loadNextTranscript(this.VTTs[this.currentQuestion]).then(() => {
-            this.loadNextAudio(this.Audios[this.currentQuestion]);
-            this.currentQuestion++;
-            if(this.currentQuestion >= 6) {
-                this.currentQuestion = 0;
-            }
+        this.loadNextTranscript().then(() => {
+            this.loadNextAudio();
         });
+        
     }
 
     render() {
@@ -109,7 +94,7 @@ class Player extends React.Component {
                 <div class="player-button-wrapper">
                     <a class="play-btn" onClick={() => {
                         this.playTranscript(this.transcript);
-                        console.log(this.transcript);
+                        // console.log(this.transcript);
                         this.currentAudio.play();
                         
                     }}>

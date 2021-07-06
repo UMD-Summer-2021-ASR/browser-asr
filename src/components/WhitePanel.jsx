@@ -75,7 +75,7 @@ class BigWhitePanel extends React.Component {
         this.state = {screen: 0, transcript: "", qid: ""}; // 0 = home, 1 = play, 2 = record
 
         this.screenChange = this.screenChange.bind(this);
-        axios.get('http://127.0.0.1:5000/record/')
+        axios.get('https://api.quizzr.shivammalhotra.dev/record/')
             .then(response => {
                 this.setState({transcript: response.data.transcript});
                 this.setState({qid: response.data.id});

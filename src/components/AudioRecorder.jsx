@@ -86,7 +86,7 @@ const Recorder = (props) => {
     const config = {
       headers: { 'content-type': 'multipart/form-data' }
     }
-    const response = await axios.post("http://127.0.0.1:5000/upload", formdata, config)
+    const response = await axios.post("https://api.quizzr.shivammalhotra.dev/upload", formdata, config)
       .then(response => {
           console.log(response);
       })
