@@ -4,11 +4,9 @@
 }
 
 .full-bg {
-    background-color: #E8EDF6;
-    background-image:  linear-gradient(135deg, #d5e1f9 25%, transparent 25%), linear-gradient(225deg, #d5e1f9 25%, transparent 25%), linear-gradient(45deg, #d5e1f9 25%, transparent 25%), linear-gradient(315deg, #d5e1f9 25%, #E8EDF6 25%);
-    background-position:  23px 0, 23px 0, 0 0, 0 0;
-    background-size: 46px 46px;
-    background-repeat: repeat;
+    background-image: url(../assets/blob-scene-haikei.svg);
+    background-size: cover;
+    
 }
 
 
