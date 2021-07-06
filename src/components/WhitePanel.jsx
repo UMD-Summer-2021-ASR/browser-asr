@@ -72,12 +72,13 @@ function PageTitle(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 0, transcript: ""}; // 0 = home, 1 = play, 2 = record
+        this.state = {screen: 0, transcript: "", qid: ""}; // 0 = home, 1 = play, 2 = record
 
         this.screenChange = this.screenChange.bind(this);
-        axios.get('https://api.quizzr.shivammalhotra.dev/record/')
+        axios.get('http://127.0.0.1:5000/record/')
             .then(response => {
-                this.setState({transcript: response.transcript});
+                this.setState({transcript: response.data.transcript});
+                this.setState({qid: response.data.id});
             })
             .catch((error) => {
                 if (error.response) {
@@ -96,11 +97,14 @@ class BigWhitePanel extends React.Component {
                 }
                 console.log(error.config);
             });
-        console.log(this.transcript);
     }
 
     screenChange(screenNumber) {
         this.setState({screen: screenNumber});
+    }
+
+    setTranscriptState(script) {
+        this.setState({transcript: script});
     }
 
     render() {
@@ -134,7 +138,10 @@ class BigWhitePanel extends React.Component {
                         <PageTitle
                             screenChange={() => this.screenChange(0)}
                         />
-                        <Recorder/>
+                        <Recorder 
+                            transcript={this.state.transcript}
+                            qid={this.state.qid}
+                        />
                     </div>
                 </div>
             );

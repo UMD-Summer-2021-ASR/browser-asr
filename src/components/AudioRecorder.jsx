@@ -80,20 +80,24 @@ const Recorder = (props) => {
   };
 
   const submit = async () => {
-    const formdat = new FormData();
-    formdat.append("audio", audio);
-    const response = await axios.post("http://localhost:5000/upload", formdat);
-    console.log(response.data);
+    const formdata = new FormData();
+    formdata.append("audio", audio);
+    formdata.append("qid", props.qid);
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' }
+    }
+    const response = await axios.post("http://127.0.0.1:5000/upload", formdata, config)
+      .then(response => {
+          console.log(response);
+      })
+      .catch(error => {
+          console.log(error);
+      });
   };
   return (
     <div class="cntr">
-      <div class="transcript-box">
-      Most Shi'a disregard a hadith saying that ten members of this group, including Talhah [TAL-huh] and Sa'id ibn
-Zayd [sah-EED ib-un ZYDE], were granted entry into Jannah [JAN-nah] while on Earth. The Tabi'un [tah-bee-OON] are a
-generation after this group, whose members include the Mukathirun [moo-kahk-thee-ROON], or “reporters of many
-traditions,” who related hundreds of hadiths. This group comprises those who witnessed the prophet and
-converted to Islam before their deaths. The first four caliphs were part of—for 10 points—what group of friends
-of Muhammad?
+      <div class="recording-transcript-box">
+        {props.transcript}
       </div>
 
 

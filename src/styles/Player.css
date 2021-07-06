@@ -15,10 +15,10 @@
 .transcript-box {
     background-color: #EDEDED;
     width: 90%;
-    height: 15rem;
     border-radius: 0.875rem;
     padding: 1rem;
     font-size: 1rem;
+    box-sizing: border-box;
 }
 
 .play-btn {
