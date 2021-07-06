@@ -16,6 +16,7 @@
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
     "fs": "^0.0.1-security",
+    "gapi-script": "^1.2.0",
     "node-webvtt": "^1.9.3",
     "react": "^17.0.2",
     "react-audio-analyser": "^0.3.1",

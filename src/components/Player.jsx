@@ -13,6 +13,7 @@ import wav3 from '../assets/quizzr_q2.wav';
 import wav4 from '../assets/quizzr_q3.wav';
 import wav5 from '../assets/quizzr_q4.wav';
 import wav6 from '../assets/quizzr_q5.wav';
+import { gapi } from 'gapi-script';
 
 import "../styles/Player.css";
 
@@ -43,18 +44,6 @@ class Player extends React.Component {
         this.Audios = [wav1, wav2, wav3, wav4, wav5, wav6];
         this.currentQuestion = 0;
         this.timeOuts = [];
-    }
-
-    buzz() {
-        // stop timer, pause audio, open answer box, enable submit button, start submit button countdown, 
-    }
-
-    submit() {
-        // TODO
-    }
-
-    playAudio() { // implement + get audio with backend
-
     }
 
     playTranscript(transcript) {
