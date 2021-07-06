@@ -13,8 +13,8 @@
     border-radius: 1.5rem;
     background-color: #F9F9F9;
     transform: translateY(max(3rem, calc(50vh - 50%)));
-    -webkit-box-shadow: 0px 14px 25px -12px #000000; 
-    box-shadow: 0px 14px 25px -12px #000000;
+    -webkit-box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2); 
+    box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2);
 }
 
 .home-title {
