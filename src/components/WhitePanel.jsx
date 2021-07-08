@@ -1,8 +1,6 @@
 import "../styles/WhitePanel.css";
 import React from "react";
-import ReactDOM from "react-dom";
 import CheckIcon from '@material-ui/icons/Check';
-import GoogleLogin from 'react-google-login';
 import AnimatedCard from './AnimatedCard';
 import MagnifyingGlass from '../assets/magnifying-glass.png';
 import Microphone from '../assets/microphone.png';
