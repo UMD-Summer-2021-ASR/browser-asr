@@ -9,6 +9,10 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 
+// Sidenav assets
+import SamplePfp from '../assets/sample-pfp.jpeg';
+import SampleIcon from '../assets/user.png';
+
 
 function LoginCardItem(props) {
     return (
@@ -20,7 +24,7 @@ function LoginCardItem(props) {
     );
 }
 
-function HomeBody(props) {
+function LoginBody(props) {
     return (
         <div class="main-body">
             <div class="login-card">
@@ -37,25 +41,29 @@ function HomeBody(props) {
     );
 }
 
-function HomeTitle() {
+function LoginTitle() {
     return (
         <div>
-            <div class="home-title">Quizzr.io</div>
-            <div class="home-subtitle"><b>the </b> quiz game</div>
+            <div class="login-title">Quizzr.io</div>
+            <div class="login-subtitle"><b>the </b> quiz game</div>
+        </div>
+    );
+}
+
+
+function SidenavItem(props) {
+    return (
+        <div class="sidenav-tab-wrapper">
+            <img class="sidenav-tab-icon" src={SampleIcon} alt="icon"/>
+            <div class="sidenav-tab-label">{props.label}</div>
         </div>
     );
 }
 
 function PageTitle(props) {
     return (
-        <div class="page-header">
-            <a class="page-back-button-wrapper" onClick={props.screenChange}>
-                <div class="page-back-button"><span class="page-back-button-text">&laquo;</span></div>
-            </a>
-            <div class="page-title-wrapper">
-                <div class="page-title">Quizzr.io</div>
-                <div class="page-subtitle"><b>the </b> quiz game</div>
-            </div>
+        <div>
+
         </div>
     );
 }
@@ -63,7 +71,7 @@ function PageTitle(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 0}; // 0 = login, 1 = home, 2 = record
+        this.state = {screen: 1}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 5 = record, 4 = leaderboards 
 
         this.screenChange = this.screenChange.bind(this);
     }
@@ -75,10 +83,10 @@ class BigWhitePanel extends React.Component {
     render() {
         if(this.state.screen === 0) {
             return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <HomeTitle/>
-                        <HomeBody
+                <div class="login-white-panel-wrapper">
+                    <div class="login-white-panel">
+                        <LoginTitle/>
+                        <LoginBody
                             screenChange={this.screenChange}
                         />
                     </div>
@@ -88,10 +96,26 @@ class BigWhitePanel extends React.Component {
             return (
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
-                        <PageTitle
-                            screenChange={() => this.screenChange(0)}
-                        />
-                        <Player/>
+                        <div class="content-wrapper">
+                            <div class="sidenav-wrapper">
+                                <div class="page-logo-title">Quizzr.io</div>
+                                <div class="page-logo-subtitle"><b>the</b> quiz game</div>
+                                <div class="sidenav-pfp-wrapper">
+                                    <img class="sidenav-pfp" src={SamplePfp} alt="profile picture"/>
+                                </div>
+                                <div class="sidenav-tabs-wrapper">
+                                    <SidenavItem label="Profile"/>
+                                    <SidenavItem label="Dashboard"/>
+                                    <SidenavItem label="Play"/>
+                                    <SidenavItem label="Record"/>
+                                    <SidenavItem label="Leaderboards"/>
+                                    <SidenavItem label="Logout"/>
+                                </div>
+                            </div>
+                            <div class="page-body-wrapper">
+                                    Hello
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
