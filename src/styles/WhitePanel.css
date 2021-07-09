@@ -106,7 +106,7 @@
     margin-top: 1.5rem;
     font-size: 1.5rem;
     font-weight: 900;
-    color: #2046F5;
+    color: #6287fa;
 }
 
 .page-logo-subtitle {
@@ -125,53 +125,113 @@
 
 
 
-.page-header {
+
+/* HEADER */
+
+.page-header-wrapper {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding-top: 1rem;
-    margin-bottom: 1rem;
+    align-items: center;
+    border-bottom: solid 1px #eff2fc;
 }
 
-.page-title-wrapper {
+.page-header-left-wrapper {
     display: flex;
-    flex-direction: column;
-    text-align: right;
-    margin-right: 5%;
+    height: 100%;
+    justify-content: left;
+    align-items: center;
 }
 
-.page-back-button-wrapper {
+.page-header-title {
+    height: 100%;
+    margin: 2rem;
+    line-height: 1.6rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: black;
+    background-color: white;
+}
+
+.page-header-divider {
+    margin: 2rem 0 2rem 0;
+    height: 1.6rem;
+    border: 2px solid #EAE9F9;
+    border-radius: 2px;
+}
+
+.page-header-caption {
+    margin-left: 2rem;
+    font-size: 0.8rem;
+    width: 10rem;
+    text-align: left;
+}
+
+.page-header-right-wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-header-energy-wrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center; 
+   margin-right: 1rem;
+}
+
+.page-header-currency-wrapper {
+    display: flex;
+}
+
+.page-header-currency-text {
     display: flex;
     align-items: center;
-    margin-left: 5%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    padding: 0.2rem 0.4rem 0.2rem 0.2rem;
+    border: 1px solid #EAE9F9;
+    height: 1.7rem;
+
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-.page-back-button {
-    border-radius: 50%;
-    background-color: #EDEDED;
-    padding: 0.2rem;
-    font-size: 2rem;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    width: 2.5rem;
-    cursor: pointer;
+.page-header-currency-add {
+    width: 0.8rem;
+    height: 1.7rem;
+    padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+    font-size: 1.25rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border: 1px solid #EAE9F9;
 }
 
-.page-back-button-text {
-    position: relative;
-    bottom: .13rem;
+.page-header-coin-mr {
+    margin-right: 2rem;
 }
 
-.page-title {
-    font-weight: 900;
-    font-weight: 900;
-    color: #2046F5;
-    font-size: 2rem;
+.page-header-energy-icon {
+    height: 1.5rem;
 }
 
-.page-subtitle {
-    color: #9B9B9B;
-    font-size: 0.75rem;
+.page-header-coin-icon {
+    height: 1.3rem;
+    margin: 0 0.3rem 0 0.2rem;
 }
+
+.page-header-energy-cooldowntext {
+    height: 0.5rem;
+    font-size: 0.6rem;
+}
+
+
+
+
+
+/* LOGIN */
 
 .main-body {
     display: flex;

@@ -9,10 +9,18 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 
-// Sidenav assets
+// ASSETS
+// Sidenav
 import SamplePfp from '../assets/sample-pfp.jpeg';
 import SampleIcon from '../assets/user.png';
-
+// Dashboard header
+import GreenLayeredSteps from '../assets/green-layered-steps.svg';
+import BlueLayeredWaves from '../assets/blue-layered-waves.svg';
+import BlueLayeredWaves2 from '../assets/blue-layered-waves-2.svg';
+import BlueLayeredSteps from '../assets/blue-layered-steps.svg';
+// Currency
+import EnergyIcon from '../assets/energy.png';
+import CoinIcon from '../assets/coin.png';
 
 function LoginCardItem(props) {
     return (
@@ -60,10 +68,41 @@ function SidenavItem(props) {
     );
 }
 
-function PageTitle(props) {
+function PageHeader(props) {
     return (
-        <div>
+        <div class="page-header-wrapper">
+            <div class="page-header-left-wrapper">
+                <div class="page-header-title">
+                    {props.title}
+                </div>
+                <div class="page-header-divider"></div>
+                <div class="page-header-caption">
+                    {props.caption}
+                </div>
+            </div>
+            <div class="page-header-right-wrapper">
+                {/* Energy */}
+                <div class="page-header-energy-wrapper">
+                    <div class="page-header-energy-cooldowntext"></div>
+                    <div class="page-header-currency-wrapper">
+                        <div class="page-header-currency-text">
+                            <img class="page-header-energy-icon" src={EnergyIcon} alt="Energy: "/>
+                            7/10
+                        </div>
+                        <div class="page-header-currency-add">+</div>
+                    </div>
+                    <div class="page-header-energy-cooldowntext">+1 in 45:07</div>
+                </div>
 
+                {/* Coins */}
+                <div class="page-header-currency-wrapper page-header-coin-mr">
+                    <div class="page-header-currency-text">
+                        <img class="page-header-coin-icon" src={CoinIcon} alt="Coins: "/>
+                        1000
+                    </div>
+                    <div class="page-header-currency-add">+</div>
+                </div>
+            </div>
         </div>
     );
 }
@@ -113,20 +152,9 @@ class BigWhitePanel extends React.Component {
                                 </div>
                             </div>
                             <div class="page-body-wrapper">
-                                    Hello
+                                <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
                             </div>
                         </div>
-                    </div>
-                </div>
-            );
-        } else if(this.state.screen === 2) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <PageTitle
-                            screenChange={() => this.screenChange(0)}
-                        />,
-                        <Recorder/>
                     </div>
                 </div>
             );
