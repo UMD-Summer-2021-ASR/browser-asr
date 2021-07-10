@@ -8,16 +8,12 @@ import MagnifyingGlass from '../assets/magnifying-glass.png';
 import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
+import Dashboard from './Dashboard.jsx';
 
 // ASSETS
 // Sidenav
 import SamplePfp from '../assets/sample-pfp.jpeg';
 import SampleIcon from '../assets/user.png';
-// Dashboard header
-import GreenLayeredSteps from '../assets/green-layered-steps.svg';
-import BlueLayeredWaves from '../assets/blue-layered-waves.svg';
-import BlueLayeredWaves2 from '../assets/blue-layered-waves-2.svg';
-import BlueLayeredSteps from '../assets/blue-layered-steps.svg';
 // Currency
 import EnergyIcon from '../assets/energy.png';
 import CoinIcon from '../assets/coin.png';
@@ -68,6 +64,26 @@ function SidenavItem(props) {
     );
 }
 
+function Sidenav(props) {
+    return (
+        <div class="sidenav-wrapper">
+            <div class="page-logo-title">Quizzr.io</div>
+            <div class="page-logo-subtitle"><b>the</b> quiz game</div>
+            <div class="sidenav-pfp-wrapper">
+                <img class="sidenav-pfp" src={SamplePfp} alt="profile picture"/>
+            </div>
+            <div class="sidenav-tabs-wrapper">
+                <SidenavItem label="Profile" setScreen={props.setScreen}/>
+                <SidenavItem label="Dashboard"/>
+                <SidenavItem label="Play"/>
+                <SidenavItem label="Record"/>
+                <SidenavItem label="Leaderboards"/>
+                <SidenavItem label="Logout"/>
+            </div>
+        </div>
+    );
+}
+
 function PageHeader(props) {
     return (
         <div class="page-header-wrapper">
@@ -110,12 +126,12 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 1}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 5 = record, 4 = leaderboards 
+        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 5 = record, 4 = leaderboards 
 
-        this.screenChange = this.screenChange.bind(this);
+        this.setScreen = this.setScreen.bind(this);
     }
 
-    screenChange(screenNumber) {
+    setScreen(screenNumber) {
         this.setState({screen: screenNumber});
     }
 
@@ -125,34 +141,21 @@ class BigWhitePanel extends React.Component {
                 <div class="login-white-panel-wrapper">
                     <div class="login-white-panel">
                         <LoginTitle/>
-                        <LoginBody
-                            screenChange={this.screenChange}
-                        />
+                        <LoginBody/>
                     </div>
                 </div>
             );
-        } else if(this.state.screen === 1) {
+        } else if(this.state.screen === 2) {
             return (
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            <div class="sidenav-wrapper">
-                                <div class="page-logo-title">Quizzr.io</div>
-                                <div class="page-logo-subtitle"><b>the</b> quiz game</div>
-                                <div class="sidenav-pfp-wrapper">
-                                    <img class="sidenav-pfp" src={SamplePfp} alt="profile picture"/>
-                                </div>
-                                <div class="sidenav-tabs-wrapper">
-                                    <SidenavItem label="Profile"/>
-                                    <SidenavItem label="Dashboard"/>
-                                    <SidenavItem label="Play"/>
-                                    <SidenavItem label="Record"/>
-                                    <SidenavItem label="Leaderboards"/>
-                                    <SidenavItem label="Logout"/>
-                                </div>
-                            </div>
+                            <Sidenav setScreen={this.setScreen}/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Dashboard/>
+                                </div>
                             </div>
                         </div>
                     </div>

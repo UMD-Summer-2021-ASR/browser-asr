@@ -121,9 +121,17 @@
     background-color: white;
     border-top-right-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
 
+/* PAGE CONTENT */
+
+.page-body-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+}
 
 
 /* HEADER */
@@ -144,13 +152,11 @@
 }
 
 .page-header-title {
-    height: 100%;
     margin: 2rem;
     line-height: 1.6rem;
     font-size: 2rem;
     font-weight: 700;
     color: black;
-    background-color: white;
 }
 
 .page-header-divider {
