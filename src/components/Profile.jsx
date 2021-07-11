@@ -1,4 +1,4 @@
-import "../styles/Dashboard.css";
+import "../styles/Profile.css";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -39,12 +39,13 @@ function NewsColumn(props) {
                 <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
                 <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
                 <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
+                
             </div>
         </div>
     );
 }
 
-class Dashboard extends React.Component {
+class Profile extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -58,4 +59,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+export default Profile;

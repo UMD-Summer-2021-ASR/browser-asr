@@ -9,6 +9,7 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 import Dashboard from './Dashboard.jsx';
+import Profile from './Profile.jsx'
 
 // ASSETS
 // Sidenav
@@ -123,7 +124,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
+        this.state = {screen: 1}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -144,12 +145,28 @@ class BigWhitePanel extends React.Component {
                     </div>
                 </div>
             );
+        } else if(this.state.screen === 1) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Profile" caption="Track your statistics, match history, and rating!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Profile/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
         } else if(this.state.screen === 2) {
             return (
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            <Sidenav setScreen={this.setScreen}/>
+                            <Sidenav/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
                                 <div class="page-body-content-wrapper">
