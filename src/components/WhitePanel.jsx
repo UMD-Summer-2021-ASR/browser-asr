@@ -57,28 +57,25 @@ function LoginTitle() {
 
 function SidenavItem(props) {
     return (
-        <div class="sidenav-tab-wrapper">
-            <img class="sidenav-tab-icon" src={SampleIcon} alt="icon"/>
+        <a href="#" class="no-text-dec sidenav-tab-wrapper">
+            <img class="sidenav-tab-icon" src={props.icon} alt="icon"/>
             <div class="sidenav-tab-label">{props.label}</div>
-        </div>
+        </a>
     );
 }
 
 function Sidenav(props) {
     return (
         <div class="sidenav-wrapper">
-            <div class="page-logo-title">Quizzr.io</div>
-            <div class="page-logo-subtitle"><b>the</b> quiz game</div>
-            <div class="sidenav-pfp-wrapper">
-                <img class="sidenav-pfp" src={SamplePfp} alt="profile picture"/>
-            </div>
+            <div class="sidenav-logo-title">Quizzr.io</div>
+            <div class="sidenav-logo-subtitle"><b>the</b> quiz game</div>
             <div class="sidenav-tabs-wrapper">
-                <SidenavItem label="Profile" setScreen={props.setScreen}/>
-                <SidenavItem label="Dashboard"/>
-                <SidenavItem label="Play"/>
-                <SidenavItem label="Record"/>
-                <SidenavItem label="Leaderboards"/>
-                <SidenavItem label="Logout"/>
+                <SidenavItem label="Profile" icon={SampleIcon}/>
+                <SidenavItem label="Dashboard" icon={SampleIcon}/>
+                <SidenavItem label="Play" icon={SampleIcon}/>
+                <SidenavItem label="Record" icon={SampleIcon}/>
+                <SidenavItem label="Leaderboards" icon={SampleIcon}/>
+                <SidenavItem label="Logout" icon={SampleIcon}/>
             </div>
         </div>
     );
@@ -126,7 +123,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 5 = record, 4 = leaderboards 
+        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -136,6 +133,8 @@ class BigWhitePanel extends React.Component {
     }
 
     render() {
+        if(this.state.screen > 5) this.state.screen = 2;
+
         if(this.state.screen === 0) {
             return (
                 <div class="login-white-panel-wrapper">

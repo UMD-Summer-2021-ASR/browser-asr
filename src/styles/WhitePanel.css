@@ -51,44 +51,37 @@
     height: 100%;
 }
 
+
+
+/* SIDENAV */
+
 .sidenav-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
     height: 100%;
     background-color: #eff2fc;
     border-bottom-left-radius: 1.5rem;
     border-top-left-radius: 1.5rem;
 }
 
-.sidenav-pfp-wrapper {
-    margin: 1.5rem 0 1.5rem 0;
-    border-radius: 50%;
-    overflow: hidden;
-    height: 5rem;
-    width: 5rem;
-    border: solid 2px #bec7ee;
-}
-
-.sidenav-pfp {
-    display: inline;
-    margin: 0 auto;
-    height: 100%;
-    width: auto;
-}
-
 .sidenav-tabs-wrapper {
     display: flex;
-    justify-content: left;
+    flex-grow: 1;
+    flex-basis: 0;
+    width: 100%;
+    padding-top: 1.7rem;
+    
     flex-direction: column;
 }
 
 .sidenav-tab-wrapper {
-    margin: 0.75rem 2rem 0.75rem 2rem;
+    margin: 1rem 0 1rem 0;
+    padding: 0;
     display: flex;
-    justify-content: left;
-    height: 2rem;
+    flex-direction: column;
     align-items: center;
+    color: black;
+    width: auto;
 }
 
 .sidenav-tab-icon {
@@ -97,23 +90,27 @@
 }
 
 .sidenav-tab-label {
-    margin-left: 1rem;
-    font-size: 1rem;
-    font-weight: 250;
+    font-size: 0.75rem;
+    font-weight: 400;
 }
 
-.page-logo-title {
-    margin-top: 1.5rem;
-    font-size: 1.5rem;
+.sidenav-logo-title {
+    margin: 2rem 1rem -3px 1rem;
+    font-size: 1rem;
     font-weight: 900;
     color: #6287fa;
 }
 
-.page-logo-subtitle {
+.sidenav-logo-subtitle {
     margin-top: 0rem;
-    font-size: 0.75rem;
+    font-size: 0.55rem;
     font-weight: 300;
 }
+
+
+
+
+/* PAGE CONTENT */
 
 .page-body-wrapper {
     flex-grow: 1;
@@ -124,9 +121,6 @@
     display: flex;
     flex-direction: column;
 }
-
-
-/* PAGE CONTENT */
 
 .page-body-content-wrapper {
     flex-grow: 1;
@@ -294,4 +288,8 @@
     margin-top: 1rem;
     font-size: 1.75rem;
     font-weight: 800;
+}
+
+.no-text-dec {
+    text-decoration: none;
 }

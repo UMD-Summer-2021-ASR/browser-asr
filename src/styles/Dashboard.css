@@ -26,11 +26,6 @@
     font-weight: 600;
     margin-top: -2px;
     margin-left: 0.5rem;
-}
-
-.newscolumn-icon {
-    height: 25px;
-    width: auto;
     color: #6287F7;
 }
 
@@ -74,7 +69,7 @@
 
 .newscard-date-text {
     font-size: 0.7rem;
-    color: orange;
+    color: green;
     margin-left: 5px;
 }
 
@@ -85,6 +80,7 @@
 .newscard-divider {
     width: 70%;
     margin: 1rem auto;
+    margin-bottom: 0;
     border: 1px solid lightgrey;
     border-radius: 50%;
 }

@@ -14,7 +14,7 @@ function NewsCard(props) {
                 {props.title}
             </div>
             <div class="newscard-date-wrapper">
-                <ScheduleIcon style={{color: "orange", height: "15px", width: "auto"}}/>
+                <ScheduleIcon style={{color: "green", height: "15px", width: "auto"}}/>
                 <div class="newscard-date-text">
                     {props.date}
                 </div>
