@@ -3,44 +3,86 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 // ASSETS
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import BookIcon from '@material-ui/icons/Book';
+import MusicVideoIcon from '@material-ui/icons/MusicVideo';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
-function NewsCard(props) {
+// pfp, username
+function ProfileCard(props) {
     return (
-        <div class="newscard-wrapper">
-            <div class="newscard-title">
-                {props.title}
+        <div class="profile-profilecard-wrapper">
+            <div class="profile-profilecard-pfp">
+
             </div>
-            <div class="newscard-date-wrapper">
-                <ScheduleIcon style={{color: "green", height: "15px", width: "auto"}}/>
-                <div class="newscard-date-text">
-                    {props.date}
+            <div class="profile-profilecard-text">
+                Andrew Chen <br/>
+                <div>
+                    
                 </div>
+                Ranked: 1456
             </div>
-            <div class="newscard-content">
-                {props.content}
-            </div>
-            <div class="newscard-divider"></div>
         </div>
     );
 }
 
-function NewsColumn(props) {
+// rating chart
+function RatingCard(props) {
     return (
-        <div class="newscolumn-wrapper">
-            <div class="newscolumn-title-wrapper">
-                <EventNoteIcon style={{color: "#6287F7", height: "25px", width: "auto"}}/>
-                <div class="newscolumn-title">News</div>
+        <div class="profile-ratingcard-wrapper">
+            <div class="profile-comingsoon">
+                COMING SOON
             </div>
-            <div class="newscolumn-cards-wrapper">
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                
+        </div>
+    );
+}
+
+// stats cards
+function StatsCard(props) {
+    return (
+        <div class="profile-statscard-wrapper">
+            {props.label}
+            <ExpandMoreIcon style={{color: "black", height: "25px"}}/>
+        </div>
+    );
+}
+
+function StatsCards(props) {
+    return (
+        <div class="profile-statscards-wrapper">
+            <div class="profile-statscards-title-wrapper">
+                <EqualizerIcon style={{color: "#6287F7", height: "25px", width: "auto"}}/>
+                <div class="profile-statscards-title">Stats</div>
             </div>
+            <div class="profile-statscards-content-wrapper">
+                <StatsCard label="Rating"/>
+                <StatsCard label="Questions"/>
+                <StatsCard label="Games"/>
+                <StatsCard label="Recordings"/>
+                <StatsCard label="Other"/>
+            </div>
+        </div>
+    );
+}
+
+function HistoryCard(props) {
+    return (
+        <div class="profile-historycard-wrapper" style={{color : props.color, backgroundColor : props.bgcolor}}>
+            {props.icon}
+            {props.label}
+        </div>
+    );
+}
+
+// match history + recording history + inbox buttons
+function HistoryCards(props) {
+    return (
+        <div class="profile-historycards-wrapper">
+            <HistoryCard label="Match Log" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>
+            <HistoryCard label="Recordings" color="green" bgcolor="#D2FBD9" icon={<MusicVideoIcon style={{color: "green", height: "3rem", width: "auto"}}/>} />
+            <HistoryCard label="Inbox" color="purple" bgcolor="#F6E1FD" icon={<MailOutlineIcon style={{color: "purple", height: "3rem", width: "auto"}}/>}/>
         </div>
     );
 }
@@ -52,8 +94,15 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <div class="dashboard-content-wrapper">
-                <NewsColumn/>
+            <div class="profile-content-wrapper">
+                <div class="profile-column">
+                    <ProfileCard/>
+                    <RatingCard/>
+                </div>
+                <div class="profile-column">
+                    <StatsCards/>
+                    <HistoryCards/>
+                </div>
             </div>
         );
     }

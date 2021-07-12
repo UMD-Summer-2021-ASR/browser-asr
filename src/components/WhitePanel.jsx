@@ -124,7 +124,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 1}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
+        this.state = {screen: 4}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -152,7 +152,7 @@ class BigWhitePanel extends React.Component {
                         <div class="content-wrapper">
                             <Sidenav/>
                             <div class="page-body-wrapper">
-                                <PageHeader title="Profile" caption="Track your statistics, match history, and rating!"/>
+                                <PageHeader title="Profile" caption="Track your statistics, match history, recordings, and rating!"/>
                                 <div class="page-body-content-wrapper">
                                     <Profile/>
                                 </div>
@@ -169,6 +169,22 @@ class BigWhitePanel extends React.Component {
                             <Sidenav/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Dashboard/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if(this.state.screen === 4) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Record" caption="Earn coins by recording for others to play!"/>
                                 <div class="page-body-content-wrapper">
                                     <Dashboard/>
                                 </div>
