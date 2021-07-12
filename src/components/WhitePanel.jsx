@@ -13,6 +13,7 @@ import Player from './Player.jsx';
 import Dashboard from './Dashboard.jsx';
 import Profile from './Profile.jsx'
 import Record from './Record.jsx'
+import Play from './Play.jsx'
 
 // ASSETS
 // Sidenav
@@ -127,7 +128,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 4}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
+        this.state = {screen: 3}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -174,6 +175,22 @@ class BigWhitePanel extends React.Component {
                                 <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
                                 <div class="page-body-content-wrapper">
                                     <Dashboard/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if(this.state.screen === 3) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Play/>
                                 </div>
                             </div>
                         </div>
