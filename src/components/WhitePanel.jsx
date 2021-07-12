@@ -8,8 +8,11 @@ import MagnifyingGlass from '../assets/magnifying-glass.png';
 import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
+
+// PAGES
 import Dashboard from './Dashboard.jsx';
 import Profile from './Profile.jsx'
+import Record from './Record.jsx'
 
 // ASSETS
 // Sidenav
@@ -186,7 +189,7 @@ class BigWhitePanel extends React.Component {
                             <div class="page-body-wrapper">
                                 <PageHeader title="Record" caption="Earn coins by recording for others to play!"/>
                                 <div class="page-body-content-wrapper">
-                                    <Dashboard/>
+                                    <Record/>
                                 </div>
                             </div>
                         </div>
