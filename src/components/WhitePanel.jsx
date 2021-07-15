@@ -17,8 +17,12 @@ import Play from './Play.jsx'
 
 // ASSETS
 // Sidenav
-import SamplePfp from '../assets/sample-pfp.jpeg';
-import SampleIcon from '../assets/user.png';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // Currency
 import EnergyIcon from '../assets/energy.png';
 import CoinIcon from '../assets/coin.png';
@@ -62,25 +66,27 @@ function LoginTitle() {
 
 function SidenavItem(props) {
     return (
-        <a href="#" class="no-text-dec sidenav-tab-wrapper">
-            <img class="sidenav-tab-icon" src={props.icon} alt="icon"/>
-            <div class="sidenav-tab-label">{props.label}</div>
-        </a>
+        <div class="sidenav-tab-wrapper" onClick={props.setScreen}>
+            {props.icon}
+            <div class="sidenav-tab-label" style={{color: props.textColor}}>{props.label}</div>
+        </div>
     );
 }
 
 function Sidenav(props) {
+    let MainColor = "#6287F7";
+    let LogoutColor = "#b52121";
     return (
         <div class="sidenav-wrapper">
             <div class="sidenav-logo-title">Quizzr.io</div>
             <div class="sidenav-logo-subtitle"><b>the</b> quiz game</div>
             <div class="sidenav-tabs-wrapper">
-                <SidenavItem label="Profile" icon={SampleIcon}/>
-                <SidenavItem label="Dashboard" icon={SampleIcon}/>
-                <SidenavItem label="Play" icon={SampleIcon}/>
-                <SidenavItem label="Record" icon={SampleIcon}/>
-                <SidenavItem label="Leaderboards" icon={SampleIcon}/>
-                <SidenavItem label="Logout" icon={SampleIcon}/>
+                <SidenavItem label="Profile" icon={<AccountCircleIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(1)} textColor={MainColor}/>
+                <SidenavItem label="Dashboard" icon={<DashboardIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(2)} textColor={MainColor}/>
+                <SidenavItem label="Play" icon={<OfflineBoltIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(3)} textColor={MainColor}/>
+                <SidenavItem label="Record" icon={<RecordVoiceOverIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(4)} textColor={MainColor}/>
+                <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(4)} textColor={MainColor}/>
+                <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor}/>
             </div>
         </div>
     );
@@ -128,7 +134,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 3}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
+        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -154,7 +160,7 @@ class BigWhitePanel extends React.Component {
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            <Sidenav/>
+                            <Sidenav setScreen={this.setScreen}/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Profile" caption="Track your statistics, match history, recordings, and rating!"/>
                                 <div class="page-body-content-wrapper">
@@ -170,7 +176,7 @@ class BigWhitePanel extends React.Component {
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            <Sidenav/>
+                            <Sidenav setScreen={this.setScreen}/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
                                 <div class="page-body-content-wrapper">
@@ -186,7 +192,7 @@ class BigWhitePanel extends React.Component {
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            <Sidenav/>
+                            <Sidenav setScreen={this.setScreen}/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
                                 <div class="page-body-content-wrapper">
@@ -202,7 +208,7 @@ class BigWhitePanel extends React.Component {
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            <Sidenav/>
+                            <Sidenav setScreen={this.setScreen}/>
                             <div class="page-body-wrapper">
                                 <PageHeader title="Record" caption="Earn coins by recording for others to play!"/>
                                 <div class="page-body-content-wrapper">

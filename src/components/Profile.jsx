@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import BookIcon from '@material-ui/icons/Book';
 import MusicVideoIcon from '@material-ui/icons/MusicVideo';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
+import InsertChartIcon from '@material-ui/icons/InsertChart';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
@@ -53,7 +53,7 @@ function StatsCards(props) {
     return (
         <div class="profile-statscards-wrapper">
             <div class="profile-statscards-title-wrapper">
-                <EqualizerIcon style={{color: "#6287F7", height: "25px", width: "auto"}}/>
+                <InsertChartIcon style={{color: "#6287F7", height: "25px", width: "auto"}}/>
                 <div class="profile-statscards-title">Stats</div>
             </div>
             <div class="profile-statscards-content-wrapper">
