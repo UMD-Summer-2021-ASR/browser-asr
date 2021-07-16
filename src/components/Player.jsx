@@ -69,7 +69,6 @@ class Player extends React.Component {
     }
 
     loadNextAudio() {
-        console.log(this.audioID);
         let path = "https://api.quizzr.shivammalhotra.dev/download/" + this.audioID;
         this.currentAudio = new Audio(path);
     }
