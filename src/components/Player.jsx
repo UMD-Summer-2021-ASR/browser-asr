@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import useSound from "use-sound";
-import { gapi } from 'gapi-script';
-
 import "../styles/Player.css";
 
 function PlayButton(props) {
@@ -55,7 +53,7 @@ class Player extends React.Component {
             .then(response => response.json())
             .then(text => {
                 let lines = text.vtt.split("\n");
-                this.audioID = text.id;
+                this.audioID = text._id;
                 for(let i = 2; i < lines.length-1; i+=3) {
                     if(lines[i+1].charAt(0) === "<") {
                         let lineSplit = lines[i+1].split(">");
@@ -71,8 +69,8 @@ class Player extends React.Component {
     }
 
     loadNextAudio() {
-        let API_KEY = ""; // insert google API key here
-        let path = "https://www.googleapis.com/drive/v2/files/" + this.audioID + "?key=" + API_KEY + "&alt=media";
+        console.log(this.audioID);
+        let path = "https://api.quizzr.shivammalhotra.dev/download/" + this.audioID;
         this.currentAudio = new Audio(path);
     }
 
