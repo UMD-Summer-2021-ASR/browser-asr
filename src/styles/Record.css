@@ -148,4 +148,105 @@
     margin-right: 0.5rem;
     color: #6287F7;
     font-weight: 500;
+    cursor: pointer;
+}
+
+/* RECORDING */
+.record-content-wrapper-2 {
+    flex-grow: 1;
+    flex-basis: 0;
+    text-align: left;
+    display: flex;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.recording-recorder-wrapper {
+    flex-grow: 3;
+    flex-basis: 0;
+    background-color: #EFF2FC;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.recording-recorder-transcript {
+    flex-grow: 3;
+    flex-basis: 0;
+    background-color: white;
+    border-radius: 1rem;
+    border: 10px solid #EFF2FC;
+    padding: 1rem;
+    overflow-y: scroll;
+}
+
+.recording-recorder-footer-wrapper {
+    flex-grow: 2;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recording-recorder-audiodisplay {
+    width: 60%;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid lightgrey;
+}
+
+.recording-recorder-buttons-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.recording-recorder-button {
+    padding: 1rem;
+    background-color: #6287F7;
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: 800;
+}
+
+.recording-directions-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 1rem;
+}
+
+.recording-directions-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.recording-directions-divider {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid grey;
+    border-radius: 50%;
+    width: 3rem;
+}
+
+.recording-directions-body {
+    font-size: 1rem;
+}
+
+.recording-directions-back-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+}
+
+.recording-directions-back {
+    background-color: #f2f2f2;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
 }

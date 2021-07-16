@@ -21,7 +21,7 @@ function TranscriptCard(props) {
                     </div>
                 </div>
                 
-                <div class="record-transcriptcard-footer-record">
+                <div class="record-transcriptcard-footer-record" onClick={props.setCurrentlyRecording}>
                     Record &#187;
                 </div>
             </div>
@@ -44,9 +44,9 @@ function RecordingCard(props) {
                 </div>
             </div>
             <div class="record-recordingcard-content-wrapper">
-                <TranscriptCard/>
-                <TranscriptCard/>
-                <TranscriptCard/>
+                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording}/>
+                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording}/>
+                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording}/>
             </div>
         </div>
     );
@@ -55,16 +55,68 @@ function RecordingCard(props) {
 class Record extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {CurrentlyRecording: 0};
+        this.setCurrentlyRecording = this.setCurrentlyRecording.bind(this);
+    }
+
+    setCurrentlyRecording(CR) {
+        this.setState({
+            CurrentlyRecording: CR
+        });
     }
 
     render() {
-        return (
-            <div class="record-content-wrapper">
-                <RecordingCard frameColor="#E1F8DC" textColor="green" label="Easy"/>
-                <RecordingCard frameColor="#FEF8DD" textColor="orange" label="Medium"/>
-                <RecordingCard frameColor="#F7D6DD" textColor="red" label="Hard"/>
-            </div>
-        );
+        if(this.state.CurrentlyRecording === 0) {
+            return (
+                <div class="record-content-wrapper">
+                    <RecordingCard frameColor="#E1F8DC" textColor="green" label="Easy" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                    <RecordingCard frameColor="#FEF8DD" textColor="orange" label="Medium" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                    <RecordingCard frameColor="#F7D6DD" textColor="red" label="Hard" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                </div>
+            );
+        } else {
+            return (
+                <div class="record-content-wrapper-2">
+                    <div class="recording-recorder-wrapper">
+                        <div class="recording-recorder-transcript">
+                        One example of this technique is the Castner-Kellner process that starts with sodium chloride.  The decomposition potential must be overcome for this technique to be successful.  Other examples of it include the Hall-H\\\\'eroult process used to make aluminum and the production of hydrogen gas from water.  For 10 points--name this technique that uses an electric current to drive an otherwise non-spontaneous process.
+                        </div>
+                        <div class="recording-recorder-footer-wrapper">
+                            <div class="recording-recorder-audiodisplay"></div>
+                            <div class="recording-recorder-buttons-wrapper">
+                                <div class="recording-recorder-button">
+                                    Start
+                                </div>
+                                <div class="recording-recorder-button">
+                                    Pause
+                                </div>
+                                <div class="recording-recorder-button">
+                                    Stop
+                                </div>
+                                <div class="recording-recorder-button">
+                                    Submit
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recording-directions-wrapper">
+                        <div class="recording-directions-title">
+                            Directions
+                        </div>
+                        <div class="recording-directions-divider"></div>
+                        <div class="recording-directions-body">
+                            Read through the transcript before recording to ensure you are prepared to speak smoothly and consistently. All recordings will pass through a pre-screening process and you will be notified in your profile if it passes. 
+                        </div>
+                        <div class="recording-directions-back-wrapper">
+                            <div class="recording-directions-back" onClick={() => this.setCurrentlyRecording(0)}>
+                                Back
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+       
     }
 }
 

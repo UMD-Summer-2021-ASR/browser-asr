@@ -5,7 +5,7 @@
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: auto;
-    border: 2px solid #EFF2FC;
+    border: 5px solid #EFF2FC;
     border-radius: 1rem;
 }
 
@@ -20,7 +20,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    border-right: 2px solid #EFF2FC;
+    border-right: 5px solid #EFF2FC;
     text-align: left;
     
 }

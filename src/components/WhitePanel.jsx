@@ -11,9 +11,10 @@ import Player from './Player.jsx';
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
-import Profile from './Profile.jsx'
-import Record from './Record.jsx'
-import Play from './Play.jsx'
+import Profile from './Profile.jsx';
+import Record from './Record.jsx';
+import Play from './Play.jsx';
+import Leaderboards from './Leaderboards.jsx';
 
 // ASSETS
 // Sidenav
@@ -85,7 +86,7 @@ function Sidenav(props) {
                 <SidenavItem label="Dashboard" icon={<DashboardIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(2)} textColor={MainColor}/>
                 <SidenavItem label="Play" icon={<OfflineBoltIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(3)} textColor={MainColor}/>
                 <SidenavItem label="Record" icon={<RecordVoiceOverIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(4)} textColor={MainColor}/>
-                <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(4)} textColor={MainColor}/>
+                <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(5)} textColor={MainColor}/>
                 <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor}/>
             </div>
         </div>
@@ -134,7 +135,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
+        this.state = {screen: 1}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -213,6 +214,22 @@ class BigWhitePanel extends React.Component {
                                 <PageHeader title="Record" caption="Earn coins by recording for others to play!"/>
                                 <div class="page-body-content-wrapper">
                                     <Record/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if(this.state.screen === 5) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav setScreen={this.setScreen}/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Leaderboards" caption="Check out the top players across the globe!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Leaderboards/>
                                 </div>
                             </div>
                         </div>
