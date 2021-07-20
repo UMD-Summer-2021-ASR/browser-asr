@@ -8,6 +8,7 @@ import MagnifyingGlass from '../assets/magnifying-glass.png';
 import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
+import Game from './Game.jsx';
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
@@ -135,7 +136,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 1}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards 
+        this.state = {screen: 7}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards, 6 = in-lobby, 7 = in-game
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -145,7 +146,7 @@ class BigWhitePanel extends React.Component {
     }
 
     render() {
-        if(this.state.screen > 5) this.state.screen = 2;
+        if(this.state.screen > 7) this.state.screen = 2;
 
         if(this.state.screen === 0) {
             return (
@@ -232,6 +233,26 @@ class BigWhitePanel extends React.Component {
                                     <Leaderboards/>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if(this.state.screen === 6){
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            Bruh
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if(this.state.screen === 7){
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Game/>
                         </div>
                     </div>
                 </div>

@@ -85,8 +85,26 @@
     padding: 0.25rem;
 }
 
-/* START LOBBY BUTTON */
+/* START BUTTONS */
+.play-description-start-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
 .play-description-start {
+    border-radius: 0.75rem;
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: orange;
+    color: white;
+    font-weight: 900;
+    margin-top: 1rem;
+}
+
+.play-description-join {
     border-radius: 0.75rem;
     text-align: center;
     width: 40%;

@@ -8,7 +8,7 @@ class gameSettings {
     
     constructor({
         title = "Practice",
-        description = "A solo, infinite gamemode designed for individual practice.",
+        description = "A solo gamemode designed for individual practice.",
         cost = "1 energy per question",
         maxPlayers = "1",
         teams = "1",
@@ -16,7 +16,7 @@ class gameSettings {
         buzzTimeAfterQuestions = "5s",
         topics = "All",
         rounds = "1",
-        questionsPerRound = "Infinite",
+        questionsPerRound = "20",
         isTextDisabled = "No",
         tiebreaker = "None"
     }) {
@@ -218,10 +218,18 @@ class Play extends React.Component {
                             </div>
                         </div>
                     </div>
-
-                    <div class="play-description-start">
-                        START LOBBY
+                    <div class="play-description-start-wrapper">
+                        <div class="play-description-start">
+                            START LOBBY
+                        </div>
+                        {this.state.gamemode === 5 && 
+                            <div class="play-description-join">
+                                JOIN
+                            </div>
+                        }
+                        
                     </div>
+                    
                 </div>
                 <div class="play-gamemodes-wrapper">
                     <div class="play-gamemodes-title">Gamemodes</div>

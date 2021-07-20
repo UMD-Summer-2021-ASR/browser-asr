@@ -1,0 +1,20 @@
+.game-content-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    text-align: center;
+    display: flex;
+    box-sizing: border-box;
+    padding-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buzz-button {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #6287F7;
+    color: white;
+    cursor: pointer;
+    width: 5rem;
+    border-radius: 1rem;
+}
