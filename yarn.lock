@@ -8014,6 +8014,14 @@
   dependencies:
     "mimic-fn" "^2.1.0"
 
+"online-answering@^1.0.4":
+  "integrity" "sha512-UTWc6iGc+lUvJs2sBFEXJ/SxSZ5ZejONE+JditcgSBna/UkQpE3AuMH5LctO5RZT9ng4fLl1gLIQPZgycQvHxw=="
+  "resolved" "https://registry.npmjs.org/online-answering/-/online-answering-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "react-speech-recognition" "^3.8.2"
+    "use-sound" "^4.0.1"
+
 "open@^7.0.2":
   "integrity" "sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q=="
   "resolved" "https://registry.npmjs.org/open/-/open-7.4.2.tgz"
@@ -9502,6 +9510,11 @@
   optionalDependencies:
     "fsevents" "^2.1.3"
 
+"react-speech-recognition@^3.8.2":
+  "integrity" "sha512-ZbA8wNNdWPAiN7tHsMc/cgfRkssAQwL3F8yMDEbuxLCT0II7YrNurNb3hAq5X58+zMn7YQO+S3OZt0mp5QA38w=="
+  "resolved" "https://registry.npmjs.org/react-speech-recognition/-/react-speech-recognition-3.8.2.tgz"
+  "version" "3.8.2"
+
 "react-tabs@^3.2.2":
   "integrity" "sha512-/o52eGKxFHRa+ssuTEgSM8qORnV4+k7ibW+aNQzKe+5gifeVz8nLxCrsI9xdRhfb0wCLdgIambIpb1qCxaMN+A=="
   "resolved" "https://registry.npmjs.org/react-tabs/-/react-tabs-3.2.2.tgz"
@@ -9527,7 +9540,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^16 || ^17", "react@^16.3.0 || ^17.0.0-0", "react@^16.8.0 || ^17.0.0", "react@^17.0.2", "react@>= 16", "react@>=16.13.1", "react@>=16.6.0", "react@>=16.8", "react@17.0.2":
+"react@*", "react@^16 || ^17", "react@^16.3.0 || ^17.0.0-0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@^17.0.2", "react@>= 16", "react@>=16.13.1", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -11478,10 +11491,10 @@
     "punycode" "1.3.2"
     "querystring" "0.2.0"
 
-"use-sound@^4.0.0":
-  "integrity" "sha512-2KP2d7MerJSEeRy6BSUJ9fZ2mjhMvSS9GT8DJJmcGwXuf0N+mx5kYGBXZTGYIP6xuuU55N/0az2sbrr0/PXCkA=="
-  "resolved" "https://registry.npmjs.org/use-sound/-/use-sound-4.0.0.tgz"
-  "version" "4.0.0"
+"use-sound@^4.0.0", "use-sound@^4.0.1":
+  "integrity" "sha512-hykJ86kNcu6y/FzlSHcQxhjSGMslZx2WlfLpZNoPbvueakv4OF3xPxEtGV2YmculrIaH0tPp9LtG4jgy17xMWg=="
+  "resolved" "https://registry.npmjs.org/use-sound/-/use-sound-4.0.1.tgz"
+  "version" "4.0.1"
   dependencies:
     "howler" "^2.1.3"
 

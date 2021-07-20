@@ -2,6 +2,7 @@ import "../styles/Game.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import socketIOClient from "socket.io-client";
+import AnswerBox from "./AnswerBox.jsx";
 const ENDPOINT = "http://127.0.0.1:5000"; // change to real endpoint
 
 function makeUsername(length) {
@@ -27,6 +28,7 @@ class Game extends React.Component {
             buzzTime: 0,
             gapTime: 0,
             inGame: false,
+            answerText: "",
         };
         this.setBuzzTime = this.setBuzzTime.bind(this);
         this.setQuestionTime = this.setQuestionTime.bind(this);
@@ -96,7 +98,7 @@ class Game extends React.Component {
     render() {
         return (
             <div class="game-content-wrapper">
-                {!this.state.inGame &&
+                {/* {!this.state.inGame &&
                     <div onClick={this.startGame} class="buzz-button">
                         Start Game
                     </div>
@@ -116,7 +118,8 @@ class Game extends React.Component {
                 </div>
                 <div onClick={this.buzz} class="buzz-button">
                     {this.state.buzzed ? "Buzzed!" : "Buzz in"}
-                </div>
+                </div> */}
+                {false && <AnswerBox/>}
             </div>
             
         )
