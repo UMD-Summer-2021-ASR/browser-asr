@@ -29,7 +29,7 @@ function TranscriptCard(props) {
     );
 }
 
-function RecordingCard(props) {
+function TranscriptDisplayCard(props) {
     return (
         <div class="record-recordingcard-wrapper" style={{borderColor: props.frameColor}}>
             <div class="record-recordingcard-title-wrapper" style={{borderColor: props.frameColor, backgroundColor: props.frameColor}}>
@@ -55,7 +55,10 @@ function RecordingCard(props) {
 class Record extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {CurrentlyRecording: 0};
+        this.state = {
+            CurrentlyRecording: 0,
+            transcript: "",
+        };
         this.setCurrentlyRecording = this.setCurrentlyRecording.bind(this);
     }
 
@@ -69,9 +72,9 @@ class Record extends React.Component {
         if(this.state.CurrentlyRecording === 0) {
             return (
                 <div class="record-content-wrapper">
-                    <RecordingCard frameColor="#E1F8DC" textColor="green" label="Easy" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
-                    <RecordingCard frameColor="#FEF8DD" textColor="orange" label="Medium" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
-                    <RecordingCard frameColor="#F7D6DD" textColor="red" label="Hard" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                    <TranscriptDisplayCard frameColor="#E1F8DC" textColor="green" label="Easy" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                    <TranscriptDisplayCard frameColor="#FEF8DD" textColor="orange" label="Medium" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                    <TranscriptDisplayCard frameColor="#F7D6DD" textColor="red" label="Hard" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
                 </div>
             );
         } else {

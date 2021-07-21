@@ -84,3 +84,43 @@
     border: 1px solid lightgrey;
     border-radius: 50%;
 }
+
+.dashboard-rightcolumn-wrapper {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.dashboard-quizzrtv-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    background-image: url(../assets/spectate.svg);
+    background-size: cover;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+
+    font-size: 2rem;
+    color: white;
+    font-weight: 900;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dashboard-comingsoon-wrapper {
+    background-color: rgb(240, 240, 240);
+    border-radius: 1rem;
+    flex-grow: 1;
+    flex-basis: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

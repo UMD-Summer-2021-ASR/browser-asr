@@ -136,7 +136,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 7}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards, 6 = in-lobby, 7 = in-game
+        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards, 6 = in-lobby, 7 = in-game
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -242,7 +242,7 @@ class BigWhitePanel extends React.Component {
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
-                            Bruh
+                            
                         </div>
                     </div>
                 </div>

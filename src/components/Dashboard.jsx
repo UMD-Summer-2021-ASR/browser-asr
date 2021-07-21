@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 // ASSETS
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import EventNoteIcon from '@material-ui/icons/EventNote';
-
+import TvIcon from '@material-ui/icons/Tv';
 
 function NewsCard(props) {
     return (
@@ -44,6 +44,23 @@ function NewsColumn(props) {
     );
 }
 
+function QuizzrTVCard(props) {
+    return (
+        <div class="dashboard-quizzrtv-wrapper">
+            <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>
+            QuizzrTV
+        </div>
+    )
+}
+
+function ComingSoonCard(props) {
+    return (
+        <div class="dashboard-comingsoon-wrapper">
+            COMING SOON
+        </div>
+    )
+}
+
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -53,6 +70,10 @@ class Dashboard extends React.Component {
         return (
             <div class="dashboard-content-wrapper">
                 <NewsColumn/>
+                <div class="dashboard-rightcolumn-wrapper">
+                    <QuizzrTVCard/>
+                    <ComingSoonCard/>
+                </div>
             </div>
         );
     }
