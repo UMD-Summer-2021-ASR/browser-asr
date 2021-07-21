@@ -97,22 +97,14 @@ const Recorder = (props) => {
   };
   return (
     <div class="cntr">
-      <div class="recording-transcript-box">
-        {props.transcript}
-      </div>
-
-
       <AudioAnalyser
         {...audioProps}
-        width={
-          window.innerWidth > 991
-            ? window.innerWidth * 0.35
-            : window.innerWidth * 0.75
-        }
-        backgroundColor="#FFFFFF"
-        strokeColor="#000000"
-        class="audio-analyzer"
+        width={400}
+        height={100}
+        backgroundColor="#EFF2FC"
+        strokeColor="#6287F7"
       ></AudioAnalyser>
+      
 
 
       <div className={classes.buttons} class="btn-wrapper">
@@ -143,7 +135,7 @@ const Recorder = (props) => {
             color="secondary"
             className={classes.button}
           >
-            {"REC " +
+            {"PAUSE " +
               Math.floor(duration / 60) +
               ":" +
               placeholder +

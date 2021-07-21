@@ -1,6 +1,7 @@
 import "../styles/Record.css";
 import React from "react";
 import ReactDOM from "react-dom";
+import AudioRecorder from './AudioRecorder.jsx';
 
 // ASSETS
 import CasinoOutlinedIcon from '@material-ui/icons/CasinoOutlined';
@@ -85,7 +86,8 @@ class Record extends React.Component {
                         One example of this technique is the Castner-Kellner process that starts with sodium chloride.  The decomposition potential must be overcome for this technique to be successful.  Other examples of it include the Hall-H\\\\'eroult process used to make aluminum and the production of hydrogen gas from water.  For 10 points--name this technique that uses an electric current to drive an otherwise non-spontaneous process.
                         </div>
                         <div class="recording-recorder-footer-wrapper">
-                            <div class="recording-recorder-audiodisplay"></div>
+                            <AudioRecorder/>
+                            {/* <div class="recording-recorder-audiodisplay"></div>
                             <div class="recording-recorder-buttons-wrapper">
                                 <div class="recording-recorder-button">
                                     Start
@@ -99,7 +101,7 @@ class Record extends React.Component {
                                 <div class="recording-recorder-button">
                                     Submit
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div class="recording-directions-wrapper">

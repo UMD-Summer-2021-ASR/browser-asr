@@ -39,8 +39,6 @@ class Leaderboards extends React.Component {
                             <div class="leaderboards-board-title-buttons"></div>
                             <div class="leaderboards-board-title-buttons"></div>
                             <div class="leaderboards-board-title-buttons"></div>
-                            <div class="leaderboards-board-title-buttons"></div>
-                            <div class="leaderboards-board-title-buttons"></div>
                         </div>
                     </div>
 
