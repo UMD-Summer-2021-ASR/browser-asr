@@ -90,10 +90,12 @@ const Recorder = (props) => {
     const response = await axios.post("https://api.quizzr.shivammalhotra.dev/upload", formdata, config)
       .then(response => {
           console.log(response);
+          props.setCurrentlyRecording(0);
       })
       .catch(error => {
           console.log(error);
       });
+    
   };
   return (
     <div class="cntr">
