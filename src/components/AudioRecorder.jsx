@@ -103,6 +103,7 @@ const Recorder = (props) => {
         height={100}
         backgroundColor="#EFF2FC"
         strokeColor="#6287F7"
+        className="audioanalyser"
       ></AudioAnalyser>
       
 
@@ -110,13 +111,14 @@ const Recorder = (props) => {
       <div className={classes.buttons} class="btn-wrapper">
 
         {status !== "recording" && (
-          <Button
+          <div
             onClick={() => controlAudio("recording")}
-            startIcon={<PlayArrowIcon />}
             variant="contained"
             color="primary"
-            className={classes.button}
+            class="audiorecorder-btn"
           >
+            <PlayArrowIcon/>
+            <div class="iconbreak"/>
             {duration === 0
               ? "START "
               : "RESUME " +
@@ -124,55 +126,46 @@ const Recorder = (props) => {
                 ":" +
                 placeholder +
                 (duration % 60)}
-          </Button>
+          </div>
         )}
 
         {status === "recording" && (
-          <Button
+          <div
             onClick={() => controlAudio("paused")}
-            startIcon={<PauseIcon />}
             variant="contained"
             color="secondary"
-            className={classes.button}
+            class="audiorecorder-btn"
           >
+            <PauseIcon />
             {"PAUSE " +
               Math.floor(duration / 60) +
               ":" +
               placeholder +
               (duration % 60)}
-          </Button>
+          </div>
         )}
 
-        <Button
+        <div
           onClick={() => controlAudio("inactive")}
-          startIcon={<StopIcon />}
           variant="contained"
           color="primary"
-          className={classes.button}
+          class="audiorecorder-btn"
         >
+          <StopIcon />
           STOP
-        </Button>
+        </div>
 
         {status === "inactive" && (
-          <Button
+          <div
             onClick={submit}
-            startIcon={<StopIcon />}
             variant="contained"
             color="primary"
-            className={classes.button}
+            class="audiorecorder-btn"
           >
+            <StopIcon />
             SUBMIT
-          </Button>
+          </div>
         )}
-      </div>
-      <div>
-        <Typography color="textSecondary" className={classes.wrapIcon}>
-          <InfoOutlinedIcon
-            color="textSecondary"
-            style={{ marginRight: "2px" }}
-          />
-          Maximum duration: 3 minutes.
-        </Typography>
       </div>
     </div>
   );

@@ -9,10 +9,18 @@ import CoinIcon from '../assets/coin.png';
 
 
 function TranscriptCard(props) {
+    let transcript = "";
+    
+
+    function record() {
+        props.setTranscript(transcript);
+        props.setCurrentlyRecording(1);
+    }
+
     return (
         <div class="record-transcriptcard-wrapper">
             <div class="record-transcriptcard-transcript">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                {transcript}
             </div>
             <div class="record-transcriptcard-footer-wrapper">
                 <div class="record-transcriptcard-footer-coin-wrapper">
@@ -22,7 +30,7 @@ function TranscriptCard(props) {
                     </div>
                 </div>
                 
-                <div class="record-transcriptcard-footer-record" onClick={props.setCurrentlyRecording}>
+                <div class="record-transcriptcard-footer-record" onClick={record()}>
                     Record &#187;
                 </div>
             </div>
@@ -45,9 +53,9 @@ function TranscriptDisplayCard(props) {
                 </div>
             </div>
             <div class="record-recordingcard-content-wrapper">
-                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording}/>
-                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording}/>
-                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording}/>
+                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording} setTranscript={props.setTranscript}/>
+                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording} setTranscript={props.setTranscript}/>
+                <TranscriptCard  setCurrentlyRecording={props.setCurrentlyRecording} setTranscript={props.setTranscript}/>
             </div>
         </div>
     );
@@ -61,6 +69,7 @@ class Record extends React.Component {
             transcript: "",
         };
         this.setCurrentlyRecording = this.setCurrentlyRecording.bind(this);
+        this.setTranscript = this.setTranscript.bind(this);
     }
 
     setCurrentlyRecording(CR) {
@@ -69,13 +78,19 @@ class Record extends React.Component {
         });
     }
 
+    setTranscript(tr) {
+        this.setState({
+            transcript: tr
+        });
+    }
+
     render() {
         if(this.state.CurrentlyRecording === 0) {
             return (
                 <div class="record-content-wrapper">
-                    <TranscriptDisplayCard frameColor="#E1F8DC" textColor="green" label="Easy" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
-                    <TranscriptDisplayCard frameColor="#FEF8DD" textColor="orange" label="Medium" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
-                    <TranscriptDisplayCard frameColor="#F7D6DD" textColor="red" label="Hard" setCurrentlyRecording={() => this.setCurrentlyRecording(1)}/>
+                    <TranscriptDisplayCard frameColor="#E1F8DC" textColor="green" label="Easy" setCurrentlyRecording={() => this.setCurrentlyRecording} setTranscript={this.setTranscript}/>
+                    <TranscriptDisplayCard frameColor="#FEF8DD" textColor="orange" label="Medium" setCurrentlyRecording={() => this.setCurrentlyRecording} setTranscript={this.setTranscript}/>
+                    <TranscriptDisplayCard frameColor="#F7D6DD" textColor="red" label="Hard" setCurrentlyRecording={() => this.setCurrentlyRecording} setTranscript={this.setTranscript}/>
                 </div>
             );
         } else {
@@ -83,25 +98,10 @@ class Record extends React.Component {
                 <div class="record-content-wrapper-2">
                     <div class="recording-recorder-wrapper">
                         <div class="recording-recorder-transcript">
-                        One example of this technique is the Castner-Kellner process that starts with sodium chloride.  The decomposition potential must be overcome for this technique to be successful.  Other examples of it include the Hall-H\\\\'eroult process used to make aluminum and the production of hydrogen gas from water.  For 10 points--name this technique that uses an electric current to drive an otherwise non-spontaneous process.
+                            {this.state.transcript}
                         </div>
                         <div class="recording-recorder-footer-wrapper">
                             <AudioRecorder/>
-                            {/* <div class="recording-recorder-audiodisplay"></div>
-                            <div class="recording-recorder-buttons-wrapper">
-                                <div class="recording-recorder-button">
-                                    Start
-                                </div>
-                                <div class="recording-recorder-button">
-                                    Pause
-                                </div>
-                                <div class="recording-recorder-button">
-                                    Stop
-                                </div>
-                                <div class="recording-recorder-button">
-                                    Submit
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                     <div class="recording-directions-wrapper">
