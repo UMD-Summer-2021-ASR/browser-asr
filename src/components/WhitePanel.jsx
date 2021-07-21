@@ -9,6 +9,7 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 import Game from './Game.jsx';
+import AnswerBox from './AnswerBox.jsx';
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
@@ -136,7 +137,7 @@ function PageHeader(props) {
 class BigWhitePanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {screen: 2}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards, 6 = in-lobby, 7 = in-game
+        this.state = {screen: 6}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards, 6 = in-lobby (temporarily AnswerBox test), 7 = in-game
 
         this.setScreen = this.setScreen.bind(this);
     }
@@ -242,6 +243,9 @@ class BigWhitePanel extends React.Component {
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
                         <div class="content-wrapper">
+                            <div class="answerbox-wrapper">
+                                <AnswerBox/>
+                            </div>
                             
                         </div>
                     </div>
