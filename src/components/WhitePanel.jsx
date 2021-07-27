@@ -1,5 +1,5 @@
 import "../styles/WhitePanel.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import CheckIcon from '@material-ui/icons/Check';
 import GoogleLogin from 'react-google-login';
@@ -10,6 +10,8 @@ import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 import Game from './Game.jsx';
 import AnswerBox from './AnswerBox.jsx';
+import { useRecoilState } from "recoil";
+import { SCREEN } from "../store";
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
@@ -30,17 +32,61 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EnergyIcon from '../assets/energy.png';
 import CoinIcon from '../assets/coin.png';
 
+//FIREBASE
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
+const firebaseConfig = {
+    apiKey: "AIzaSyCiKPy60wLQMYdttnGec8BFbUUs1Y60yuE",
+    authDomain: "quizzrio.firebaseapp.com",
+    projectId: "quizzrio",
+    storageBucket: "quizzrio.appspot.com",
+    messagingSenderId: "770436468924",
+    appId: "1:770436468924:web:d9203acd685d6b3b1a40b9"
+  };
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+} else {
+    firebase.app(); // if already initialized, use that one
+}
+
+const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      signInSuccessWithAuthResult: () => false,
+    },
+};
+
+
 function LoginCardItem(props) {
     return (
         <div class="login-card-item">
             <CheckIcon style={{ color:"green" }} fontSize="small"/>
             <div class="mr-1"></div>
             {props.text}
+            
         </div>
     );
 }
 
 function LoginBody(props) {
+    const [screen, setScreen] = useRecoilState(SCREEN);
+    useEffect(() => {
+        const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+            if(user) {
+                setScreen(2);
+            } else {
+                return;
+            }
+        });
+        return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    }, []);
+
     return (
         <div class="main-body">
             <div class="login-card">
@@ -51,6 +97,7 @@ function LoginBody(props) {
                 <LoginCardItem text="Party mode"/>
                 <LoginCardItem text="Play with friends"/>
                 <LoginCardItem text="Contribute to ASR research"/>
+                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
             </div>
             {/* TODO ADD TUTORIAL SLIDES */}
         </div>
@@ -79,6 +126,18 @@ function SidenavItem(props) {
 function Sidenav(props) {
     let MainColor = "#6287F7";
     let LogoutColor = "#b52121";
+
+    useEffect(() => {
+        const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+          if(user) {
+            return;
+          } else {
+            props.setScreen(0);
+          }
+        });
+        return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    }, []);
+
     return (
         <div class="sidenav-wrapper">
             <div class="sidenav-logo-title">Quizzr.io</div>
@@ -89,7 +148,7 @@ function Sidenav(props) {
                 <SidenavItem label="Play" icon={<OfflineBoltIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(3)} textColor={MainColor}/>
                 <SidenavItem label="Record" icon={<RecordVoiceOverIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(4)} textColor={MainColor}/>
                 <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(5)} textColor={MainColor}/>
-                <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor}/>
+                <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor} setScreen={() => firebase.auth().signOut()}/>
             </div>
         </div>
     );
@@ -134,135 +193,116 @@ function PageHeader(props) {
     );
 }
 
-class BigWhitePanel extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {screen: 7}; // 0 = login, 1 = profile, 2 = dashboard, 3 = play, 4 = record, 5 = leaderboards, 6 = in-lobby (temporarily AnswerBox test), 7 = in-game
+function BigWhitePanel() {
+    const [screen, setScreen] = useRecoilState(SCREEN);
 
-        this.setScreen = this.setScreen.bind(this);
-    }
-
-    setScreen(screenNumber) {
-        this.setState({screen: screenNumber});
-    }
-
-    render() {
-        if(this.state.screen > 7) this.state.screen = 2;
-
-        if(this.state.screen === 0) {
-            return (
-                <div class="login-white-panel-wrapper">
-                    <div class="login-white-panel">
-                        <LoginTitle/>
-                        <LoginBody/>
-                    </div>
+    if(screen === 0) { // login
+        return (
+            <div class="login-white-panel-wrapper">
+                <div class="login-white-panel">
+                    <LoginTitle/>
+                    <LoginBody/>
                 </div>
-            );
-        } else if(this.state.screen === 1) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <Sidenav setScreen={this.setScreen}/>
-                            <div class="page-body-wrapper">
-                                <PageHeader title="Profile" caption="Track your statistics, match history, recordings, and rating!"/>
-                                <div class="page-body-content-wrapper">
-                                    <Profile/>
-                                </div>
+            </div>
+        );
+    } else if(screen === 1) { // profile
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <Sidenav setScreen={setScreen}/>
+                        <div class="page-body-wrapper">
+                            <PageHeader title="Profile" caption="Track your statistics, match history, recordings, and rating!"/>
+                            <div class="page-body-content-wrapper">
+                                <Profile/>
                             </div>
                         </div>
                     </div>
                 </div>
-            );
-        } else if(this.state.screen === 2) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <Sidenav setScreen={this.setScreen}/>
-                            <div class="page-body-wrapper">
-                                <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
-                                <div class="page-body-content-wrapper">
-                                    <Dashboard/>
-                                </div>
+            </div>
+        );
+    } else if(screen === 3) { // select gamemode / create lobby
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <Sidenav setScreen={setScreen}/>
+                        <div class="page-body-wrapper">
+                            <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
+                            <div class="page-body-content-wrapper">
+                                <Play/>
                             </div>
                         </div>
                     </div>
                 </div>
-            );
-        } else if(this.state.screen === 3) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <Sidenav setScreen={this.setScreen}/>
-                            <div class="page-body-wrapper">
-                                <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
-                                <div class="page-body-content-wrapper">
-                                    <Play/>
-                                </div>
+            </div>
+        );
+    } else if(screen === 4) { // recording
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <Sidenav setScreen={setScreen}/>
+                        <div class="page-body-wrapper">
+                            <PageHeader title="Record" caption="Earn coins by recording for others to play!"/>
+                            <div class="page-body-content-wrapper">
+                                <Record/>
                             </div>
                         </div>
                     </div>
                 </div>
-            );
-        } else if(this.state.screen === 4) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <Sidenav setScreen={this.setScreen}/>
-                            <div class="page-body-wrapper">
-                                <PageHeader title="Record" caption="Earn coins by recording for others to play!"/>
-                                <div class="page-body-content-wrapper">
-                                    <Record/>
-                                </div>
+            </div>
+        );
+    } else if(screen === 5) { // leaderboards
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <Sidenav setScreen={setScreen}/>
+                        <div class="page-body-wrapper">
+                            <PageHeader title="Leaderboards" caption="Check out the top players across the globe!"/>
+                            <div class="page-body-content-wrapper">
+                                <Leaderboards/>
                             </div>
                         </div>
                     </div>
                 </div>
-            );
-        } else if(this.state.screen === 5) {
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <Sidenav setScreen={this.setScreen}/>
-                            <div class="page-body-wrapper">
-                                <PageHeader title="Leaderboards" caption="Check out the top players across the globe!"/>
-                                <div class="page-body-content-wrapper">
-                                    <Leaderboards/>
-                                </div>
+            </div>
+        );
+    } else if(screen === 6){ // in-lobby
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <div class="answerbox-wrapper">
+                            <AnswerBox/>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        );
+    } else if(screen === 7){ // in-game
+        return (
+            <Game/>
+        );
+    } else { //dashboard
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <Sidenav setScreen={setScreen}/>
+                        <div class="page-body-wrapper">
+                            <PageHeader title="Dashboard" caption="Catch up on the latest news and updates!"/>
+                            <div class="page-body-content-wrapper">
+                                <Dashboard/>
                             </div>
                         </div>
                     </div>
                 </div>
-            );
-        } else if(this.state.screen === 6){
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <div class="answerbox-wrapper">
-                                <AnswerBox/>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            );
-        } else if(this.state.screen === 7){
-            return (
-                <div class="big-white-panel-wrapper">
-                    <div class="big-white-panel">
-                        <div class="content-wrapper">
-                            <Game/>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-    }
+            </div>
+        );
+    } 
 }
 
 export default BigWhitePanel;

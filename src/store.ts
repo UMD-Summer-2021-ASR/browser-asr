@@ -4,8 +4,16 @@ const AUDIO_BLOB = atom<Blob | undefined>({
     key: 'AUDIO_BLOB',
     default: undefined
 })
+
 const TEXT = atom<String>({
     key: 'ASR',
     default: ""
 })
-export { AUDIO_BLOB, TEXT }
+
+const SCREEN = atom({
+    key: 'SCREEN',
+    default: 7
+})
+
+export { AUDIO_BLOB, TEXT, SCREEN }
+

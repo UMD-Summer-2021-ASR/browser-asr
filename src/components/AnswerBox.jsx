@@ -3,6 +3,9 @@ import {React, useState} from 'react'
 import ReactDOM from "react-dom";
 import {useOnlineAnswering} from 'online-answering'
 import Switch from "react-switch";
+import MicIcon from '@material-ui/icons/Mic';
+import MicOffIcon from '@material-ui/icons/MicOff';
+import MicOff from "@material-ui/icons/MicOff";
 
 const VoiceBuzzSwitch = (props) => {
     const [checked, setChecked] = useState(false);
@@ -14,11 +17,12 @@ const VoiceBuzzSwitch = (props) => {
     return (
       <div>
         <label class="answerbox-toggle-wrapper">
-          <span>Toggle voice buzzing</span>
           <Switch
             onChange={handleChange}
             checked={checked}
             className={"answerbox-toggle-content"}
+            checkedIcon={<MicIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+            uncheckedIcon={<MicOffIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
           />
         </label>
       </div>
@@ -54,7 +58,7 @@ function AnswerBox(props) {
     })
 
     return (
-        <div class="answerbox-wrapper">
+        <div class="answerbox-answering-wrapper">
             <form class="answerbox-textbox">
                 <label>
                     <input type="text" name="name" value={answer} onChange={setAnswer2} className={"answerbox-textbox-text"}/>

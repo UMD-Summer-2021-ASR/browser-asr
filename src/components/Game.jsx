@@ -16,6 +16,33 @@ function makeUsername(length) {
     return result;
 }
 
+function TeamCard(props) {
+    if(props.color === "red") {
+        return (
+            <div class="game-team-wrapper game-team-red">
+                <div class="game-team-title">
+                    Team Red
+                </div>
+                <div class="game-team-body">
+                        
+                </div>
+            </div>
+        )
+    } else if(props.color === "yellow") {
+        return (
+            <div class="game-team-wrapper game-team-yellow">
+                <div class="game-team-title">
+                    Team Yellow
+                </div>
+                <div class="game-team-body">
+                        
+                </div>
+            </div>
+        )
+    }
+    
+}
+
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -97,33 +124,49 @@ class Game extends React.Component {
 
     render() {
         return (
-            <div class="game-content-wrapper">
-                {!this.state.inGame &&
-                    <div onClick={this.startGame} class="buzz-button">
-                        Start Game
+            <div class="game1-big-white-panel-wrapper">
+                <TeamCard color="red"/>
+                <div class="game1-big-white-panel">
+                    <div class="game1-content-wrapper">
+                        <div class="game-content-wrapper">
+                            <div class="game-header">
+                                Round: {this.state.round} / Question: {this.state.question} / Time remaining: {this.state.questionTime}
+                            </div>
+                            <div class="game-transcriptbox">
+                                
+                            </div>
+                            <AnswerBox/>
+                            {/* {!this.state.inGame &&
+                                <div onClick={this.startGame} class="buzz-button">
+                                    Start Game
+                                </div>
+                            }
+                            
+                            <div>
+                                Username: {this.state.username}
+                            </div>
+                            <div>
+                                R: {this.state.round} / Q: {this.state.question}
+                            </div>
+                            <div>
+                                Time left in gap: {this.state.gapTime}
+                            </div>
+                            <div>
+                                Time left in question: {this.state.questionTime}
+                            </div>
+                            <div>
+                                Time left in buzz: {this.state.buzzTime}
+                            </div>
+                            <div onClick={this.buzz} class="buzz-button">
+                                {this.state.buzzed ? "Buzzed!" : "Buzz in"}
+                            </div> */}
+                            
+                        </div>
                     </div>
-                }
-                
-                <div>
-                    Username: {this.state.username}
                 </div>
-                <div>
-                    R: {this.state.round} / Q: {this.state.question}
-                </div>
-                <div>
-                    Time left in gap: {this.state.gapTime}
-                </div>
-                <div>
-                    Time left in question: {this.state.questionTime}
-                </div>
-                <div>
-                    Time left in buzz: {this.state.buzzTime}
-                </div>
-                <div onClick={this.buzz} class="buzz-button">
-                    {this.state.buzzed ? "Buzzed!" : "Buzz in"}
-                </div>
-                
+                <TeamCard color="yellow"/>
             </div>
+            
             
         )
     }

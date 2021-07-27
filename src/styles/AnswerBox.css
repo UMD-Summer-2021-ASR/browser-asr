@@ -1,7 +1,9 @@
-.answerbox-wrapper {
+.answerbox-answering-wrapper {
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    align-items: center;
     justify-content: center;
+    margin-bottom: 1.5rem;
 }
 
 .answerbox-toggle-wrapper {
@@ -16,7 +18,7 @@
 }
 
 .answerbox-textbox {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .answerbox-textbox-text {
