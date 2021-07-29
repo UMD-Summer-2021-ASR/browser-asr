@@ -9,9 +9,11 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 import Game from './Game.jsx';
+import socketIOClient from "socket.io-client";
 import AnswerBox from './AnswerBox.jsx';
+import Lobby from './Lobby.jsx';
 import { useRecoilState } from "recoil";
-import { SCREEN } from "../store";
+import { SCREEN, PLAY_SCREEN} from "../store";
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
@@ -195,6 +197,7 @@ function PageHeader(props) {
 
 function BigWhitePanel() {
     const [screen, setScreen] = useRecoilState(SCREEN);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
 
     if(screen === 0) { // login
         return (
@@ -221,22 +224,40 @@ function BigWhitePanel() {
                 </div>
             </div>
         );
-    } else if(screen === 3) { // select gamemode / create lobby
-        return (
-            <div class="big-white-panel-wrapper">
-                <div class="big-white-panel">
-                    <div class="content-wrapper">
-                        <Sidenav setScreen={setScreen}/>
-                        <div class="page-body-wrapper">
-                            <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
-                            <div class="page-body-content-wrapper">
-                                <Play/>
+    } else if(screen === 3) { // select gamemode / lobby
+        if(playScreen === 0) {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav setScreen={setScreen}/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Play/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav setScreen={setScreen}/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Lobby/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
     } else if(screen === 4) { // recording
         return (
             <div class="big-white-panel-wrapper">
@@ -269,20 +290,7 @@ function BigWhitePanel() {
                 </div>
             </div>
         );
-    } else if(screen === 6){ // in-lobby
-        return (
-            <div class="big-white-panel-wrapper">
-                <div class="big-white-panel">
-                    <div class="content-wrapper">
-                        <div class="answerbox-wrapper">
-                            <AnswerBox/>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        );
-    } else if(screen === 7){ // in-game
+    } else if(screen === 6){ // in-game
         return (
             <Game/>
         );

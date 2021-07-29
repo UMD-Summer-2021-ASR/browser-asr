@@ -1,6 +1,11 @@
 import "../styles/Play.css";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Modal } from 'react-bootstrap';
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS } from "../store";
+import JoinCustomLobbyModal from "./JoinCustomLobbyModal";
 
 // ASSETS
 
@@ -33,6 +38,46 @@ class gameSettings {
         this.isTextDisabled = isTextDisabled;
         this.tiebreaker = tiebreaker;
     }
+}
+
+function JoinCustomLobbyButton() {
+    const [show, setShow] = useRecoilState(JOIN_CUSTOM_LOBBY_SCREEN);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <div class="play-description-join" onClick={handleShow}>
+                JOIN
+            </div>
+            <JoinCustomLobbyModal/>
+        </>
+    )
+}
+
+function StartCustomLobbyButton() {
+    const [socket, setSocket] = useRecoilState(SOCKET);
+    const [username, setUsername] = useRecoilState(USERNAME);
+    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+    const [players, setPlayers] = useRecoilState(PLAYERS);
+
+    socket.on("lobbystate", (data) => {
+        setLobbyCode(data[1]);
+        setPlayers(data[0]);
+        setPlayScreen(1);
+    });
+
+    function StartLobby() {
+        socket.emit("startlobby", {
+            username: username,
+        });
+    }
+
+    return (
+        <div class="play-description-start" onClick={StartLobby}>
+            START LOBBY
+        </div>
+    )
 }
 
 class Play extends React.Component {
@@ -219,13 +264,9 @@ class Play extends React.Component {
                         </div>
                     </div>
                     <div class="play-description-start-wrapper">
-                        <div class="play-description-start">
-                            START LOBBY
-                        </div>
+                        <StartCustomLobbyButton/>
                         {this.state.gamemode === 5 && 
-                            <div class="play-description-join">
-                                JOIN
-                            </div>
+                            <JoinCustomLobbyButton/>
                         }
                         
                     </div>

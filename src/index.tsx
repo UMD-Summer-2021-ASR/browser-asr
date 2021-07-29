@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { RecoilRoot } from "recoil";
 
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -29,6 +30,8 @@ const theme = createMuiTheme({
   },
   spacing: 12,
 });
+
+
 
 ReactDOM.render(
   <React.StrictMode>

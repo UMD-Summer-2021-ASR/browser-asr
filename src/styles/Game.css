@@ -14,6 +14,7 @@
     height: 35rem;
     border-radius: 1.5rem;
     background-color: #E8EDF6;
+    border: 1px solid #cedcf7;
     -webkit-box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2); 
     box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2);
 }
@@ -46,8 +47,7 @@
 }
 
 .game-team-wrapper {
-    width: 17rem;
-    height: 23rem;
+    width: 23rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -65,9 +65,16 @@
     margin-left: 2rem;
 }
 
+.game-team-standings {
+    background-color: #E8EDF6;
+    color: #6287F7;
+    margin-left: 2rem;
+    font-weight: 700;
+    border: 1px solid #cedcf7;
+}
+
 .game-team-title {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.25rem;
     font-size: 1.5rem;
 }
 
@@ -76,19 +83,107 @@
     flex-basis: 0;
     background-color: white;
     margin: 0.75rem;
-    overflow-y: scroll;
+    margin-top: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-bottom-left-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
+
 }
 
-.game-header {
+.game-header-wrapper {
+    width: calc(100% - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
     font-size: 1.25rem;
+    box-sizing: border-box;
+    border-top-right-radius: 0.8rem;
+    border-top-left-radius: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.game-header-rq {
+    color: #6287F7;
+}
+
+.game-header-time {
+    color: #6287F7;
 }
 
 .game-transcriptbox {
-    width: 90%;
-    margin: 1.75rem;
-    margin-top: 1rem;
-    border-radius: 1rem;
+    width: calc(100% - 2rem);
+    margin: 0 1rem 1rem 1rem;
     flex-grow: 1;
     box-sizing: border-box;
     background-color: white;
+    text-align: left;
+    padding: 1rem;
+}
+
+.game-menubox {
+    width: calc(100% - 2rem);
+    margin: 0 1rem 1rem 1rem;
+    height: 3rem;
+}
+
+.game-playercard-wrapper {
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    
+    padding: 0.5rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: grey;
+    border: 2px solid #E8EDF6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.game-playercard-username-wrapper {
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.game-playercard-buzzed-timer {
+    margin-right: 0.5rem;
+    color: grey;
+    display: flex;
+    align-items: center;
+}
+
+.game-playercard-buzzed-divider {
+    height: 1.3rem;
+    border: 1px solid #EAE9F9;
+    border-radius: 2px;
+    margin-left: 0.5rem;
+}
+
+.game-playercard-self {
+    color: #6287F7;
+}
+
+.game-team-body  > * {
+    margin-top: 1rem;
+}
+
+.game-team-body  > *:first-child {
+    margin-top: 0px;
+}
+
+.game-playercard-buzzed-outline {
+    border: 5px solid gold;
+}
+
+.game-playercard-points {
+    color: grey;
 }
