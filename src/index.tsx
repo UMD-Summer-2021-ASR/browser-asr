@@ -11,6 +11,8 @@ import {
   CssBaseline,
 } from "@material-ui/core";
 import { RecoilRoot } from "recoil";
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 
 const theme = createMuiTheme({
@@ -31,13 +33,22 @@ const theme = createMuiTheme({
   spacing: 12,
 });
 
-
+const alertConfig = { // TODO custom style alert
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: '5px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
+        <AlertProvider template={AlertTemplate} {...alertConfig}>
           <BigWhitePanel/>
+        </AlertProvider>
       </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,

@@ -1,5 +1,5 @@
 import "../styles/Game.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import socketIOClient from "socket.io-client";
 import { useRecoilState } from "recoil";
@@ -65,25 +65,53 @@ function Game() {
     const [points, setPoints] = useState([0,0]);
     const [lobby, setLobby] = useRecoilState(LOBBY_CODE);
 
-    socket.on("buzzed", data => {
-        setBuzzer(data)
+    console.log("game rendered");
+
+    useEffect(() => {
+        const buzzerListener = data => {
+            setBuzzer(data)
+        }
+
+        const gameStateListener = data => {
+            setInGame(data[0]);
+            setRound(data[1]);
+            setQuestion(data[2]);
+            setQuestionTime(data[3].toFixed(1));
+            setBuzzTime(data[4].toFixed(1));
+            setGapTime(data[5].toFixed(1));
+            setBuzzer(data[6]);
+            setPoints(data[7]);
+        }
+
+        const answeredListener = data => {
+            console.log(data);
+            // this.setBuzzTime(time);
+        }
+
+        socket.on("buzzed", buzzerListener);
+        socket.on("gamestate", gameStateListener);
+        socket.on("answered", answeredListener);
+
+        let interval = setInterval(() => {
+            if(!inGame) {
+                clearInterval(interval);
+            } else {
+                socket.emit('getstate', {
+                    lobby: lobby
+                })
+            }
+        }, 100)
+
+        return function cleanSockets() {
+            socket.off("buzzed", buzzerListener);
+            socket.off("gamestate", gameStateListener);
+            socket.off("answered", answeredListener);
+            clearInterval(interval);
+        }
     });
 
-    socket.on("gamestate", data => {
-        setInGame(data[0]);
-        setRound(data[1]);
-        setQuestion(data[2]);
-        setQuestionTime(data[3].toFixed(1));
-        setBuzzTime(data[4].toFixed(1));
-        setGapTime(data[5].toFixed(1));
-        setBuzzer(data[6]);
-        setPoints(data[7]);
-    });
 
-    socket.on("answered", data => {
-        console.log(data);
-        // this.setBuzzTime(time);
-    });
+
 
     function buzz() {
         socket.emit("buzz", {
@@ -100,15 +128,7 @@ function Game() {
         });
     }
 
-    let interval = setInterval(() => {
-        if(!inGame) {
-            clearInterval(interval);
-        } else {
-            socket.emit('getstate', {
-                lobby: lobby
-            })
-        }
-    }, 100)
+    
 
     return (
         <div class="game1-big-white-panel-wrapper">

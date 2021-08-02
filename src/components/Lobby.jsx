@@ -5,7 +5,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import socketIOClient from "socket.io-client";
 import PersonIcon from '@material-ui/icons/Person';
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { LOBBY_CODE, SOCKET, USERNAME, PLAY_SCREEN, PLAYERS, SCREEN } from "../store";
 
 function Player(props) {
@@ -19,21 +19,32 @@ function Player(props) {
 
 function Lobby() {
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
-    const [socket, setSocket] = useRecoilState(SOCKET);
-    const [username, setUsername] = useRecoilState(USERNAME);
+    const socket = useRecoilValue(SOCKET);
+    const username = useRecoilValue(USERNAME);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [players, setPlayers] = useRecoilState(PLAYERS);
     const [screen, setScreen] = useRecoilState(SCREEN);
 
+    useEffect(() => {
+        const lobbyStateListener = (data) => {
+            setLobbyCode(data[1]);
+            setPlayers(data[0]);
+        };
 
-    socket.on("lobbystate", (data) => {
-        setLobbyCode(data[1]);
-        setPlayers(data[0]);
-    });
+        const gameStartedListener = (data) => {
+            console.log(data)
+            setScreen(6);
+        };
 
-    socket.on("gamestarted", (data) => {
-        setScreen(6);
+        socket.on("lobbystate", lobbyStateListener);
+        socket.on("gamestarted", gameStartedListener);
+
+        return function cleanSockets() {
+            socket.off("lobbystate", lobbyStateListener);
+            socket.off("gamestarted", gameStartedListener);
+        }
     });
+    
 
     function leave() {
         socket.emit("leavelobby", {

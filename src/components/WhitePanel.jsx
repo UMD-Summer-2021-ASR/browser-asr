@@ -9,7 +9,6 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 import Game from './Game.jsx';
-import socketIOClient from "socket.io-client";
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState } from "recoil";

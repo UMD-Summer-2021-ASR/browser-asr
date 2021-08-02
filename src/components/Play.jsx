@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS } from "../store";
 import JoinCustomLobbyModal from "./JoinCustomLobbyModal";
+import { useEffect } from "react";
 
 // ASSETS
 
@@ -61,10 +62,18 @@ function StartCustomLobbyButton() {
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [players, setPlayers] = useRecoilState(PLAYERS);
 
-    socket.on("lobbystate", (data) => {
-        setLobbyCode(data[1]);
-        setPlayers(data[0]);
-        setPlayScreen(1);
+    useEffect(() => {
+        const lobbyStateListener = (data) => {
+            setLobbyCode(data[1]);
+            setPlayers(data[0]);
+            setPlayScreen(1);
+        }
+
+        socket.on("lobbystate", lobbyStateListener);
+
+        return function cleanSockets() {
+            socket.off("lobbystate", lobbyStateListener);
+        }
     });
 
     function StartLobby() {

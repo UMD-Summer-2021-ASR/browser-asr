@@ -1,6 +1,7 @@
 import "../styles/Dashboard.css";
 import React from "react";
 import ReactDOM from "react-dom";
+import { useAlert } from 'react-alert'
 
 // ASSETS
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -45,8 +46,15 @@ function NewsColumn(props) {
 }
 
 function QuizzrTVCard(props) {
+    const alert = useAlert();
+    
     return (
-        <div class="dashboard-quizzrtv-wrapper">
+        <div class="dashboard-quizzrtv-wrapper" onClick={() => {
+            alert.show("hi world");
+            alert.error("hi world");
+            alert.success("hi world");
+
+        }}>
             <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>
             QuizzrTV
         </div>
