@@ -1,13 +1,22 @@
 import "../styles/Play.css";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Modal } from 'react-bootstrap';
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS } from "../store";
-import JoinCustomLobbyModal from "./JoinCustomLobbyModal";
 import { useEffect } from "react";
+import { useAlert } from 'react-alert'
+
 
 // ASSETS
+import GamemodeIcon1 from '../assets/gamemode-icon-1.svg';
+import GamemodeIcon2 from '../assets/gamemode-icon-2.svg';
+import GamemodeIcon3 from '../assets/gamemode-icon-3.svg';
+import GamemodeIcon4 from '../assets/gamemode-icon-4.svg';
+import GamemodeIcon5 from '../assets/gamemode-icon-5.svg';
+import GamemodeIcon6 from '../assets/gamemode-icon-6.svg';
+import GamemodeIcon7 from '../assets/gamemode-icon-7.svg';
+
+
 
 class gameSettings {
     
@@ -23,7 +32,8 @@ class gameSettings {
         rounds = "1",
         questionsPerRound = "20",
         isTextDisabled = "No",
-        tiebreaker = "None"
+        tiebreaker = "None",
+        gameType = "solopractice"
     }) {
         this.title = title;
         this.description = description;
@@ -37,6 +47,7 @@ class gameSettings {
         this.questionsPerRound = questionsPerRound;
         this.isTextDisabled = isTextDisabled;
         this.tiebreaker = tiebreaker;
+        this.gameType = gameType;
     }
 }
 
@@ -100,7 +111,7 @@ const gameSettingsList = [
     }),
     new gameSettings({ // gamemode = 5 (Custom)
         title: "Custom Lobby",
-        description: "Play with friends in a completely custom lobby (all settings can be modified in the lobby)",
+        description: "Play with friends in a completely custom lobby!",
         cost: "Varies",
         maxPlayers: "2-8",
         teams: "2-4",
@@ -110,25 +121,12 @@ const gameSettingsList = [
         rounds: "1-7",
         questionsPerRound: "1-30",
         isTextDisabled: "No",
-        tiebreaker: "Tiebreaker question"
+        tiebreaker: "Tiebreaker question",
+        gameType: "customclassic"
     }),
 ];
 
-function JoinCustomLobbyButton() {
-    const [show, setShow] = useRecoilState(JOIN_CUSTOM_LOBBY_SCREEN);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <div class="play-description-join" onClick={handleShow}>
-                JOIN
-            </div>
-            <JoinCustomLobbyModal/>
-        </>
-    )
-}
-
-function StartCustomLobbyButton() {
+function StartLobbyButton(props) {
     const [socket, setSocket] = useRecoilState(SOCKET);
     const [username, setUsername] = useRecoilState(USERNAME);
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
@@ -152,44 +150,132 @@ function StartCustomLobbyButton() {
     function StartLobby() {
         socket.emit("startlobby", {
             username: username,
-        });
-        socket.emit("test", {
-            testboolean: [true, true, false, false],
+            gamemode: props.gameType,
         });
     }
 
     return (
-        <div class="play-description-start" onClick={StartLobby}>
-            START LOBBY
+        <div class="play-gamemodecard-start play-hvr-grow" onClick={StartLobby}>
+            START
         </div>
     )
 }
 
 // name = display name, gamemode = gamemode state, layer = layer of button, self = which button on the layer is it
-function gamemodeBtn(props) {
+function GamemodeBtn(props) {
+    function setGamemodeHandler() {
+        props.setGamemode(props.self);
+    }
+    
     return (
-        <div className={"play-gamemode-btn " + (props.gamemode[props.layer] === props.self ? "play-gamemode-btn-selected" : "")}>
+        <div className={"play-gamemode-btn " + (props.gamemode === props.self ? "play-gamemode-btn-selected" : "")} onClick={setGamemodeHandler}>
             {props.name}
         </div>
     );
 }
 
+function GamemodeComingSoonCard(props) {
+    const alert = useAlert();
+
+    function alertComingSoon() {
+        alert.show("This gamemode is coming soon!");
+    }
+
+    return (
+        <div class="play-gamemodecard-comingsoon-wrapper" onClick={alertComingSoon}>
+            <div class="play-gamemodecard-pfp" style={{ backgroundImage: `url(${props.icon})` }}></div>
+            <div class="play-gamemodecard-comingsoon-title">
+                Coming Soon!
+            </div>
+        </div>
+    );
+}
+
+function GamemodeCard(props) {
+    return (
+        <div class="play-gamemodecard-wrapper">
+            <div class="play-gamemodecard-pfp" style={{ backgroundImage: `url(${props.icon})` }}></div>
+            <div class="play-gamemodecard-title">
+                {props.gamesettings.title}
+            </div>
+            <div class="play-gamemodecard-description">
+                {props.gamesettings.description}
+            </div>
+            <StartLobbyButton gameType={props.gamesettings.gameType}/>
+        </div>
+    );
+}
+
+function JoinCustomLobbyCard(props) {
+    const [text, setText] = useState("");
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+    const socket = useRecoilValue(SOCKET);
+    const username = useRecoilValue(USERNAME);
+
+    function handleText(event) {
+        setText(event.target.value);
+    }
+
+    function joinLobby() {
+        setPlayScreen(1);
+        socket.emit("joinlobby", {
+            lobby: text,
+            username: username
+        });
+    }
+
+    return (
+        <div class="play-gamemodecard-wrapper">
+            <div class="play-gamemodecard-pfp" style={{ backgroundImage: `url(${props.icon})` }}></div>
+            <div class="play-gamemodecard-title">
+                Join a custom lobby!
+            </div>
+
+            <input type="text" value={text} placeholder={"Room code"} onChange={handleText} class="play-joincustomlobbycard-textbox"/>
+            <div class="play-gamemodecard-start play-hvr-grow" onClick={joinLobby}>
+                JOIN
+            </div>
+        </div>
+    )
+}
+
 function Play(props) {
-    const [gamemode, setGamemode] = useState([0,0]);
+    const [gamemode, setGamemode] = useState(0);
 
     return (
         <div class="play-content-wrapper">
             <div class="play-gamemode-wrapper">
-                <gamemodeBtn name={"Casual"} self={0} layer={0} gamemode={gamemode}/>
-                <div class="play-gamemode-btn">
-                    Ranked
-                </div>
-                <div class="play-gamemode-btn">
-                    Solo
-                </div>
-                <div class="play-gamemode-btn">
-                    Custom
-                </div>
+                <GamemodeBtn name={"Casual"} self={0} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Ranked"} self={1} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Solo"} self={2} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Custom"} self={3} gamemode={gamemode} setGamemode={setGamemode}/>
+            </div>
+
+            <div class="play-gamemodecards-wrapper">
+                { gamemode === 0 && // casual
+                    <>
+                        <GamemodeComingSoonCard icon={GamemodeIcon1}/>
+                        <GamemodeComingSoonCard icon={GamemodeIcon6}/>
+                    </>
+                }
+                { gamemode === 1 && // Ranked
+                    <>
+                        <GamemodeComingSoonCard icon={GamemodeIcon3}/>
+                        <GamemodeComingSoonCard icon={GamemodeIcon2}/>
+                    </>
+                }
+                { gamemode === 2 && // Solo
+                    <>
+                        <GamemodeComingSoonCard icon={GamemodeIcon5}/>
+                    </>
+                }
+                { gamemode === 3 && // Custom
+                    <>
+                        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[5]}/>
+                        <JoinCustomLobbyCard icon={GamemodeIcon7}/>
+                    </>
+                }
+
             </div>
         </div>
     );

@@ -174,8 +174,8 @@ function PageHeader(props) {
                     <div class="page-header-energy-cooldowntext"></div>
                     <div class="page-header-currency-wrapper">
                         <div class="page-header-currency-text">
-                            <img class="page-header-energy-icon" src={EnergyIcon} alt="Energy: "/>
-                            7/10
+                            <img class="page-header-coin-icon" src={CoinIcon} alt="Energy: "/>
+                            70 / 100
                         </div>
                         <div class="page-header-currency-add">+</div>
                     </div>

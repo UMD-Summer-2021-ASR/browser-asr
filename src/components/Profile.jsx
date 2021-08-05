@@ -1,6 +1,7 @@
 import "../styles/Profile.css";
 import React from "react";
 import ReactDOM from "react-dom";
+import StatsCardsAccordion from "./StatsCardsAccordion";
 
 // ASSETS
 import BookIcon from '@material-ui/icons/Book';
@@ -57,11 +58,7 @@ function StatsCards(props) {
                 <div class="profile-statscards-title">Stats</div>
             </div>
             <div class="profile-statscards-content-wrapper">
-                <StatsCard label="Rating"/>
-                <StatsCard label="Questions"/>
-                <StatsCard label="Games"/>
-                <StatsCard label="Recordings"/>
-                <StatsCard label="Other"/>
+                <StatsCardsAccordion/>
             </div>
         </div>
     );
