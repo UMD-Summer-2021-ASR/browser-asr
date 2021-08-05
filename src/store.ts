@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 import socketIOClient from "socket.io-client";
 
+
 const ENDPOINT = "http://127.0.0.1:5000"; // change to real endpoint
 function makeUsername(length) {
     var result           = 'guest';
@@ -29,7 +30,7 @@ const SCREEN = atom({
 })
 
 const PLAY_SCREEN = atom({
-    key: 'PLAY_SCREEN',
+    key: 'PLAY_SCREEN', // 0 = select gamemode screen, 1 = in-lobby screen
     default: 0
 })
 
@@ -57,6 +58,7 @@ const PLAYERS = atom({
     key: 'PLAYERS',
     default: [""]
 })
+
 
 export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, USERNAME, SOCKET, PLAYERS }
 

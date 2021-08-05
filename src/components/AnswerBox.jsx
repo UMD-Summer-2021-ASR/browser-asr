@@ -46,6 +46,7 @@ function AnswerBox(props) {
 
     function buzzin() {
         console.log("buzzed");
+        setCurrentlyBuzzed(true);
         if(currentlyBuzzed) {
             return;
         }
@@ -56,6 +57,8 @@ function AnswerBox(props) {
         if(!currentlyBuzzed) {
             return;
         }
+        setCurrentlyBuzzed(false);
+        setAnswer("");
         props.submit(answer);
     }
 

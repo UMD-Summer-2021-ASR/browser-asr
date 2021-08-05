@@ -24,6 +24,8 @@ function Lobby() {
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [players, setPlayers] = useRecoilState(PLAYERS);
     const [screen, setScreen] = useRecoilState(SCREEN);
+    const [teams, setTeams] = useState(0);
+    const [maxPlayers, setMaxPlayers] = useState(4);
 
     useEffect(() => {
         const lobbyStateListener = (data) => {
@@ -32,9 +34,14 @@ function Lobby() {
         };
 
         const gameStartedListener = (data) => {
-            console.log(data)
             setScreen(6);
         };
+
+        setTimeout(() => {
+            socket.emit("lobbystate", {
+                lobby: lobbyCode
+            });
+        }, 1000);
 
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
@@ -56,7 +63,8 @@ function Lobby() {
 
     function start() {
         socket.emit("startgame", {
-            lobby: lobbyCode
+            lobby: lobbyCode,
+            players: players
         });
     }
 

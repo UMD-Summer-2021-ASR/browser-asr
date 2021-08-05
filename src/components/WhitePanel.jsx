@@ -11,8 +11,9 @@ import Player from './Player.jsx';
 import Game from './Game.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
-import { useRecoilState } from "recoil";
-import { SCREEN, PLAY_SCREEN} from "../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { SCREEN, PLAY_SCREEN, SOCKET} from "../store";
+import { useAlert } from 'react-alert';
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
@@ -181,14 +182,14 @@ function PageHeader(props) {
                     <div class="page-header-energy-cooldowntext">+1 in 45:07</div>
                 </div>
 
-                {/* Coins */}
+                {/* Coins
                 <div class="page-header-currency-wrapper page-header-coin-mr">
                     <div class="page-header-currency-text">
                         <img class="page-header-coin-icon" src={CoinIcon} alt="Coins: "/>
                         1000
                     </div>
                     <div class="page-header-currency-add">+</div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
@@ -197,6 +198,29 @@ function PageHeader(props) {
 function BigWhitePanel() {
     const [screen, setScreen] = useRecoilState(SCREEN);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+    const alert = useAlert()
+    const socket = useRecoilValue(SOCKET);
+
+    useEffect(() => {
+        const alertListener = (data) => {
+            if(data[0] === 'normal') {
+                alert.show(data[1]);
+            } else if(data[1] === 'error') {
+                alert.error(data[1]);
+            } else if(data[1] === 'success') {
+                alert.success(data[1]);
+            } else {
+                alert.show(data[1]);
+            }
+        };
+    
+        socket.on("alert", alertListener);
+
+        return function cleanSockets() {
+            socket.off("alert", alertListener);
+        }
+    });
+    
 
     if(screen === 0) { // login
         return (

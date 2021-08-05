@@ -1,8 +1,8 @@
 import "../styles/Game.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 import socketIOClient from "socket.io-client";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, USERNAME} from "../store";
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from '@material-ui/icons/Person';
@@ -31,8 +31,11 @@ function PlayerCard(props) {
 }
 
 function TeamCard(props) {
-    const [players, setPlayers] = useRecoilState(PLAYERS);
-    const [username, setUsername] = useRecoilState(USERNAME);
+    const username = useRecoilValue(USERNAME);
+    const pointsArray = [];
+    for(const key in props.points) {
+        pointsArray.push([key, props.points[key]]);
+    }
     return (
         <div className={"game-team-wrapper " +
             (props.color === "red" ? "game-team-red " : "") + 
@@ -42,8 +45,8 @@ function TeamCard(props) {
                 Scoreboard
             </div>
             <div class="game-team-body">
-                {players.map((uname) =>
-                    <PlayerCard name={uname} self={uname===username} points={props.points[players.indexOf(uname)]} currentlyBuzzed={props.buzzer === uname}/>
+                {pointsArray.map(([uname, pts]) =>
+                    <PlayerCard name={uname} self={uname===username} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
                 )}
             </div>
         </div>
@@ -52,61 +55,67 @@ function TeamCard(props) {
 }
 
 function Game() {
-    const [round, setRound] = useState(0);
-    const [question, setQuestion] = useState(0);
-    const [buzzer, setBuzzer] = useState("");
-    const [username, setUsername] = useRecoilState(USERNAME);
-    const [questionTime, setQuestionTime] = useState(0);
-    const [buzzTime, setBuzzTime] = useState(0);
-    const [gapTime, setGapTime] = useState(0);
-    const [inGame, setInGame] = useState(true);
-    const [answerText, setAnswerText] = useState("");
-    const [socket, setSocket] = useRecoilState(SOCKET);
-    const [points, setPoints] = useState([0,0]);
-    const [lobby, setLobby] = useRecoilState(LOBBY_CODE);
-
-    console.log("game rendered");
+    const [state, setState] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            round: 0, 
+            question: 0,
+            buzzer: "",
+            username: useRecoilValue(USERNAME),
+            questionTime: 0,
+            buzzTime: 0,
+            gapTime: 0,
+            inGame: true,
+            answerText: "",
+            socket: useRecoilValue(SOCKET),
+            points: new Map([[useRecoilValue(USERNAME), 0]]),
+            lobby: useRecoilValue(LOBBY_CODE),
+        }
+    );
 
     useEffect(() => {
         const buzzerListener = data => {
-            setBuzzer(data)
+            setState({buzzer: data});
         }
 
         const gameStateListener = data => {
-            setInGame(data[0]);
-            setRound(data[1]);
-            setQuestion(data[2]);
-            setQuestionTime(data[3].toFixed(1));
-            setBuzzTime(data[4].toFixed(1));
-            setGapTime(data[5].toFixed(1));
-            setBuzzer(data[6]);
-            setPoints(data[7]);
+            console.log("game state rendered!");
+            setState({
+                inGame: data[0],
+                round: data[1],
+                question: data[2],
+                questionTime: data[3].toFixed(1), // rounds to nearest tenth
+                buzzTime: data[4].toFixed(1),
+                gapTime: data[5].toFixed(1),
+                buzzer: data[6],
+                points: data[7]
+            });
         }
 
         const answeredListener = data => {
             console.log(data);
             // this.setBuzzTime(time);
+            // TODO correct animation
         }
 
-        socket.on("buzzed", buzzerListener);
-        socket.on("gamestate", gameStateListener);
-        socket.on("answered", answeredListener);
+        state.socket.on("buzzed", buzzerListener);
+        state.socket.on("gamestate", gameStateListener);
+        state.socket.on("answered", answeredListener);
 
-        let interval = setInterval(() => {
-            if(!inGame) {
-                clearInterval(interval);
+        setTimeout(() => {
+            if(!state.inGame) {
+                return
             } else {
-                socket.emit('getstate', {
-                    lobby: lobby
+                state.socket.emit('gamestate', {
+                    lobby: state.lobby
                 })
             }
-        }, 100)
+        }, 100);
 
         return function cleanSockets() {
-            socket.off("buzzed", buzzerListener);
-            socket.off("gamestate", gameStateListener);
-            socket.off("answered", answeredListener);
-            clearInterval(interval);
+            state.socket.off("buzzed", buzzerListener);
+            state.socket.off("gamestate", gameStateListener);
+            state.socket.off("answered", answeredListener);
         }
     });
 
@@ -114,16 +123,17 @@ function Game() {
 
 
     function buzz() {
-        socket.emit("buzz", {
-            lobby: lobby,
-            username: username,
+        state.socket.emit("buzz", {
+            lobby: state.lobby,
+            username: state.username,
         });
     }
 
     function answer(txt) {
-        socket.emit("answer", {
-            lobby: lobby,
-            username: username,
+        console.log("answered");
+        state.socket.emit("answer", {
+            lobby: state.lobby,
+            username: state.username,
             answer: txt
         });
     }
@@ -138,10 +148,10 @@ function Game() {
 
                         <div class="game-header-wrapper">
                             <div class="game-header-rq">
-                                R: {round} / Q: {question}
+                                R: {state.round} / Q: {state.question}
                             </div>
                             <div class="game-header-time">
-                                Current: {questionTime} / Next in: {gapTime}
+                                Current: {state.questionTime} / Next in: {state.gapTime}
                             </div>
                         </div>
 
@@ -156,7 +166,7 @@ function Game() {
                     </div>
                 </div>
             </div>
-            <TeamCard color="standings" points={points} buzzer={buzzer}/>
+            <TeamCard color="standings" points={state.points} buzzer={state.buzzer} buzzTime={state.buzzTime}/>
         </div>
     )
 }
