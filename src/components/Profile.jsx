@@ -2,6 +2,7 @@ import "../styles/Profile.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import StatsCardsAccordion from "./StatsCardsAccordion";
+import { useAlert } from 'react-alert'
 
 // ASSETS
 import BookIcon from '@material-ui/icons/Book';
@@ -65,8 +66,14 @@ function StatsCards(props) {
 }
 
 function HistoryCard(props) {
+    const alert = useAlert();
+
+    function comingSoon() {
+        alert.show("This feature is coming soon!");
+    }
+
     return (
-        <div class="profile-historycard-wrapper" style={{color : props.color, backgroundColor : props.bgcolor}}>
+        <div onClick={comingSoon} class="profile-historycard-wrapper" style={{color : props.color, backgroundColor : props.bgcolor}}>
             {props.icon}
             {props.label}
         </div>
@@ -75,6 +82,7 @@ function HistoryCard(props) {
 
 // match history + recording history + inbox buttons
 function HistoryCards(props) {
+    
     return (
         <div class="profile-historycards-wrapper">
             <HistoryCard label="Match Log" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>

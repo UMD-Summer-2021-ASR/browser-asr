@@ -122,7 +122,7 @@ const Recorder = (props) => {
             <PlayArrowIcon/>
             <div class="iconbreak"/>
             {duration === 0
-              ? "START "
+              ? (status==="inactive" ? "RESTART " : "START ")
               : "RESUME " +
                 Math.floor(duration / 60) +
                 ":" +

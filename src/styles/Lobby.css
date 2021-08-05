@@ -24,7 +24,48 @@
     flex-grow: 1;
     flex-basis: 0;
     overflow-y: hidden;
+    overflow-x: hidden;
     border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.lobby-gamesettings-setting-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.lobby-gamesettings-hor-flex {
+    display: flex;
+    align-items: center;
+}
+
+.lobby-gamesettings-selector-item {
+    padding: 0.15rem 0.5rem 0.15rem 0.5rem;
+    border-radius: 0.3rem;
+    margin-left: 0.5rem;
+    border: 3px solid white;
+    cursor: pointer;
+}
+
+.lobby-gamesettings-selector-selected {
+    border: 3px solid #6287f7;
+}
+
+.lobby-gamesettings-slider-num {
+    margin-right: 1rem;
+}
+
+.lobby-gamesettings-slider-wrapper {
+    width: 5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .lobby-gamesettings-buttons-wrapper {
