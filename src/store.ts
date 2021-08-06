@@ -2,7 +2,7 @@ import { atom } from "recoil";
 import socketIOClient from "socket.io-client";
 
 
-const ENDPOINT = "http://127.0.0.1:5000"; // change to real endpoint
+const SOCKET_ENDPOINT = "http://127.0.0.1:4000"; // change to real endpoint
 function makeUsername(length) {
     var result           = 'guest';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -26,7 +26,7 @@ const TEXT = atom<String>({
 
 const SCREEN = atom({
     key: 'SCREEN',
-    default: 2
+    default: -1
 })
 
 const PLAY_SCREEN = atom({
@@ -51,7 +51,7 @@ const USERNAME = atom({
 
 const SOCKET = atom({
     key: 'SOCKET',
-    default: socketIOClient(ENDPOINT)
+    default: socketIOClient(SOCKET_ENDPOINT)
 })
 
 const PLAYERS = atom({
@@ -59,6 +59,11 @@ const PLAYERS = atom({
     default: [""]
 })
 
+const PROFILE = atom({
+    key: 'PROFILE',
+    default: undefined
+})
 
-export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, USERNAME, SOCKET, PLAYERS }
+
+export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, USERNAME, SOCKET, PLAYERS, PROFILE }
 

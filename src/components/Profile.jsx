@@ -2,7 +2,9 @@ import "../styles/Profile.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import StatsCardsAccordion from "./StatsCardsAccordion";
-import { useAlert } from 'react-alert'
+import { useAlert } from 'react-alert';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { PROFILE } from "../store";
 
 // ASSETS
 import BookIcon from '@material-ui/icons/Book';
@@ -14,17 +16,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // pfp, username
 function ProfileCard(props) {
+    const profile = useRecoilValue(PROFILE);
+
     return (
         <div class="profile-profilecard-wrapper">
             <div class="profile-profilecard-pfp">
 
             </div>
             <div class="profile-profilecard-text">
-                Andrew Chen <br/>
+                {profile['username']} <br/>
                 <div>
                     
                 </div>
-                Ranked: 1456
+                {profile['rating']}
             </div>
         </div>
     );
@@ -92,25 +96,19 @@ function HistoryCards(props) {
     );
 }
 
-class Profile extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div class="profile-content-wrapper">
-                <div class="profile-column">
-                    <ProfileCard/>
-                    <RatingCard/>
-                </div>
-                <div class="profile-column">
-                    <StatsCards/>
-                    <HistoryCards/>
-                </div>
+function Profile(props) {
+    return (
+        <div class="profile-content-wrapper">
+            <div class="profile-column">
+                <ProfileCard/>
+                <RatingCard/>
             </div>
-        );
-    }
+            <div class="profile-column">
+                <StatsCards/>
+                <HistoryCards/>
+            </div>
+        </div>
+    );
 }
 
 export default Profile;

@@ -2,6 +2,8 @@ import "../styles/Dashboard.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { useAlert } from 'react-alert'
+import axios from 'axios';
+
 
 // ASSETS
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -50,9 +52,15 @@ function QuizzrTVCard(props) {
     
     return (
         <div class="dashboard-quizzrtv-wrapper" onClick={() => {
-            alert.show("hi world");
-            alert.error("hi world");
-            alert.success("hi world");
+            // Deletes your account
+            // axios.delete('http://localhost:5000/profile')
+            //     .then(function (response) {
+            //         // handle success
+            //         console.log(response);
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //     })
 
         }}>
             <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>

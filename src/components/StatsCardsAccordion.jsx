@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/StatsCardsAccordion.css';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { PROFILE } from "../store";
+
+// Material UI Accordion
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -15,6 +19,8 @@ function Stat(props) {
 }
 
 export default function StatsCardsAccordion() {
+  const profile = useRecoilValue(PROFILE);
+
   const [expanded, setExpanded] = useState({
       "rating": false,
       "questions": false,
@@ -45,7 +51,7 @@ export default function StatsCardsAccordion() {
         </AccordionSummary>
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
-                <Stat name="Rating" value="????"/>
+                <Stat name="Rating" value={profile['rating']}/>
                 <Stat name="Rating by category" value="????"/>
                 <Stat name="Rating over time" value="????"/>
             </div>
@@ -59,7 +65,7 @@ export default function StatsCardsAccordion() {
         </AccordionSummary>
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
-                <Stat name="Total questions played" value="????"/>
+                <Stat name="Total questions played" value={profile['totalQuestionsPlayed']}/>
                 <Stat name="Total questions answered" value="????"/>
                 <Stat name="Questions played by category" value="????"/>
                 <Stat name="Questions answered by category" value="????"/>
@@ -82,7 +88,7 @@ export default function StatsCardsAccordion() {
         </AccordionSummary>
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
-                <Stat name="Games played" value="????"/>
+                <Stat name="Games played" value={profile['totalGames']}/>
                 <Stat name="Ranked games played" value="????"/>
                 <Stat name="Ranked games won" value="????"/>
                 <Stat name="Ranked winrate" value="????"/>
@@ -100,7 +106,7 @@ export default function StatsCardsAccordion() {
         </AccordionSummary>
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
-                <Stat name="Recordings made" value="????"/>
+                <Stat name="Recordings made" value={profile['recordedAudios'].length}/>
                 <Stat name="Average recording rating" value="????"/>
             </div>
         </AccordionDetails>
@@ -113,8 +119,8 @@ export default function StatsCardsAccordion() {
         </AccordionSummary>
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
-                <Stat name="Lifetime coins earned" value="????"/>
-                <Stat name="Lifetime playtime" value="????"/>
+                <Stat name="Lifetime coins earned" value={profile['coinsCumulative']}/>
+                <Stat name="Lifetime playtime" value={profile['playTime']}/>
             </div>
         </AccordionDetails>
       </Accordion>
