@@ -225,20 +225,24 @@ function BigWhitePanel() {
             firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
                 axios.defaults.headers.common['Authorization'] = idToken;
                 axios.get('http://localhost:5000/profile')
-                        .then(function (response) {
-                            // handle success
-                            setProfile(response['data']);
-                            console.log(response['data']);
-                            setScreen(2);
-                        })
-                        .catch(function (error) {
-                            if(error.response.status === 404) {
-                                setScreen(7);
-                            }
-                        })
-                        .then(function () {
-                            // always executed
-                        });
+                    .then(function (response) {
+                        // handle success
+                        setProfile(response['data']);
+                        console.log(response['data']);
+                        setScreen(2);
+                    })
+                    .catch(function (error) {
+                        if(!error.response) {
+                            firebase.auth().signOut();
+                            setScreen(0);
+                            alert.error("Server connection failed");
+                        } else if (error.response.status === 404) {
+                            setScreen(7);
+                        }
+                    })
+                    .then(function () {
+                        // always executed
+                    });
               }).catch(function(error) {
                 setScreen(0);
                 alert.error("Login failed");

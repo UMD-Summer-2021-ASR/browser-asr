@@ -52,7 +52,7 @@ function QuizzrTVCard(props) {
     
     return (
         <div class="dashboard-quizzrtv-wrapper" onClick={() => {
-            // Deletes your account
+            // // Deletes your account
             // axios.delete('http://localhost:5000/profile')
             //     .then(function (response) {
             //         // handle success
