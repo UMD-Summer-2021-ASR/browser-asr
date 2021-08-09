@@ -139,7 +139,7 @@ function Sidenav(props) {
 
     return (
         <div class="sidenav-wrapper">
-            <div class="sidenav-logo-title">Quizzr.io</div>
+            <div class="sidenav-logo-title">Quizzr</div>
             <div class="sidenav-logo-subtitle"><b>the</b> quiz game</div>
             <div class="sidenav-tabs-wrapper">
                 <SidenavItem label="Profile" icon={<AccountCircleIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(1)} textColor={MainColor}/>
