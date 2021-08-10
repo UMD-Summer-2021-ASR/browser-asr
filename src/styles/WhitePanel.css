@@ -209,6 +209,23 @@
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     border: 1px solid #EAE9F9;
+    cursor: pointer;
+}
+
+.page-header-currency-add-hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.page-header-currency-add-hvr-grow:hover, .page-header-currency-add-hvr-grow:focus, .page-header-currency-add-hvr-grow:active {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .page-header-coin-mr {

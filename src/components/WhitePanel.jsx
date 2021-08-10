@@ -154,6 +154,8 @@ function Sidenav(props) {
 }
 
 function PageHeader(props) {
+    const [screen, setScreen] = useRecoilState(SCREEN);
+
     return (
         <div class="page-header-wrapper">
             <div class="page-header-left-wrapper">
@@ -174,7 +176,9 @@ function PageHeader(props) {
                             <img class="page-header-coin-icon" src={CoinIcon} alt="Energy: "/>
                             70 / 100
                         </div>
-                        <div class="page-header-currency-add">+</div>
+                        <div onClick={() => {setScreen(4)}} class="page-header-currency-add page-header-currency-add-hvr-grow">
+                            +
+                        </div>
                     </div>
                     <div class="page-header-energy-cooldowntext">+1 in 45:07</div>
                 </div>
