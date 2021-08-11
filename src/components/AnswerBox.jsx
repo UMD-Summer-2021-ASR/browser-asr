@@ -7,27 +7,27 @@ import MicIcon from '@material-ui/icons/Mic';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import MicOff from "@material-ui/icons/MicOff";
 
-// const VoiceBuzzSwitch = (props) => {
-//     const [checked, setChecked] = useState(false);
-//     const handleChange = nextChecked => {
-//         setChecked(nextChecked);
-//         props.setVoice(nextChecked);
-//     };
+const VoiceBuzzSwitch = (props) => {
+    const [checked, setChecked] = useState(false);
+    const handleChange = nextChecked => {
+        setChecked(nextChecked);
+        props.setVoice(nextChecked);
+    };
   
-//     return (
-//       <div>
-//         <label class="answerbox-toggle-wrapper">
-//           <Switch
-//             onChange={handleChange}
-//             checked={checked}
-//             className={"answerbox-toggle-content"}
-//             checkedIcon={<MicIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
-//             uncheckedIcon={<MicOffIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
-//           />
-//         </label>
-//       </div>
-//     );
-//   };
+    return (
+      <div>
+        <label class="answerbox-toggle-wrapper">
+          <Switch
+            onChange={handleChange}
+            checked={checked}
+            className={"answerbox-toggle-content"}
+            checkedIcon={<MicIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+            uncheckedIcon={<MicOffIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+          />
+        </label>
+      </div>
+    );
+  };
 
 function AnswerBox(props) {
     const [ready, setReady] = useState(false)
@@ -62,6 +62,28 @@ function AnswerBox(props) {
         props.submit(answer);
     }
 
+    function handleVoiceBuzzin() {
+        setListening(true);
+        buzzin();
+    }
+
+    useOnlineAnswering({
+        audio: {
+          buzzin:
+            'https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav',
+          buzzout:
+            'https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav'
+        },
+        onAudioData: () => {},
+        timeout: 7000,
+        isReady: ready,
+        onComplete: async (answer, blob) => {
+            complete(answer);
+            console.log(blob);
+        },
+        onBuzzin: () => handleVoiceBuzzin()
+      });
+
     // useOnlineAnswering({
     //     keywords: { buzzin: 'Listen', buzzout: 'Submit' },
     //     audio: {
@@ -83,7 +105,7 @@ function AnswerBox(props) {
                     <input type="text" name="name" value={answer} onChange={setAnswer2} className={"answerbox-textbox-text"}/>
                 </label>
             </form>
-            {/* <VoiceBuzzSwitch setVoice={setReady}/> */}
+            <VoiceBuzzSwitch setVoice={setReady}/>
             <div class="answerbox-button" onClick={buzzin}>
                 Buzz
             </div>

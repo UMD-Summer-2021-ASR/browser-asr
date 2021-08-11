@@ -64,6 +64,16 @@ const PROFILE = atom({
     default: undefined
 })
 
+const TRANSCRIPTS = atom({
+    key: 'TRANSCRIPTS',
+    default: [
+        {"transcript": ""},
+        {"transcript": ""},
+        {"transcript": ""},
+        {"transcript": ""},
+    ]
+})
 
-export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, USERNAME, SOCKET, PLAYERS, PROFILE }
+
+export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, USERNAME, SOCKET, PLAYERS, PROFILE, TRANSCRIPTS }
 

@@ -177,7 +177,7 @@
     background-color: #6287F6;
     color: white;
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 1rem;
     border-radius: 0.75rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
     margin-top: 1rem;
@@ -259,5 +259,14 @@
 }
 .shop-selectingtranscript-reroll-btn-hvr-rotate:hover, .shop-selectingtranscript-reroll-btn-hvr-rotate:focus, .shop-selectingtranscript-reroll-btn-hvr-rotate:active {
     -webkit-transform: rotate(181deg);
-    transform: rotate(181deg);
+    transform: rotate(180deg);
+}
+
+.shop-selectingtranscript-loading-wrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
 }

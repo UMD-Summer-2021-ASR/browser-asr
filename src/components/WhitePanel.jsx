@@ -12,7 +12,7 @@ import Game from './Game.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE } from "../store";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -202,7 +202,10 @@ function BigWhitePanel() {
     const [profile, setProfile] = useRecoilState(PROFILE);
     const alert = useAlert()
     const socket = useRecoilValue(SOCKET);
+    const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
 
+    
+    // connecting to socket server errors
     useEffect(() => {
         const alertListener = (data) => {
             if(data[0] === 'normal') {
@@ -223,6 +226,7 @@ function BigWhitePanel() {
         }
     });
 
+    // connecting to data flow server errors
     useEffect(() => {
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
           if(user) {
@@ -257,6 +261,25 @@ function BigWhitePanel() {
         });
         return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     }, []);
+
+    // getting transcripts
+    useEffect(() => {
+        let transcriptsArray = [];
+        let requestsArray = [];
+        for(let i = 0; i < 4; i++) {
+            requestsArray.push(axios.get('http://localhost:5000/question/unrec')
+                .then(function (response) {
+                    transcriptsArray.push(response['data']['results'][0]);
+                }));
+        }
+        axios.all(requestsArray)
+            .then(() => {
+                setTranscripts(transcriptsArray);
+            })
+            .catch(function (error) {
+                alert.error("Server connection failed");
+            });
+    }, []);
     
 
     if(screen === -1){ // Loading
@@ -266,6 +289,18 @@ function BigWhitePanel() {
                     <div class="content-wrapper">
                         <div class="whitepanel-loading">
                             Loading, please wait...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    } else if(screen === -2) { // Searching for opponent 
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <div class="whitepanel-loading">
+                            Searching for opponent, please wait...
                         </div>
                     </div>
                 </div>

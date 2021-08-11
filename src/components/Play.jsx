@@ -2,7 +2,7 @@ import "../styles/Play.css";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS } from "../store";
+import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS, SCREEN } from "../store";
 import { useEffect } from "react";
 import { useAlert } from 'react-alert'
 
@@ -81,9 +81,9 @@ const gameSettingsList = [
         isTextDisabled: "Yes",
         tiebreaker: "Tiebreaker question"
     }),
-    new gameSettings({ // gamemode = 3 (1v1 custom)
-        title: "Casual 1v1",
-        description: "Preset to play against friends in a blitz 1v1 (all settings can be modified in the lobby)",
+    new gameSettings({ // gamemode = 3 (1v1 casual)
+        title: "1v1",
+        description: "Queue up to play casual 1v1 against others!",
         cost: "10 energy per player per game",
         maxPlayers: "2",
         teams: "2",
@@ -148,6 +148,7 @@ function StartLobbyButton(props) {
     });
 
     function StartLobby() {
+        setPlayScreen()
         socket.emit("startlobby", {
             username: username,
             gamemode: props.gameType,
@@ -217,7 +218,6 @@ function JoinCustomLobbyCard(props) {
     }
 
     function joinLobby() {
-        setPlayScreen(1);
         socket.emit("joinlobby", {
             lobby: text,
             username: username
@@ -254,7 +254,7 @@ function Play(props) {
             <div class="play-gamemodecards-wrapper">
                 { gamemode === 0 && // casual
                     <>
-                        <GamemodeComingSoonCard icon={GamemodeIcon1}/>
+                        <GamemodeCard icon={GamemodeIcon1} gamesettings={gameSettingsList[3]}/>
                         <GamemodeComingSoonCard icon={GamemodeIcon6}/>
                     </>
                 }
