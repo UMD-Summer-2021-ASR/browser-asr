@@ -200,7 +200,7 @@ function BigWhitePanel() {
     const [screen, setScreen] = useRecoilState(SCREEN);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [profile, setProfile] = useRecoilState(PROFILE);
-    const alert = useAlert()
+    const alert = useAlert();
     const socket = useRecoilValue(SOCKET);
     const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
 

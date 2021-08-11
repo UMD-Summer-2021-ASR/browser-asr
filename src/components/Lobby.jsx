@@ -37,7 +37,7 @@ function Lobby() {
     // topics
     const [gapTime, setGapTime] = useState(10);
     const [buzzTime, setBuzzTime] = useState(5);
-
+    console.log("rendered");
     useEffect(() => {
         const lobbyStateListener = (data) => {
             setLobbyCode(data[1]);
@@ -48,25 +48,20 @@ function Lobby() {
             setScreen(6);
         };
 
+        socket.on("lobbystate", lobbyStateListener);
+        socket.on("gamestarted", gameStartedListener);
+
         setTimeout(() => {
             socket.emit("lobbystate", {
                 lobby: lobbyCode
             });
         }, 1000);
 
-        socket.on("lobbystate", lobbyStateListener);
-        socket.on("gamestarted", gameStartedListener);
-
         return function cleanSockets() {
-            socket.off("lobbystate", lobbyStateListener);
-            socket.off("gamestarted", gameStartedListener);
+            socket.off("lobbystate");
+            socket.off("gamestarted");
         }
     });
-
-    // update states
-    // useEffect(() => {
-
-    // });
     
 
     function leave() {
@@ -196,7 +191,7 @@ function Lobby() {
                 </div>
                 <div class="lobby-players-list-wrapper">
                 {players.map((uname) =>
-                    <Player name={uname} self={uname===username}/>
+                    <Player name={uname} self={uname===username} key={uname}/>
                 )}
                 </div>
             </div>

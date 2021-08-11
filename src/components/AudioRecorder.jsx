@@ -1,12 +1,9 @@
 import AudioAnalyser from "react-audio-analyser";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import Button from "@material-ui/core/Button";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import StopIcon from "@material-ui/icons/Stop";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 import { AUDIO_BLOB } from "../store";
@@ -30,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Recorder = (props) => {
-  const [status, setStatus] = React.useState("");
-  const [audioSrc, setAudioSrc] = React.useState(null);
-  const [duration, setDuration] = React.useState(0);
-  const [placeholder, setPlaceholder] = React.useState("0");
-  const [audio, setAudio] = useRecoilState(AUDIO_BLOB);
+  const [status, setStatus] = useState("");
+  const [audioSrc, setAudioSrc] = useState(null);
+  const [duration, setDuration] = useState(0);
+  const [placeholder, setPlaceholder] = useState("0");
+  const [audio, setAudio] = useState(undefined);
   const controlAudio = (status) => {
     setStatus(status);
   };
-
-  React.useEffect(() => {
+  console.log("rendered");
+  useEffect(() => {
     if (duration > 180) {
       controlAudio("inactive");
     }
@@ -66,6 +63,7 @@ const Recorder = (props) => {
     stopCallback: (e) => {
       setAudioSrc(window.URL.createObjectURL(e));
       setAudio(e);
+      props.setAudio(props.index, e);
       console.log("Duration", duration);
       setDuration(0);
       console.log("stop", e);
@@ -78,38 +76,9 @@ const Recorder = (props) => {
       console.log("error", err);
     },
   };
-
-  const submit = async () => {
-    props.setCurrentlyRecording(0);
-    const formdata = new FormData();
-    formdata.append("audio", audio);
-    formdata.append("qid", props.qid);
-    formdata.append("recType", "normal");
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' }
-    }
-    const response = await axios.post("https://api.quizzr.shivammalhotra.dev/upload", formdata, config)
-      .then(response => {
-          console.log(response);
-      })
-      .catch(error => {
-          console.log(error);
-      });
-    
-  };
+  
   return (
-    <div class="cntr">
-      <AudioAnalyser
-        {...audioProps}
-        width={400}
-        height={100}
-        backgroundColor="#EFF2FC"
-        strokeColor="#6287F7"
-        className="audioanalyser"
-      ></AudioAnalyser>
-      
-
-
+    <div class="audiorecorder-wrapper">
       <div className={classes.buttons} class="btn-wrapper">
 
         {status !== "recording" && (
@@ -156,19 +125,16 @@ const Recorder = (props) => {
           <StopIcon />
           STOP
         </div>
-
-        {status === "inactive" && (
-          <div
-            onClick={submit}
-            variant="contained"
-            color="primary"
-            class="audiorecorder-btn"
-          >
-            <StopIcon />
-            SUBMIT
-          </div>
-        )}
       </div>
+
+      <AudioAnalyser
+        {...audioProps}
+        width={100}
+        height={100}
+        backgroundColor="#6287F7"
+        strokeColor="#EFF2FC"
+        className="audioanalyser"
+      ></AudioAnalyser>
     </div>
   );
 };

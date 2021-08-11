@@ -10,6 +10,7 @@ import 'react-tippy/dist/tippy.css';
 import axios from 'axios';
 import { useRecoilState } from "recoil";
 import { TRANSCRIPTS } from "../store";
+import AudioRecorder from './AudioRecorder.jsx';
 
 
 
@@ -35,11 +36,18 @@ function SpendComingSoon(props) {
 }
 
 function TranscriptOption(props) {
+
+    function handleRecord() {
+        props.setTranscript(props.transcript);
+        props.setAudios(Array.apply(null, Array(props.transcript['tokenizations'].length)).map(function () {}));
+        props.setShopScreen("recording");
+    }
+
     return (
         <div class="shop-selectingtranscript-transcript-wrapper">
             <div class="shop-selectingtranscript-transcript-body-wrapper">
                 <div class="shop-selectingtranscript-transcript-body">
-                    {props.transcript}
+                    {props.transcript['transcript']}
                 </div>
             </div>
             <div class="shop-selectingtranscript-transcript-footer">
@@ -49,10 +57,21 @@ function TranscriptOption(props) {
                     {props.bounty}
                 </div>
 
-                <div onClick={() => {props.setShopScreen("recording")}} class="shop-selectingtranscript-record-btn">
+                <div onClick={handleRecord} class="shop-selectingtranscript-record-btn">
                     Record &#187;
                 </div>
             </div>
+        </div>
+    );
+}
+
+function Sentence(props) {
+    return (
+        <div class="shop-sentence-wrapper">
+            <div class="shop-sentence-transcript-wrapper">
+                {props.transcript}
+            </div>
+            <AudioRecorder setAudio={props.setAudio} index={props.index}/>
         </div>
     );
 }
@@ -61,6 +80,16 @@ function Shop() {
     const [shopScreen, setShopScreen] = useState("home");
     const [difficulty, setDifficulty] = useState("easy");
     const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
+    const alert = useAlert()
+    const [transcript, setTranscript] = useState({"transcript": ""});
+    const [audios, setAudios] = useState([]);
+
+    function setAudio(index, audio) {
+        let audiosCopy = [...audios];
+        audiosCopy[index] = audio;
+        setAudios(audiosCopy);
+        console.log(audios);
+    }
 
     function activateShopScreen(diff) {
         setDifficulty(diff);
@@ -83,9 +112,46 @@ function Shop() {
                 setShopScreen("selectingtranscript");
             })
             .catch(function (error) {
-                alert.error("Server connection failed");
+                alert.error("Rerolling failed");
+                setShopScreen("selectingtranscript")
             });
     }
+
+    function submitAudios() {
+        let b = true;
+        audios.forEach(element => {
+            if(element == null && b) {
+                alert.error("Recordings Incomplete");
+                b = false;
+            }
+        });
+
+        if(b) submitAudios2();
+    }
+
+    async function submitAudios2() {
+        setShopScreen("submitting");
+        const formdata = new FormData();
+        formdata.append("audio", audios);
+        formdata.append("qb_id", Array.apply(null, Array(audios.length)).map(function () { return transcript.id; }));
+        formdata.append("recType", Array.apply(null, Array(audios.length)).map(function () { return "normal"; }));
+        formdata.append("sentenceId", Array.apply(null, Array(audios.length)).map(function (x, i) { return i; }));
+        formdata.append("diarMetadata", Array.apply(null, Array(audios.length)).map(function () { return ""; }));
+        console.log(formdata);
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+        const response = await axios.post("http://localhost:5000/audio", formdata, config)
+            .then(response => {
+                setShopScreen("home");
+                alert.success("Submitted recording");
+            })
+            .catch(error => {
+                setShopScreen("home");
+                alert.error("Submission failed");
+            });
+        
+      };
 
     if(shopScreen === "home") {
         return (
@@ -148,17 +214,17 @@ function Shop() {
                     Select {difficulty==="easy" ? "an" : "a"} {difficulty} difficulty transcript to record
                 </div>
                 <div class="shop-selectingtranscript-layer-wrapper">
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} transcript={transcripts[0]['transcript']}/>
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} transcript={transcripts[1]['transcript']}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[0]} setAudios={setAudios}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[1]} setAudios={setAudios}/>
                 </div>
                 <div class="shop-selectingtranscript-layer-wrapper">
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} transcript={transcripts[2]['transcript']}/>
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} transcript={transcripts[3]['transcript']}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[2]} setAudios={setAudios}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[3]} setAudios={setAudios}/>
                 </div>
                 <div class="shop-selectingtranscript-footer-wrapper">
                     <div class="shop-selectingtranscript-placeholder"></div>
                     <div onClick={() => {setShopScreen("home")}} class="shop-selectingtranscript-cancel-btn">
-                        Cancel
+                        Back
                     </div>
                     <div onClick={rerollTranscripts} class="shop-selectingtranscript-reroll-btn shop-selectingtranscript-reroll-btn-hvr-rotate">
                         <LoopIcon style={{color: "white", height: "2.5rem"}}/>
@@ -172,6 +238,37 @@ function Shop() {
             <div class="shop-content-wrapper">
                 <div class="shop-selectingtranscript-loading-wrapper">
                     Loading, please wait...
+                </div>
+            </div>
+        );
+    }else if(shopScreen === "submitting") {
+        return (
+            <div class="shop-content-wrapper">
+                <div class="shop-selectingtranscript-loading-wrapper">
+                    Submitting, please wait...
+                </div>
+            </div>
+        );
+    } else if(shopScreen === "recording") {
+        let sentences = [];
+        transcript['tokenizations'].forEach(element => {
+            sentences.push(transcript['transcript'].substring(element[0], element[1]));
+        });
+    
+        return (
+            <div class="shop-content-wrapper">
+                <div class="shop-sentences-wrapper">
+                    {sentences.map((sentence, index) =>
+                        <Sentence transcript={sentence} key={sentence} setAudio={setAudio} index={index}/>
+                    )}
+                    <div class="shop-sentences-btn-wrapper">
+                        <div onClick={submitAudios} class="shop-sentences-submit">
+                            Submit
+                        </div>
+                        <div onClick={() => {setShopScreen("selectingtranscript")}} class="shop-sentences-cancel">
+                            Back
+                        </div>
+                    </div>
                 </div>
             </div>
         );

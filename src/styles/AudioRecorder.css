@@ -1,6 +1,5 @@
 .btn-wrapper {
     text-align: center;
-    margin-bottom: 1rem;
     display: flex;
     align-items: center;
 }
@@ -9,14 +8,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1rem;
 }
 
-.cntr {
+.audiorecorder-wrapper {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     margin-top: 0;
 }
 
@@ -39,6 +36,8 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    border: 4px solid white;
+    margin-right: 1rem;
 }
 
 .btn-wrapper > * {
@@ -46,7 +45,7 @@
 }
 
 .btn-wrapper > *:first-child {
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 .iconbreak {

@@ -270,3 +270,58 @@
     font-size: 2rem;
     font-weight: 800;
 }
+
+.shop-sentences-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 1rem;
+    align-items: center;
+}
+
+.shop-sentence-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    background-color: #6287F6;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.shop-sentence-transcript-wrapper {
+    background-color: white;
+    border-radius: 0.6rem;
+    padding: 0.5rem;
+}
+
+.shop-sentences-btn-wrapper {
+    display: flex;
+}
+
+.shop-sentences-submit {
+    background-color: #6287F6;
+    color: white;
+    padding: 0.5rem;
+    display: inline-block;
+    border-radius: 0.5rem;
+    width: 5rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.shop-sentences-cancel {
+    background-color: #6287F6;
+    color: white;
+    padding: 0.5rem;
+    display: inline-block;
+    border-radius: 0.5rem;
+    width: 5rem;
+    font-weight: 800;
+    margin-left: 1rem;
+    cursor: pointer;
+}
