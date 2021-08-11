@@ -6,7 +6,7 @@ import axios from "axios";
 import socketIOClient from "socket.io-client";
 import PersonIcon from '@material-ui/icons/Person';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { LOBBY_CODE, SOCKET, USERNAME, PLAY_SCREEN, PLAYERS, SCREEN } from "../store";
+import { LOBBY_CODE, SOCKET, USERNAME, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN } from "../store";
 import Slider from '@material-ui/core/Slider';
 import Select from 'react-dropdown-select';
 
@@ -27,6 +27,7 @@ function Lobby() {
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [players, setPlayers] = useRecoilState(PLAYERS);
     const [screen, setScreen] = useRecoilState(SCREEN);
+    const authtoken = useRecoilValue(AUTHTOKEN);
     
     // Settings TODO - set to given gamesettings
     const [maxPlayers, setMaxPlayers] = useState(8);
@@ -51,11 +52,11 @@ function Lobby() {
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
 
-        setTimeout(() => {
-            socket.emit("lobbystate", {
-                lobby: lobbyCode
-            });
-        }, 1000);
+        // setTimeout(() => {
+        //     socket.emit("lobbystate", {
+        //         lobby: lobbyCode
+        //     });
+        // }, 1000);
 
         return function cleanSockets() {
             socket.off("lobbystate");
@@ -69,13 +70,16 @@ function Lobby() {
             lobby: lobbyCode,
             username: username
         });
+        // socket.off("lobbystate");
+        socket.off("gamestarted");
         setPlayScreen(0);
     }
 
     function start() {
         socket.emit("startgame", {
             lobby: lobbyCode,
-            players: players
+            players: players,
+            auth: authtoken,
         });
     }
 

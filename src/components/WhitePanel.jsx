@@ -12,7 +12,7 @@ import Game from './Game.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS } from "../store";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -82,10 +82,12 @@ function LoginCardItem(props) {
 
 function LoginBody(props) {
     const [screen, setScreen] = useRecoilState(SCREEN);
+    const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
     useEffect(() => {
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
             if(user) {
                 firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                    setAuthtoken(idToken);
                   }).catch(function(error) {
                     // Handle error
                   });
@@ -203,6 +205,7 @@ function BigWhitePanel() {
     const alert = useAlert();
     const socket = useRecoilValue(SOCKET);
     const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
+    const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
 
     
     // connecting to socket server errors
@@ -231,6 +234,7 @@ function BigWhitePanel() {
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
           if(user) {
             firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                setAuthtoken(idToken);
                 axios.defaults.headers.common['Authorization'] = idToken;
                 axios.get('http://localhost:5000/profile')
                     .then(function (response) {

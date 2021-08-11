@@ -130,24 +130,39 @@ function Shop() {
     }
 
     async function submitAudios2() {
-        setShopScreen("submitting");
+        // setShopScreen("submitting");
         const formdata = new FormData();
-        formdata.append("audio", audios);
-        formdata.append("qb_id", Array.apply(null, Array(audios.length)).map(function () { return transcript.id; }));
-        formdata.append("recType", Array.apply(null, Array(audios.length)).map(function () { return "normal"; }));
-        formdata.append("sentenceId", Array.apply(null, Array(audios.length)).map(function (x, i) { return i; }));
-        formdata.append("diarMetadata", Array.apply(null, Array(audios.length)).map(function () { return ""; }));
-        console.log(formdata);
+        const qb_ids = Array.apply(null, Array(audios.length)).map(function () { return transcript.id; });
+        const recTypes = Array.apply(null, Array(audios.length)).map(function () { return "normal"; });
+        const sentenceIds = Array.apply(null, Array(audios.length)).map(function (x, i) { return i; });
+        const diarMetadatas = Array.apply(null, Array(audios.length)).map(function () { return ""; });
+        audios.forEach((element) => {
+            formdata.append("audio", element);
+        });
+        qb_ids.forEach((element) => {
+            formdata.append("qb_id", element);
+        });
+        recTypes.forEach((element) => {
+            formdata.append("recType", element);
+        });
+        if(transcript.hasOwnProperty('sentenceId')) {
+            sentenceIds.forEach((element) => {
+                formdata.append("sentenceId", element);
+            }); 
+        }
+        diarMetadatas.forEach((element) => {
+            formdata.append("diarMetadata", element);
+        });
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         }
         const response = await axios.post("http://localhost:5000/audio", formdata, config)
             .then(response => {
-                setShopScreen("home");
+                // setShopScreen("home");
                 alert.success("Submitted recording");
             })
             .catch(error => {
-                setShopScreen("home");
+                // setShopScreen("home");
                 alert.error("Submission failed");
             });
         
