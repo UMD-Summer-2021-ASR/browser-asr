@@ -1,19 +1,20 @@
 import "../styles/Game.css";
+import '../styles/WhitePanel.css';
 import React, { useState, useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 import socketIOClient from "socket.io-client";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, USERNAME} from "../store";
+import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, USERNAME, AUTHTOKEN} from "../store";
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from '@material-ui/icons/Person';
 
 function PlayerCard(props) {
-
+    const username = useRecoilValue(USERNAME);
     return (
-        <div className={"game-playercard-wrapper " + (props.self ? "game-playercard-self " : "") + (props.currentlyBuzzed ? "game-playercard-buzzed-outline " : "")}>
+        <div className={"game-playercard-wrapper " + (props.name === username ? "game-playercard-self " : "") + (props.currentlyBuzzed ? "game-playercard-buzzed-outline " : "")}>
             <div class="game-playercard-username-wrapper">
                 {props.name}
-                {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                {props.name === username && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
             </div>
             <div class="game-playercard-username-wrapper">
                 {props.currentlyBuzzed && 
@@ -30,8 +31,25 @@ function PlayerCard(props) {
     )
 }
 
-function TeamCard(props) {
+function PostgamePlayerCard(props) {
     const username = useRecoilValue(USERNAME);
+
+    return (
+        <div className={"game-postgame-playercard-wrapper " + (props.name === username ? "game-playercard-self " : "") + (props.currentlyBuzzed ? "game-playercard-buzzed-outline " : "")}>
+            <div class="game-playercard-username-wrapper">
+                {props.name}
+                {props.name === username && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+            </div>
+            <div class="game-playercard-username-wrapper">
+                <div class="game-playercard-points">
+                    {props.points}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function TeamCard(props) {
     const pointsArray = [];
     for(const key in props.points) {
         pointsArray.push([key, props.points[key]]);
@@ -46,7 +64,7 @@ function TeamCard(props) {
             </div>
             <div class="game-team-body">
                 {pointsArray.map(([uname, pts]) =>
-                    <PlayerCard name={uname} self={uname===username} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
+                    <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
                 )}
             </div>
         </div>
@@ -72,6 +90,10 @@ function Game() {
             lobby: useRecoilValue(LOBBY_CODE),
         }
     );
+    const authtoken = useRecoilValue(AUTHTOKEN)
+    const [gameScreen, setGameScreen] = useState("ingame");
+    const username = useRecoilValue(USERNAME);
+    const [screen, setScreen] = useRecoilState(SCREEN);
 
     useEffect(() => {
         const buzzerListener = data => {
@@ -79,6 +101,9 @@ function Game() {
         }
 
         const gameStateListener = data => {
+            if(data[0] === false) {
+                setGameScreen("postgame");
+            }
             console.log("game state rendered!");
             setState({
                 inGame: data[0],
@@ -102,16 +127,6 @@ function Game() {
         state.socket.on("gamestate", gameStateListener);
         state.socket.on("answered", answeredListener);
 
-        setTimeout(() => {
-            if(!state.inGame) {
-                return
-            } else {
-                state.socket.emit('gamestate', {
-                    lobby: state.lobby
-                })
-            }
-        }, 100);
-
         return function cleanSockets() {
             state.socket.off("buzzed", buzzerListener);
             state.socket.off("gamestate", gameStateListener);
@@ -124,51 +139,77 @@ function Game() {
 
     function buzz() {
         state.socket.emit("buzz", {
-            lobby: state.lobby,
-            username: state.username,
+            auth: authtoken,
         });
     }
 
     function answer(txt) {
         console.log("answered");
         state.socket.emit("answer", {
-            lobby: state.lobby,
-            username: state.username,
+            auth: authtoken,
             answer: txt
         });
     }
 
     
-
-    return (
-        <div class="game1-big-white-panel-wrapper">
-            <div class="game1-big-white-panel">
-                <div class="game1-content-wrapper">
-                    <div class="game-content-wrapper">
-
-                        <div class="game-header-wrapper">
-                            <div class="game-header-rq">
-                                R: {state.round} / Q: {state.question}
+    if(gameScreen === 'ingame') {
+        return (
+            <div class="game1-big-white-panel-wrapper">
+                <div class="game1-big-white-panel">
+                    <div class="game1-content-wrapper">
+                        <div class="game-content-wrapper">
+    
+                            <div class="game-header-wrapper">
+                                <div class="game-header-rq">
+                                    R: {state.round} / Q: {state.question}
+                                </div>
+                                <div class="game-header-time">
+                                    Current: {state.questionTime} / Next in: {state.gapTime}
+                                </div>
                             </div>
-                            <div class="game-header-time">
-                                Current: {state.questionTime} / Next in: {state.gapTime}
+    
+                            <div class="game-transcriptbox">
+                                The transcript would stream here
                             </div>
+    
+                            <div class="game-menubox">
+                                <AnswerBox buzz={buzz} submit={answer}/>
+                            </div>
+                            
                         </div>
+                    </div>
+                </div>
+                <TeamCard color="standings" points={state.points} buzzer={state.buzzer} buzzTime={state.buzzTime}/>
+            </div>
+        )
+    } else {
+        const pointsArray = [];
 
-                        <div class="game-transcriptbox">
-                            The transcript would stream here
-                        </div>
+        for(const key in state.points) {
+            pointsArray.push([key, state.points[key]]);
+        }
 
-                        <div class="game-menubox">
-                            <AnswerBox buzz={buzz} submit={answer}/>
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="game-postgame-content-wrapper">
+                        <div class="game-postgame-standings-title">
+                            Final Standings
                         </div>
-                        
+                        <div class="game-postgame-standings-wrapper">
+                            {pointsArray.map(([uname, pts]) =>
+                                <PostgamePlayerCard name={uname} points={pts}/>
+                            )}
+                        </div>
+                        <div onClick={() => {setScreen(2)}} class="game-postgame-return-btn">
+                            Back to home
+                        </div>
                     </div>
                 </div>
             </div>
-            <TeamCard color="standings" points={state.points} buzzer={state.buzzer} buzzTime={state.buzzTime}/>
-        </div>
-    )
+        )
+    }
+    
 }
 
 export default Game;

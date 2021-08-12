@@ -2,7 +2,7 @@ import "../styles/Play.css";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS, SCREEN } from "../store";
+import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN } from "../store";
 import { useEffect } from "react";
 import { useAlert } from 'react-alert'
 
@@ -132,6 +132,8 @@ function StartLobbyButton(props) {
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [players, setPlayers] = useRecoilState(PLAYERS);
+    const authtoken = useRecoilValue(AUTHTOKEN);
+
 
     useEffect(() => {
         const lobbyStateListener = (data) => {
@@ -150,7 +152,7 @@ function StartLobbyButton(props) {
     function StartLobby() {
         setPlayScreen()
         socket.emit("startlobby", {
-            username: username,
+            auth: authtoken,
             gamemode: props.gameType,
         });
     }
@@ -220,7 +222,6 @@ function JoinCustomLobbyCard(props) {
     function joinLobby() {
         socket.emit("joinlobby", {
             lobby: text,
-            username: username
         });
     }
 

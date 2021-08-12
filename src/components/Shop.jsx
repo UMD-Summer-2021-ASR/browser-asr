@@ -130,7 +130,7 @@ function Shop() {
     }
 
     async function submitAudios2() {
-        // setShopScreen("submitting");
+        setShopScreen("submitting");
         const formdata = new FormData();
         const qb_ids = Array.apply(null, Array(audios.length)).map(function () { return transcript.id; });
         const recTypes = Array.apply(null, Array(audios.length)).map(function () { return "normal"; });
@@ -158,11 +158,11 @@ function Shop() {
         }
         const response = await axios.post("http://localhost:5000/audio", formdata, config)
             .then(response => {
-                // setShopScreen("home");
+                setShopScreen("home");
                 alert.success("Submitted recording");
             })
             .catch(error => {
-                // setShopScreen("home");
+                setShopScreen("home");
                 alert.error("Submission failed");
             });
         

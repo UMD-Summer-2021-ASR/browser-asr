@@ -46,7 +46,7 @@ const LOBBY_CODE = atom({
 
 const USERNAME = atom({
     key: 'USERNAME',
-    default: makeUsername(5)
+    default: ""
 })
 
 const SOCKET = atom({

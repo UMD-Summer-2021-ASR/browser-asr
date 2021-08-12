@@ -12,7 +12,7 @@ import Game from './Game.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN } from "../store";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -206,6 +206,7 @@ function BigWhitePanel() {
     const socket = useRecoilValue(SOCKET);
     const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
     const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
+    const [username, setUsername] = useRecoilState(USERNAME);
 
     
     // connecting to socket server errors
@@ -242,6 +243,7 @@ function BigWhitePanel() {
                         setProfile(response['data']);
                         console.log(response['data']);
                         setScreen(2);
+                        setUsername(response['data']['username']);
                     })
                     .catch(function (error) {
                         if(!error.response) {

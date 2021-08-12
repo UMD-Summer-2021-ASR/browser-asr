@@ -46,20 +46,12 @@ function AnswerBox(props) {
 
     function buzzin() {
         console.log("buzzed");
-        setCurrentlyBuzzed(true);
-        if(currentlyBuzzed) {
-            return;
-        }
         props.buzz();
     }
 
     function submit() {
-        if(!currentlyBuzzed) {
-            return;
-        }
-        setCurrentlyBuzzed(false);
-        setAnswer("");
         props.submit(answer);
+        setAnswer("");
     }
 
     function handleVoiceBuzzin() {
@@ -75,7 +67,7 @@ function AnswerBox(props) {
             'https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav'
         },
         onAudioData: () => {},
-        timeout: 7000,
+        timeout: 3000,
         isReady: ready,
         onComplete: async (answer, blob) => {
             complete(answer);

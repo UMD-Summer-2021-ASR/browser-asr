@@ -38,7 +38,8 @@ function Lobby() {
     // topics
     const [gapTime, setGapTime] = useState(10);
     const [buzzTime, setBuzzTime] = useState(5);
-    console.log("rendered");
+
+
     useEffect(() => {
         const lobbyStateListener = (data) => {
             setLobbyCode(data[1]);
@@ -52,12 +53,6 @@ function Lobby() {
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
 
-        // setTimeout(() => {
-        //     socket.emit("lobbystate", {
-        //         lobby: lobbyCode
-        //     });
-        // }, 1000);
-
         return function cleanSockets() {
             socket.off("lobbystate");
             socket.off("gamestarted");
@@ -67,8 +62,7 @@ function Lobby() {
 
     function leave() {
         socket.emit("leavelobby", {
-            lobby: lobbyCode,
-            username: username
+            auth: authtoken
         });
         // socket.off("lobbystate");
         socket.off("gamestarted");
@@ -77,9 +71,7 @@ function Lobby() {
 
     function start() {
         socket.emit("startgame", {
-            lobby: lobbyCode,
-            players: players,
-            auth: authtoken,
+            auth: authtoken
         });
     }
 
