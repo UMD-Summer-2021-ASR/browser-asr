@@ -35,8 +35,8 @@ function PostgamePlayerCard(props) {
     const username = useRecoilValue(USERNAME);
 
     return (
-        <div className={"game-postgame-playercard-wrapper " + (props.name === username ? "game-playercard-self " : "") + (props.currentlyBuzzed ? "game-playercard-buzzed-outline " : "")}>
-            <div class="game-playercard-username-wrapper">
+        <div className={"game-postgame-playercard-wrapper"}>
+            <div className={"game-playercard-username-wrapper" + (props.name === username ? " game-postgame-color-blue" : "")}>
                 {props.name}
                 {props.name === username && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
             </div>

@@ -214,6 +214,7 @@ function JoinCustomLobbyCard(props) {
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const socket = useRecoilValue(SOCKET);
     const username = useRecoilValue(USERNAME);
+    const authtoken = useRecoilValue(AUTHTOKEN);
 
     function handleText(event) {
         setText(event.target.value);
@@ -221,6 +222,7 @@ function JoinCustomLobbyCard(props) {
 
     function joinLobby() {
         socket.emit("joinlobby", {
+            auth: authtoken,
             lobby: text,
         });
     }
