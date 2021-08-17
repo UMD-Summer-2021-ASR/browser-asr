@@ -9,15 +9,32 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { LOBBY_CODE, SOCKET, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN, PROFILE, GAMESETTINGS } from "../store";
 import Slider from '@material-ui/core/Slider';
 import Select from 'react-dropdown-select';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
 
 
 function Player(props) {
+    const socket = useRecoilValue(SOCKET);
+    const authtoken = useRecoilValue(AUTHTOKEN);
+
+    function switchTeams() {
+        if(!props.switchable) {
+            return;
+        }
+        socket.emit("switchteam", {
+            auth: authtoken,
+            user: props.name,
+        });
+    }
+
     if(props.switchable) {
         return (
             <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}> 
                 <div class="lobby-players-player-wrapper-left">
                     {props.name}
                     {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                </div>
+                <div class="lobby-players-switchteam-icon-wrapper" onClick={switchTeams}>
+                    <SwapVertIcon style={{color: "grey", height: "25px"}}/>
                 </div>
             </div>
         )
@@ -162,7 +179,7 @@ function Lobby() {
                                     valueLabelDisplay="auto"
                                     step={1}
                                     min={1}
-                                    max={40}
+                                    max={7}
                                     value={gameSettings['questions_num']}
                                     onChange={(event, value) => {
                                         updateSettings({'questions_num': value});

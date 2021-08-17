@@ -74,12 +74,16 @@ function TeamCard(props) {
         )
     } else {
         const pointsArray1 = [];
+        let team1pts = 0;
+        let team2pts = 0;
         for(const key in props.points[0]) {
             pointsArray1.push([key, props.points[0][key]]);
+            team1pts += props.points[0][key];
         }
         const pointsArray2 = [];
         for(const key in props.points[1]) {
             pointsArray2.push([key, props.points[1][key]]);
+            team2pts += props.points[1][key];
         }
         return (
             <div className={"game-team-wrapper " +
@@ -90,11 +94,11 @@ function TeamCard(props) {
                     Scoreboard
                 </div>
                 <div class="game-team-body">
-                    Team 1
+                    Team 1 - {team1pts}
                     {pointsArray1.map(([uname, pts]) =>
                         <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
                     )}
-                    Team 2
+                    Team 2 - {team2pts}
                     {pointsArray2.map(([uname, pts]) =>
                         <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
                     )}
@@ -129,6 +133,11 @@ function Game() {
     const authtoken = useRecoilValue(AUTHTOKEN)
     const [gameScreen, setGameScreen] = useState("ingame");
     const [screen, setScreen] = useRecoilState(SCREEN);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+
+    // for HLS
+    const [token, setToken] = useState("");
+    const [rid, setRid] = useState("");
 
     useEffect(() => {
         const buzzerListener = data => {
@@ -157,19 +166,27 @@ function Game() {
             // TODO correct animation
         }
 
+        const hlsListener = data => {
+            setToken(data['token']);
+            setRid(data['rid']);
+        }
+
         state.socket.on("buzzed", buzzerListener);
         state.socket.on("gamestate", gameStateListener);
         state.socket.on("answered", answeredListener);
+        state.socket.on("hlsupdate", hlsListener);
 
         return function cleanSockets() {
             state.socket.off("buzzed", buzzerListener);
             state.socket.off("gamestate", gameStateListener);
             state.socket.off("answered", answeredListener);
+            state.socket.off("hlsupdate", hlsListener);
         }
     });
 
-
-
+    useEffect(() => {
+        console.log("update");
+    }, [token])
 
     function buzz() {
         state.socket.emit("buzz", {
@@ -185,7 +202,6 @@ function Game() {
         });
     }
 
-    
     if(gameScreen === 'ingame') {
         return (
             <div class="game1-big-white-panel-wrapper">
@@ -217,31 +233,75 @@ function Game() {
             </div>
         )
     } else {
-        const pointsArray = [];
+        if(state.points[0] === undefined) {
+            const pointsArray = [];
 
-        for(const key in state.points) {
-            pointsArray.push([key, state.points[key]]);
-        }
-
-        return (
-            <div class="big-white-panel-wrapper">
-                <div class="big-white-panel">
-                    <div class="game-postgame-content-wrapper">
-                        <div class="game-postgame-standings-title">
-                            Final Standings
-                        </div>
-                        <div class="game-postgame-standings-wrapper">
-                            {pointsArray.map(([uname, pts]) =>
-                                <PostgamePlayerCard name={uname} points={pts}/>
-                            )}
-                        </div>
-                        <div onClick={() => {setScreen(4)}} class="game-postgame-return-btn">
-                            Back to home
+            for(const key in state.points) {
+                pointsArray.push([key, state.points[key]]);
+            }
+    
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="game-postgame-content-wrapper">
+                            <div class="game-postgame-standings-title">
+                                Final Standings
+                            </div>
+                            <div class="game-postgame-standings-wrapper">
+                                {pointsArray.map(([uname, pts]) =>
+                                    <PostgamePlayerCard name={uname} points={pts}/>
+                                )}
+                            </div>
+                            <div onClick={() => {setScreen(3)}} class="game-postgame-return-btn">
+                                Back to home
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            const pointsArray1 = [];
+            const pointsArray2 = []
+            let team1pts = 0;
+            let team2pts = 0;
+            for(const key in state.points[0]) {
+                pointsArray1.push([key, state.points[0][key]]);
+                team1pts += state.points[0][key];
+            }
+            for(const key in state.points[1]) {
+                pointsArray2.push([key, state.points[1][key]]);
+                team2pts += state.points[1][key];
+            }
+
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="game-postgame-content-wrapper">
+                            <div class="game-postgame-standings-title">
+                                Final Standings
+                            </div>
+                            <div class="game-postgame-standings-wrapper">
+                                Team 1 - {team1pts}
+                                {pointsArray1.map(([uname, pts]) =>
+                                    <PostgamePlayerCard name={uname} points={pts}/>
+                                )}
+                                Team 2 - {team2pts}
+                                {pointsArray2.map(([uname, pts]) =>
+                                    <PostgamePlayerCard name={uname} points={pts}/>
+                                )}
+                            </div>
+                            <div onClick={() => {
+                                setScreen(3);
+                                setPlayScreen(0);
+                                }} class="game-postgame-return-btn">
+                                Back to home
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
     }
     
 }

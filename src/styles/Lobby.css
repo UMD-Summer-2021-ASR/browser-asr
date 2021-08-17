@@ -159,6 +159,15 @@
     align-items: center;
 }
 
+.lobby-players-switchteam-icon-wrapper {
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .lobby-players-list-wrapper > * {
     margin-top: 0.75rem;
 }
