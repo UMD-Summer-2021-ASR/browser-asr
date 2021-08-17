@@ -1,61 +1,86 @@
 import "../styles/Lobby.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import {useState, useEffect} from "react";
+import { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import socketIOClient from "socket.io-client";
 import PersonIcon from '@material-ui/icons/Person';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { LOBBY_CODE, SOCKET, USERNAME, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN } from "../store";
+import { LOBBY_CODE, SOCKET, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN, PROFILE, GAMESETTINGS } from "../store";
 import Slider from '@material-ui/core/Slider';
 import Select from 'react-dropdown-select';
 
 
 function Player(props) {
-    return (
-        <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}>           
-            {props.name}
-            {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
-        </div>
-    )
+    if(props.switchable) {
+        return (
+            <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}> 
+                <div class="lobby-players-player-wrapper-left">
+                    {props.name}
+                    {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                </div>
+            </div>
+        )
+    } else {
+        return (
+            <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}>           
+                <div class="lobby-players-player-wrapper-left">
+                    {props.name}
+                    {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                </div> 
+            </div>
+        )
+    }
+    
 }
 
 function Lobby() {
+    const profile = useRecoilValue(PROFILE);
+    const username = profile['username'];
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
     const socket = useRecoilValue(SOCKET);
-    const username = useRecoilValue(USERNAME);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [players, setPlayers] = useRecoilState(PLAYERS);
     const [screen, setScreen] = useRecoilState(SCREEN);
     const authtoken = useRecoilValue(AUTHTOKEN);
     
-    // Settings TODO - set to given gamesettings
-    const [maxPlayers, setMaxPlayers] = useState(8);
-    const [teams, setTeams] = useState(0);
-    const [rounds, setRounds] = useState(3);
-    const [questionsPerRound, setQuestionsPerRound] = useState(10);
-    // const [tiebreaker, setTiebreaker] = useState(0);
-    // topics
-    const [gapTime, setGapTime] = useState(10);
-    const [buzzTime, setBuzzTime] = useState(5);
+    // Game settings
+    const [gameSettings, setGameSettings] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        useRecoilValue(GAMESETTINGS)
+    );
 
 
     useEffect(() => {
         const lobbyStateListener = (data) => {
-            setLobbyCode(data[1]);
-            setPlayers(data[0]);
+            setGameSettings({
+                'players': data['players'],
+                'teams': data['teams'],
+                'max_players': data['max_players'],
+                'rounds': data['rounds'],
+                'questions_num': data['questions_num'],
+                'gap_time': data['gap_time'],
+                'post_buzz_time': data['post_buzz_time'],
+            });
+            setLobbyCode(data['code']);
         };
 
         const gameStartedListener = (data) => {
             setScreen(6);
         };
 
+        const closeLobbyListener = (data) => {
+            setPlayScreen(0);
+        }
+
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
+        socket.on("closelobby", closeLobbyListener);
+
 
         return function cleanSockets() {
-            socket.off("lobbystate");
-            socket.off("gamestarted");
+            socket.off("lobbystate", lobbyStateListener);
+            socket.off("gamestarted", gameStartedListener);
+            socket.off("closelobby", closeLobbyListener);
         }
     });
     
@@ -64,14 +89,19 @@ function Lobby() {
         socket.emit("leavelobby", {
             auth: authtoken
         });
-        // socket.off("lobbystate");
-        socket.off("gamestarted");
         setPlayScreen(0);
     }
 
     function start() {
         socket.emit("startgame", {
             auth: authtoken
+        });
+    }
+
+    function updateSettings(updatedSettings) {
+        socket.emit("updatesettings", {
+            auth: authtoken,
+            settings: updatedSettings,
         });
     }
 
@@ -84,49 +114,59 @@ function Lobby() {
                 <div class="lobby-gamesettings-list-wrapper">
                     <div class="lobby-gamesettings-setting-wrapper">
                         <div>Max players</div>
-                        <div>{maxPlayers}</div>
+                        <div>{gameSettings['max_players']}</div>
                     </div>
                     <div class="lobby-gamesettings-setting-wrapper">
                         <div>Teams</div>
                         <div class="lobby-gamesettings-hor-flex">
-                            <div onClick={() => {setTeams(0)}} className={"lobby-gamesettings-selector-item " + (teams === 0 ? "lobby-gamesettings-selector-selected" : "")}>
+                            <div onClick={() => {
+                                updateSettings({'teams': 0});
+                            }} className={"lobby-gamesettings-selector-item " + (gameSettings['teams'] === 0 ? "lobby-gamesettings-selector-selected" : "")}>
                                 0
                             </div>
-                            <div onClick={() => {setTeams(2)}} className={"lobby-gamesettings-selector-item " + (teams === 2 ? "lobby-gamesettings-selector-selected" : "")}>
+                            <div onClick={() => {
+                                updateSettings({'teams': 2});
+                            }} className={"lobby-gamesettings-selector-item " + (gameSettings['teams'] === 2 ? "lobby-gamesettings-selector-selected" : "")}>
                                 2
                             </div>
                         </div>
                     </div>
                     <div class="lobby-gamesettings-setting-wrapper">
                         <div>Rounds</div>
-                        <div class="lobby-gamesettings-hor-flex">
+                        <div>{gameSettings['rounds']}</div>
+
+                        {/* <div class="lobby-gamesettings-hor-flex">
                             <div class="lobby-gamesettings-slider-wrapper">
                                 <Slider
-                                    defaultValue={rounds}
+                                    defaultValue={gameSettings['rounds']}
                                     valueLabelDisplay="auto"
                                     step={2}
                                     marks
                                     min={1}
                                     max={7}
-                                    value={rounds}
-                                    onChange={(event, value) => {setRounds(value)}}
+                                    value={gameSettings['rounds']}
+                                    onChange={(event, value) => {
+                                        updateSettings({'rounds': value});
+                                    }}
                                     classes={"lobby-gamesettings-slider-wrapper"}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div class="lobby-gamesettings-setting-wrapper">
                         <div>Questions per round</div>
                         <div class="lobby-gamesettings-hor-flex">
                             <div class="lobby-gamesettings-slider-wrapper">
                                 <Slider
-                                    defaultValue={questionsPerRound}
+                                    defaultValue={gameSettings['questions_num']}
                                     valueLabelDisplay="auto"
                                     step={1}
                                     min={1}
-                                    max={20}
-                                    value={questionsPerRound}
-                                    onChange={(event, value) => {setQuestionsPerRound(value)}}
+                                    max={40}
+                                    value={gameSettings['questions_num']}
+                                    onChange={(event, value) => {
+                                        updateSettings({'questions_num': value});
+                                    }}
                                     classes={"lobby-gamesettings-slider-wrapper"}
                                 />
                             </div>
@@ -137,13 +177,15 @@ function Lobby() {
                         <div class="lobby-gamesettings-hor-flex">
                             <div class="lobby-gamesettings-slider-wrapper">
                                 <Slider
-                                    defaultValue={gapTime}
+                                    defaultValue={gameSettings['gap_time']}
                                     valueLabelDisplay="auto"
                                     step={1}
                                     min={0}
                                     max={30}
-                                    value={gapTime}
-                                    onChange={(event, value) => {setGapTime(value)}}
+                                    value={gameSettings['gap_time']}
+                                    onChange={(event, value) => {
+                                        updateSettings({'gap_time': value});
+                                    }}
                                     classes={"lobby-gamesettings-slider-wrapper"}
                                 />
                             </div>
@@ -154,13 +196,15 @@ function Lobby() {
                         <div class="lobby-gamesettings-hor-flex">
                             <div class="lobby-gamesettings-slider-wrapper">
                                 <Slider
-                                    defaultValue={buzzTime}
+                                    defaultValue={gameSettings['post_buzz_time']}
                                     valueLabelDisplay="auto"
                                     step={1}
                                     min={0}
                                     max={10}
-                                    value={buzzTime}
-                                    onChange={(event, value) => {setBuzzTime(value)}}
+                                    value={gameSettings['post_buzz_time']}
+                                    onChange={(event, value) => {
+                                        updateSettings({'post_buzz_time': value});
+                                    }}
                                     classes={"lobby-gamesettings-slider-wrapper"}
                                 />
                             </div>
@@ -179,17 +223,40 @@ function Lobby() {
             <div class="lobby-players-wrapper">
                 <div class="lobby-title">
                     <div>
-                        Players {players.length}/{maxPlayers}
+                        Players {typeof gameSettings['players'][0] === 'string' ? gameSettings['players'].length : gameSettings['players'][0].length + gameSettings['players'][1].length}/{gameSettings['max_players']}
                     </div>
                     <div>
                         Room: {lobbyCode}
                     </div>
                 </div>
-                <div class="lobby-players-list-wrapper">
-                {players.map((uname) =>
-                    <Player name={uname} self={uname===username} key={uname}/>
-                )}
-                </div>
+                {typeof gameSettings['players'][0] === 'string' &&
+                    <div class="lobby-players-list-wrapper">
+                        {gameSettings['players'].map((uname) =>
+                            <Player name={uname} self={uname===username} key={uname} switchable={false}/>
+                        )}
+                    </div>
+                }
+                {typeof gameSettings['players'][0] === 'object' &&
+                    <div class="lobby-players-list-wrapper">
+                        <div class="lobby-players-list-team-wrapper">
+                            <div class="lobby-players-list-team-title">
+                                Team 1
+                            </div>
+                            {gameSettings['players'][0].map((uname) =>
+                                <Player name={uname} self={uname===username} key={uname} switchable={true}/>
+                            )}
+                        </div>
+                        <div class="lobby-players-list-team-wrapper">
+                            <div class="lobby-players-list-team-title">
+                                Team 2
+                            </div>
+                            {gameSettings['players'][1].map((uname) =>
+                                <Player name={uname} self={uname===username} key={uname} switchable={true}/>
+                            )}
+                        </div>
+                    </div>
+                }
+                
             </div>
         </div>
     );

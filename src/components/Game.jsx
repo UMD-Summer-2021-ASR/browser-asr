@@ -4,12 +4,13 @@ import React, { useState, useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 import socketIOClient from "socket.io-client";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, USERNAME, AUTHTOKEN} from "../store";
+import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, AUTHTOKEN, PROFILE} from "../store";
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from '@material-ui/icons/Person';
 
 function PlayerCard(props) {
-    const username = useRecoilValue(USERNAME);
+    const profile = useRecoilValue(PROFILE);
+    const username = profile['username'];
     return (
         <div className={"game-playercard-wrapper " + (props.name === username ? "game-playercard-self " : "") + (props.currentlyBuzzed ? "game-playercard-buzzed-outline " : "")}>
             <div class="game-playercard-username-wrapper">
@@ -32,7 +33,8 @@ function PlayerCard(props) {
 }
 
 function PostgamePlayerCard(props) {
-    const username = useRecoilValue(USERNAME);
+    const profile = useRecoilValue(PROFILE);
+    const username = profile['username'];
 
     return (
         <div className={"game-postgame-playercard-wrapper"}>
@@ -50,49 +52,82 @@ function PostgamePlayerCard(props) {
 }
 
 function TeamCard(props) {
-    const pointsArray = [];
-    for(const key in props.points) {
-        pointsArray.push([key, props.points[key]]);
+    if(props.points[0] === undefined) {
+        const pointsArray = [];
+        for(const key in props.points) {
+            pointsArray.push([key, props.points[key]]);
+        }
+        return (
+            <div className={"game-team-wrapper " +
+                (props.color === "red" ? "game-team-red " : "") + 
+                (props.color === "yellow" ? "game-team-yellow " : "") + 
+                (props.color === "standings" ? "game-team-standings " : "")}>
+                <div class="game-team-title">
+                    Scoreboard
+                </div>
+                <div class="game-team-body">
+                    {pointsArray.map(([uname, pts]) =>
+                        <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
+                    )}
+                </div>
+            </div>
+        )
+    } else {
+        const pointsArray1 = [];
+        for(const key in props.points[0]) {
+            pointsArray1.push([key, props.points[0][key]]);
+        }
+        const pointsArray2 = [];
+        for(const key in props.points[1]) {
+            pointsArray2.push([key, props.points[1][key]]);
+        }
+        return (
+            <div className={"game-team-wrapper " +
+                (props.color === "red" ? "game-team-red " : "") + 
+                (props.color === "yellow" ? "game-team-yellow " : "") + 
+                (props.color === "standings" ? "game-team-standings " : "")}>
+                <div class="game-team-title">
+                    Scoreboard
+                </div>
+                <div class="game-team-body">
+                    Team 1
+                    {pointsArray1.map(([uname, pts]) =>
+                        <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
+                    )}
+                    Team 2
+                    {pointsArray2.map(([uname, pts]) =>
+                        <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
+                    )}
+                </div>
+            </div>
+        )
     }
-    return (
-        <div className={"game-team-wrapper " +
-            (props.color === "red" ? "game-team-red " : "") + 
-            (props.color === "yellow" ? "game-team-yellow " : "") + 
-            (props.color === "standings" ? "game-team-standings " : "")}>
-            <div class="game-team-title">
-                Scoreboard
-            </div>
-            <div class="game-team-body">
-                {pointsArray.map(([uname, pts]) =>
-                    <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
-                )}
-            </div>
-        </div>
-    )
+    
     
 }
 
 function Game() {
+    const profile = useRecoilValue(PROFILE);
+    const username = profile['username'];
     const [state, setState] = useReducer(
         (state, newState) => ({...state, ...newState}),
         {
             round: 0, 
             question: 0,
             buzzer: "",
-            username: useRecoilValue(USERNAME),
+            username: username,
             questionTime: 0,
             buzzTime: 0,
             gapTime: 0,
             inGame: true,
             answerText: "",
             socket: useRecoilValue(SOCKET),
-            points: new Map([[useRecoilValue(USERNAME), 0]]),
+            points: new Map([[username, 0]]),
             lobby: useRecoilValue(LOBBY_CODE),
         }
     );
     const authtoken = useRecoilValue(AUTHTOKEN)
     const [gameScreen, setGameScreen] = useState("ingame");
-    const username = useRecoilValue(USERNAME);
     const [screen, setScreen] = useRecoilState(SCREEN);
 
     useEffect(() => {
@@ -104,7 +139,6 @@ function Game() {
             if(data[0] === false) {
                 setGameScreen("postgame");
             }
-            console.log("game state rendered!");
             setState({
                 inGame: data[0],
                 round: data[1],
@@ -201,7 +235,7 @@ function Game() {
                                 <PostgamePlayerCard name={uname} points={pts}/>
                             )}
                         </div>
-                        <div onClick={() => {setScreen(2)}} class="game-postgame-return-btn">
+                        <div onClick={() => {setScreen(4)}} class="game-postgame-return-btn">
                             Back to home
                         </div>
                     </div>

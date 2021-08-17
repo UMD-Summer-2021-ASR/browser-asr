@@ -88,6 +88,7 @@ function LoginBody(props) {
             if(user) {
                 firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
                     setAuthtoken(idToken);
+                    
                   }).catch(function(error) {
                     // Handle error
                   });
@@ -206,7 +207,6 @@ function BigWhitePanel() {
     const socket = useRecoilValue(SOCKET);
     const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
     const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
-    const [username, setUsername] = useRecoilState(USERNAME);
 
     
     // connecting to socket server errors
@@ -241,9 +241,7 @@ function BigWhitePanel() {
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);
-                        console.log(response['data']);
                         setScreen(2);
-                        setUsername(response['data']['username']);
                     })
                     .catch(function (error) {
                         if(!error.response) {
@@ -283,7 +281,7 @@ function BigWhitePanel() {
                 setTranscripts(transcriptsArray);
             })
             .catch(function (error) {
-                alert.error("Server connection failed");
+                alert.error("Getting transcripts failed");
             });
     }, []);
     

@@ -2,7 +2,7 @@ import "../styles/Play.css";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN } from "../store";
+import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, GAMESETTINGS, PLAYERS, SCREEN, AUTHTOKEN } from "../store";
 import { useEffect } from "react";
 import { useAlert } from 'react-alert'
 
@@ -33,7 +33,7 @@ class gameSettings {
         questionsPerRound = "20",
         isTextDisabled = "No",
         tiebreaker = "None",
-        gameType = "solopractice"
+        gamemode = "solopractice"
     }) {
         this.title = title;
         this.description = description;
@@ -47,7 +47,7 @@ class gameSettings {
         this.questionsPerRound = questionsPerRound;
         this.isTextDisabled = isTextDisabled;
         this.tiebreaker = tiebreaker;
-        this.gameType = gameType;
+        this.gamemode = gamemode;
     }
 }
 
@@ -122,25 +122,32 @@ const gameSettingsList = [
         questionsPerRound: "1-30",
         isTextDisabled: "No",
         tiebreaker: "Tiebreaker question",
-        gameType: "customclassic"
+        gamemode: "customclassic"
     }),
 ];
 
 function StartLobbyButton(props) {
     const [socket, setSocket] = useRecoilState(SOCKET);
-    const [username, setUsername] = useRecoilState(USERNAME);
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [players, setPlayers] = useRecoilState(PLAYERS);
+    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
     const authtoken = useRecoilValue(AUTHTOKEN);
 
 
     useEffect(() => {
         const lobbyStateListener = (data) => {
-            setLobbyCode(data[1]);
-            setPlayers(data[0]);
+            setGameSettings({
+                'players': data['players'],
+                'teams': data['teams'],
+                'max_players': data['max_players'],
+                'rounds': data['rounds'],
+                'questions_num': data['questions_num'],
+                'gap_time': data['gap_time'],
+                'post_buzz_time': data['post_buzz_time'],
+            });
+            setLobbyCode(data['code']);
             setPlayScreen(1);
-        }
+        };
 
         socket.on("lobbystate", lobbyStateListener);
 
@@ -153,7 +160,7 @@ function StartLobbyButton(props) {
         setPlayScreen()
         socket.emit("startlobby", {
             auth: authtoken,
-            gamemode: props.gameType,
+            gamemode: props.gamemode,
         });
     }
 
@@ -204,7 +211,7 @@ function GamemodeCard(props) {
             <div class="play-gamemodecard-description">
                 {props.gamesettings.description}
             </div>
-            <StartLobbyButton gameType={props.gamesettings.gameType}/>
+            <StartLobbyButton gamemode={props.gamesettings.gamemode}/>
         </div>
     );
 }
@@ -213,8 +220,31 @@ function JoinCustomLobbyCard(props) {
     const [text, setText] = useState("");
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const socket = useRecoilValue(SOCKET);
-    const username = useRecoilValue(USERNAME);
     const authtoken = useRecoilValue(AUTHTOKEN);
+    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
+    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
+
+    useEffect(() => {
+        const lobbyStateListener = (data) => {
+            setGameSettings({
+                'players': data['players'],
+                'teams': data['teams'],
+                'max_players': data['max_players'],
+                'rounds': data['rounds'],
+                'questions_num': data['questions_num'],
+                'gap_time': data['gap_time'],
+                'post_buzz_time': data['post_buzz_time'],
+            });
+            setLobbyCode(data['code']);
+            setPlayScreen(1);
+        };
+
+        socket.on("lobbystate", lobbyStateListener);
+
+        return function cleanSockets() {
+            socket.off("lobbystate", lobbyStateListener);
+        }
+    });
 
     function handleText(event) {
         setText(event.target.value);

@@ -44,11 +44,6 @@ const LOBBY_CODE = atom({
     default: ""
 })
 
-const USERNAME = atom({
-    key: 'USERNAME',
-    default: ""
-})
-
 const SOCKET = atom({
     key: 'SOCKET',
     default: socketIOClient(SOCKET_ENDPOINT)
@@ -79,6 +74,21 @@ const AUTHTOKEN = atom({
     default: ""
 })
 
+const GAMESETTINGS = atom({
+    key: 'GAMESETTINGS',
+    default: {
+        'players': [''],
+        'max_players': 8,
+        'teams': 0,
+        'rounds': 3,
+        'questions_num': 10,
+        'gap_time': 10,
+        'post_buzz_time': 5,
+        // tiebreaker
+        // topics
+    }
+})
 
-export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, USERNAME, SOCKET, PLAYERS, PROFILE, TRANSCRIPTS, AUTHTOKEN }
+
+export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, SOCKET, PLAYERS, PROFILE, TRANSCRIPTS, AUTHTOKEN, GAMESETTINGS }
 

@@ -124,6 +124,20 @@
     padding: 0.75rem;
 }
 
+.lobby-players-list-team-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 1.5rem;
+}
+
+.lobby-players-list-team-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
 
 .lobby-players-player-wrapper {
     width: 100%;
@@ -137,6 +151,12 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.lobby-players-player-wrapper-left {
+    display: flex;
+    align-items: center;
 }
 
 .lobby-players-list-wrapper > * {

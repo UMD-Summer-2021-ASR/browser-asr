@@ -29,7 +29,6 @@ function CreateAccount(props) {
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);
-                        console.log(response['data']);
                         setScreen(2);
                     })
                     .catch(function (error) {
