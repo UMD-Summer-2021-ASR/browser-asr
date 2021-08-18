@@ -172,7 +172,7 @@ function PageHeader(props) {
             </div>
             <div class="page-header-right-wrapper">
                 {/* Energy */}
-                <div class="page-header-energy-wrapper">
+                {/* <div class="page-header-energy-wrapper">
                     <div class="page-header-energy-cooldowntext"></div>
                     <div class="page-header-currency-wrapper">
                         <div class="page-header-currency-text">
@@ -184,7 +184,7 @@ function PageHeader(props) {
                         </div>
                     </div>
                     <div class="page-header-energy-cooldowntext">+1 in 45:07</div>
-                </div>
+                </div> */}
 
                 {/* Coins
                 <div class="page-header-currency-wrapper page-header-coin-mr">

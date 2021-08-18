@@ -179,3 +179,12 @@
 .lobby-players-player-self {
     color: #6287F7;
 }
+
+.lobby-loading-wrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+}
