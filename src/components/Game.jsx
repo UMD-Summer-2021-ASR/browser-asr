@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, AUTHTOKEN, PROFILE} from "../store";
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from '@material-ui/icons/Person';
+import { useQuestion } from 'online-answering';
 
 function PlayerCard(props) {
     const profile = useRecoilValue(PROFILE);
@@ -167,8 +168,17 @@ function Game() {
         }
 
         const hlsListener = data => {
+            var div = document.getElementById('transcript-box')
+            if (div) div.innerHTML = ""
+            console.log(data['token']);
+            console.log(data['rid']);
             setToken(data['token']);
             setRid(data['rid']);
+            setTimeout(() => {
+                var video = document.getElementById('hls');
+                video.play()
+            }, 200);
+            
         }
 
         state.socket.on("buzzed", buzzerListener);
@@ -184,9 +194,17 @@ function Game() {
         }
     });
 
-    useEffect(() => {
-        console.log("update");
-    }, [token])
+    useQuestion({
+        onCue: (cue) => {
+            var div = document.getElementById('transcript-box')
+            if (div) div.innerHTML = div.innerHTML + '  \n' + cue
+        },
+        backend_url: 'http://localhost:7000/hls',
+        recording_id: rid,
+        token: token,
+        header: 'x-gostreamer-token',
+        mediaId: 'hls'
+        });
 
     function buzz() {
         state.socket.emit("buzz", {
@@ -205,6 +223,7 @@ function Game() {
     if(gameScreen === 'ingame') {
         return (
             <div class="game1-big-white-panel-wrapper">
+                <video id="hls" hidden />
                 <div class="game1-big-white-panel">
                     <div class="game1-content-wrapper">
                         <div class="game-content-wrapper">
@@ -218,8 +237,8 @@ function Game() {
                                 </div>
                             </div>
     
-                            <div class="game-transcriptbox">
-                                The transcript would stream here
+                            <div class="game-transcriptbox" id="transcript-box">
+
                             </div>
     
                             <div class="game-menubox">
