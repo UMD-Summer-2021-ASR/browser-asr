@@ -291,7 +291,10 @@ function Game() {
                                     <PostgamePlayerCard name={uname} points={pts}/>
                                 )}
                             </div>
-                            <div onClick={() => {setScreen(3)}} class="game-postgame-return-btn">
+                            <div onClick={() => {
+                                setPlayScreen(0);
+                                setScreen(3);
+                            }} class="game-postgame-return-btn">
                                 Back to home
                             </div>
                         </div>
