@@ -125,6 +125,7 @@
     background-color: white;
     text-align: left;
     padding: 1rem;
+    overflow-y: auto;
 }
 
 .game-menubox {

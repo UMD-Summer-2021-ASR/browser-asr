@@ -1,5 +1,5 @@
 import "../styles/Profile.css";
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import StatsCardsAccordion from "./StatsCardsAccordion";
 import { useAlert } from 'react-alert';
@@ -19,7 +19,7 @@ function ProfileCard(props) {
     const profile = useRecoilValue(PROFILE);
 
     return (
-        <div class="profile-profilecard-wrapper">
+        <div class="profile-profilecard-wrapper" onClick={() => props.setProfileScreen('changeuserinfo')}>
             <div class="profile-profilecard-pfp">
 
             </div>
@@ -97,18 +97,31 @@ function HistoryCards(props) {
 }
 
 function Profile(props) {
-    return (
-        <div class="profile-content-wrapper">
-            <div class="profile-column">
-                <ProfileCard/>
-                <RatingCard/>
+    const [profileScreen, setProfileScreen] = useState('home')
+
+    if (profileScreen === 'changeuserinfo') {
+        return (
+            <div class="profile-content-wrapper">
+                {/* Pfp, change pfp, username, edit username */}
+                <div>
+                    
+                </div>
             </div>
-            <div class="profile-column">
-                <StatsCards/>
-                <HistoryCards/>
+        )
+    } else {
+        return (
+            <div class="profile-content-wrapper">
+                <div class="profile-column">
+                    <ProfileCard setProfileScreen={setProfileScreen}/>
+                    <RatingCard/>
+                </div>
+                <div class="profile-column">
+                    <StatsCards/>
+                    <HistoryCards/>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Profile;

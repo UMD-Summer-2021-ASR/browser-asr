@@ -1,11 +1,13 @@
 import "../styles/AnswerBox.css";
-import {React, useState} from 'react'
+import {React, useState, useEffect, useRef} from 'react'
 import ReactDOM from "react-dom";
 import {useOnlineAnswering} from 'online-answering'
 import Switch from "react-switch";
 import MicIcon from '@material-ui/icons/Mic';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import MicOff from "@material-ui/icons/MicOff";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { PROFILE } from "../store";
 
 const VoiceBuzzSwitch = (props) => {
     const [checked, setChecked] = useState(false);
@@ -29,15 +31,24 @@ const VoiceBuzzSwitch = (props) => {
     );
   };
 
+function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+}
+
 function AnswerBox(props) {
-    const [ready, setReady] = useState(false)
-    const [answer, setAnswer] = useState("")
-    const [listening, setListening] = useState(false)
-    const [currentlyBuzzed, setCurrentlyBuzzed] = useState(false)
+    const profile = useRecoilValue(PROFILE);
+    const username = profile['username'];
+
+    const [answer, setAnswer] = useState("");
+    const [ready, setReady] = useState(false);
+    const prevQuestionTime = usePrevious(props.questionTime)
     
     function complete(answer) {
         setAnswer(answer.substr(answer.indexOf(" ") + 1)); // drops the "listen" off
-        setListening(false);
     }
 
     function setAnswer2(event) {
@@ -54,10 +65,7 @@ function AnswerBox(props) {
         setAnswer("");
     }
 
-    function handleVoiceBuzzin() {
-        setListening(true);
-        buzzin();
-    }
+    console.log(props.questionTime !== prevQuestionTime);
 
     useOnlineAnswering({
         audio: {
@@ -73,7 +81,7 @@ function AnswerBox(props) {
             complete(answer);
             console.log(blob);
         },
-        onBuzzin: () => handleVoiceBuzzin()
+        onBuzzin: () => buzzin()
       });
 
     // useOnlineAnswering({

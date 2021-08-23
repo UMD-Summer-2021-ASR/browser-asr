@@ -95,14 +95,19 @@ function TeamCard(props) {
                     Scoreboard
                 </div>
                 <div class="game-team-body">
-                    Team 1 - {team1pts}
-                    {pointsArray1.map(([uname, pts]) =>
-                        <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
-                    )}
-                    Team 2 - {team2pts}
-                    {pointsArray2.map(([uname, pts]) =>
-                        <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
-                    )}
+                    <div>
+                        Team 1 - {team1pts}
+                        {pointsArray1.map(([uname, pts]) =>
+                            <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
+                        )}
+                    </div>
+                    <div>
+                        Team 2 - {team2pts}
+                        {pointsArray2.map(([uname, pts]) =>
+                            <PlayerCard name={uname} points={pts} currentlyBuzzed={props.buzzer === uname} buzzTime={props.buzzTime}/>
+                        )}
+                    </div>
+                    
                 </div>
             </div>
         )
@@ -142,6 +147,8 @@ function Game() {
 
     useEffect(() => {
         const buzzerListener = data => {
+            var video = document.getElementById('hls');
+            video.pause()
             setState({buzzer: data});
         }
 
@@ -162,6 +169,8 @@ function Game() {
         }
 
         const answeredListener = data => {
+            var video = document.getElementById('hls');
+            video.play()
             console.log(data);
             // this.setBuzzTime(time);
             // TODO correct animation
@@ -196,7 +205,13 @@ function Game() {
 
     useQuestion({
         onCue: (cue) => {
+            console.log(cue);
             var div = document.getElementById('transcript-box')
+            let splitarr = div.innerHTML.split(' ')
+            if(cue === splitarr[splitarr.length - 1]) {
+                return;
+            }
+            
             if (div) div.innerHTML = div.innerHTML + '  \n' + cue
         },
         backend_url: 'http://localhost:7000/hls',
@@ -223,7 +238,12 @@ function Game() {
     if(gameScreen === 'ingame') {
         return (
             <div class="game1-big-white-panel-wrapper">
-                <video id="hls" hidden />
+                <div>
+                    <div>
+                        <video id="hls" hidden />
+                    </div>
+                </div>
+               
                 <div class="game1-big-white-panel">
                     <div class="game1-content-wrapper">
                         <div class="game-content-wrapper">
@@ -242,7 +262,7 @@ function Game() {
                             </div>
     
                             <div class="game-menubox">
-                                <AnswerBox buzz={buzz} submit={answer}/>
+                                <AnswerBox buzz={buzz} buzzer={state.buzzer} submit={answer} questionTime={state.questionTime}/>
                             </div>
                             
                         </div>
@@ -310,8 +330,8 @@ function Game() {
                                 )}
                             </div>
                             <div onClick={() => {
-                                setScreen(3);
                                 setPlayScreen(0);
+                                setScreen(3);
                                 }} class="game-postgame-return-btn">
                                 Back to home
                             </div>

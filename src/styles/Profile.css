@@ -27,6 +27,7 @@
 
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .profile-profilecard-pfp {
@@ -150,4 +151,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* CHANGE PROFILE */
+.profile-changeprofile-pfp-wrapper {
+    flex-grow: 1;
 }

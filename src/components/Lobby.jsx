@@ -91,15 +91,21 @@ function Lobby() {
             setPlayScreen(0);
         }
 
+        const startGameFailedListener = (data) => {
+            setPlayScreen(0);
+        }
+
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
         socket.on("closelobby", closeLobbyListener);
+        socket.on("startgamefailed", startGameFailedListener);
 
 
         return function cleanSockets() {
             socket.off("lobbystate", lobbyStateListener);
             socket.off("gamestarted", gameStartedListener);
             socket.off("closelobby", closeLobbyListener);
+            socket.off("startgamefailed", startGameFailedListener);
         }
     });
     
