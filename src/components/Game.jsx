@@ -168,9 +168,16 @@ function Game() {
             });
         }
 
-        const answeredListener = data => {
+        const answeredIncorrectlyListener = data => {
             var video = document.getElementById('hls');
             video.play()
+            console.log(data);
+            // this.setBuzzTime(time);
+            // TODO correct animation
+        }
+
+        const answeredCorrectlyListener = data => {
+            var video = document.getElementById('hls');
             console.log(data);
             // this.setBuzzTime(time);
             // TODO correct animation
@@ -192,13 +199,15 @@ function Game() {
 
         state.socket.on("buzzed", buzzerListener);
         state.socket.on("gamestate", gameStateListener);
-        state.socket.on("answered", answeredListener);
+        state.socket.on("answeredincorrectly", answeredIncorrectlyListener);
+        state.socket.on("answeredcorrectly", answeredCorrectlyListener);
         state.socket.on("hlsupdate", hlsListener);
 
         return function cleanSockets() {
             state.socket.off("buzzed", buzzerListener);
             state.socket.off("gamestate", gameStateListener);
-            state.socket.off("answered", answeredListener);
+            state.socket.off("answeredincorrectly", answeredIncorrectlyListener);
+            state.socket.off("answeredcorrectly", answeredCorrectlyListener);
             state.socket.off("hlsupdate", hlsListener);
         }
     });
