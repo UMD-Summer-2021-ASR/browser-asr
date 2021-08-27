@@ -6,8 +6,14 @@ import Switch from "react-switch";
 import MicIcon from '@material-ui/icons/Mic';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import MicOff from "@material-ui/icons/MicOff";
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CloseIcon from '@material-ui/icons/Close';
 import { useRecoilState, useRecoilValue } from "recoil";
 import { PROFILE } from "../store";
+import {
+  Tooltip,
+} from 'react-tippy';
+import axios from "axios";
 
 const VoiceBuzzSwitch = (props) => {
     const [checked, setChecked] = useState(false);
@@ -31,6 +37,28 @@ const VoiceBuzzSwitch = (props) => {
     );
   };
 
+  const UseClassifierSwitch = (props) => {
+    const [checked, setChecked] = useState(false);
+    const handleChange = nextChecked => {
+        setChecked(nextChecked);
+        props.setVoice(nextChecked);
+    };
+  
+    return (
+      <div>
+        <label class="answerbox-toggle-wrapper-2">
+          <Switch
+            onChange={handleChange}
+            checked={checked}
+            className={"answerbox-toggle-content-2"}
+            checkedIcon={<DoneOutlineIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+            uncheckedIcon={<CloseIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+          />
+        </label>
+      </div>
+    );
+  };
+
 function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -45,6 +73,7 @@ function AnswerBox(props) {
 
     const [answer, setAnswer] = useState("");
     const [ready, setReady] = useState(false);
+    const [useClassifier, setUseClassifier] = useState(false);
     const prevQuestionTime = usePrevious(props.questionTime)
     
     function complete(answer) {
@@ -65,8 +94,6 @@ function AnswerBox(props) {
         setAnswer("");
     }
 
-    console.log(props.questionTime !== prevQuestionTime);
-
     useOnlineAnswering({
         audio: {
           buzzin:
@@ -78,8 +105,17 @@ function AnswerBox(props) {
         timeout: 3000,
         isReady: ready,
         onComplete: async (answer, blob) => {
-            complete(answer);
-            console.log(blob);
+            if(setUseClassifier) {
+              const formdata = new FormData();
+              formdata.append("audio", blob);
+
+
+              axios.post('http://localhost:4000/audioanswer', 
+                formdata
+              );
+            } else {
+              complete(answer);
+            }
         },
         onBuzzin: () => buzzin()
       });
@@ -105,7 +141,32 @@ function AnswerBox(props) {
                     <input type="text" name="name" value={answer} onChange={setAnswer2} className={"answerbox-textbox-text"}/>
                 </label>
             </form>
-            <VoiceBuzzSwitch setVoice={setReady}/>
+            <div class="answerbox-switch-wrapper">
+              <Tooltip
+                // options
+                title="Use voice commands"
+                position="top"
+                trigger="mouseenter"
+                unmountHTMLWhenHide="true"
+              >
+                <VoiceBuzzSwitch setVoice={setReady}/>
+              </Tooltip>
+              {ready && 
+                <div>
+                  <Tooltip
+                    // options
+                    title="Use classifier"
+                    position="top"
+                    trigger="mouseenter"
+                    unmountHTMLWhenHide="true"
+                  >
+                    <UseClassifierSwitch setVoice={setUseClassifier}/>
+                  </Tooltip>
+                </div>
+              }
+                
+            </div>
+            
             <div class="answerbox-button" onClick={buzzin}>
                 Buzz
             </div>

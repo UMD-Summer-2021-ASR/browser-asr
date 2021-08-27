@@ -95,10 +95,15 @@ function Lobby() {
             setPlayScreen(0);
         }
 
+        const lobbyLoadingListener = (data) => {
+            setLobbyScreen("loading");
+        }
+
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
         socket.on("closelobby", closeLobbyListener);
         socket.on("startgamefailed", startGameFailedListener);
+        socket.on("lobbyloading", lobbyLoadingListener);
 
 
         return function cleanSockets() {
@@ -106,6 +111,7 @@ function Lobby() {
             socket.off("gamestarted", gameStartedListener);
             socket.off("closelobby", closeLobbyListener);
             socket.off("startgamefailed", startGameFailedListener);
+            socket.off("lobbyloading", lobbyLoadingListener);
         }
     });
     
@@ -121,7 +127,9 @@ function Lobby() {
         socket.emit("startgame", {
             auth: authtoken
         });
-        setLobbyScreen("loading");
+        socket.emit("lobbyloading", {
+            auth: authtoken
+        })
     }
 
     function updateSettings(updatedSettings) {

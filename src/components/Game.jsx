@@ -212,7 +212,7 @@ function Game() {
         }
     });
 
-    useQuestion({
+    const [hls] = useQuestion({
         onCue: (cue) => {
             console.log(cue);
             var div = document.getElementById('transcript-box')
@@ -227,8 +227,12 @@ function Game() {
         recording_id: rid,
         token: token,
         header: 'x-gostreamer-token',
-        mediaId: 'hls'
+        mediaId: 'hls',
+        listeners: {
+            seeking: false
+          }
         });
+    console.log(hls.isSupported())
 
     function buzz() {
         state.socket.emit("buzz", {
@@ -271,7 +275,7 @@ function Game() {
                             </div>
     
                             <div class="game-menubox">
-                                <AnswerBox buzz={buzz} buzzer={state.buzzer} submit={answer} questionTime={state.questionTime}/>
+                                <AnswerBox buzz={buzz} buzzer={state.buzzer} submit={answer} questionTime={state.questionTime} state={state}/>
                             </div>
                             
                         </div>
