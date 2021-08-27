@@ -1,42 +1,57 @@
-# Getting Started with Create React App
+# How to run
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
+1. Clone the repository
+2. Run npm install
+3. Run `yarn start`. This runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
 # File structure
+
+Most files are in 3 folders: `assets`, `components`, and `styles`. More documentation is available inside each file.
+
+## Assets
+
+Contains images, svgs, sound effects, etc. 
+
+## Components
+
+Contains all of the react hooks. 
+
+`AnimatedCard` - Legacy hook, not used in the current website. It displays a small tile with customizable image, title, and description that animates on hover
+
+`AnswerBox` - Contains the answering hook used in all games (the textbox + toggles for voice controls + the voice controls)
+
+`AudioRecorder` - Contains the hook for recording (and saving the recording) sentence-by-sentence in the shop.
+
+`CreateAccount` - Contains the hook for the create account page displayed when a user logs in for the first time
+
+`Dashboard` - Contains the hook for the dashboard page
+
+`Game` - Contains the hook with socket integration for live gameplay
+
+`Leaderboards` - Contains the hook for the leaderboards page
+
+`Lobby` - Contains the hook for the lobby created upon lobby start (from the `Play` page)
+
+`Play` - Contains the hook for the play page
+
+`Player` - Legacy hook that played a VTT and Wav Audio in sync.
+
+`Profile` - Contains the hook for the profile page
+
+`Record` - Legacy hook that for recording a transcript
+
+`Shop` - Contains the hook for the shop page
+
+`StatsCardsAccordion` - Contains the hook for the stats cards (from the `Profile` page)
+
+`Tooltip` - Legacy hook for putting a tooltip on an element on hover
+
+`WhitePanel` - Hook behind the entire app that encapsulates all the other hooks. 
+
+## Styles
+
+Contains all of the css files for the entire app. Files are named exactly the same as their corresponding hook except with the `.css` suffix replacing `.jsx`
