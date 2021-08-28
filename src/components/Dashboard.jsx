@@ -51,18 +51,20 @@ function QuizzrTVCard(props) {
     const alert = useAlert();
     
     return (
-        <div class="dashboard-quizzrtv-wrapper" onClick={() => {
-            // Deletes your account
-            axios.delete('http://localhost:5000/profile')
-                .then(function (response) {
-                    // handle success
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+        <div class="dashboard-quizzrtv-wrapper" 
+        // onClick={() => {
+        //     // Deletes your account
+        //     axios.delete('http://localhost:5000/profile')
+        //         .then(function (response) {
+        //             // handle success
+        //             console.log(response);
+        //         })
+        //         .catch(function (error) {
+        //             console.log(error);
+        //         })
 
-        }}>
+        // }}
+        >
             <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>
             QuizzrTV
         </div>
