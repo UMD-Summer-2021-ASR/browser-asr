@@ -1,6 +1,9 @@
 import "../styles/Leaderboards.css";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import {
+    Tooltip,
+} from 'react-tippy';
 
 // ASSETS
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
@@ -15,7 +18,15 @@ function User(props) {
                 {props.username}
             </div>
             <div class="leaderboards-board-user-rating">
-                {props.rating}
+                <Tooltip
+                    // options
+                    title="Rating"
+                    position="top"
+                    trigger="mouseenter"
+                    unmountHTMLWhenHide="true"
+                >
+                    {props.rating}
+                </Tooltip>
             </div>
         </div>
     );
@@ -29,9 +40,30 @@ function Topic(props) {
             <div class="leaderboards-topic-name">
                 {props.name}
             </div>
+            
 
             <div>
-                #{props.rank} / {props.percentile}%
+                <Tooltip
+                    // options
+                    title="Objective rank"
+                    position="top"
+                    trigger="mouseenter"
+                    unmountHTMLWhenHide="true"
+                >
+                #{props.rank}
+                </Tooltip>
+
+                / 
+                
+                <Tooltip
+                    // options
+                    title="Relative rank"
+                    position="top"
+                    trigger="mouseenter"
+                    unmountHTMLWhenHide="true"
+                >
+                {props.percentile}%
+                </Tooltip>
             </div>
         </div>
     )

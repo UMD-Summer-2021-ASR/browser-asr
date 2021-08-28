@@ -4,6 +4,8 @@ import {
 } from 'react-tippy';
 import 'react-tippy/dist/tippy.css'
 
+
+// Legacy hook for card with animations for icon, title, and short description
 function AnimatedCard(props) {
     // text, image, caption, enabled/disabled
     let enabled = props.enabled;

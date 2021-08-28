@@ -8,6 +8,9 @@ import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, AUTHTOKEN, PROFILE} f
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from '@material-ui/icons/Person';
 import { useQuestion } from 'online-answering';
+import {
+    Tooltip,
+} from 'react-tippy';
 
 function PlayerCard(props) {
     const profile = useRecoilValue(PROFILE);
@@ -16,7 +19,17 @@ function PlayerCard(props) {
         <div className={"game-playercard-wrapper " + (props.name === username ? "game-playercard-self " : "") + (props.currentlyBuzzed ? "game-playercard-buzzed-outline " : "")}>
             <div class="game-playercard-username-wrapper">
                 {props.name}
-                {props.name === username && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                {props.name === username && 
+                    <Tooltip
+                        // options
+                        title="This is you"
+                        position="top"
+                        trigger="mouseenter"
+                        unmountHTMLWhenHide="true"
+                    >
+                        <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>
+                    </Tooltip>
+                }
             </div>
             <div class="game-playercard-username-wrapper">
                 {props.currentlyBuzzed && 
@@ -41,7 +54,17 @@ function PostgamePlayerCard(props) {
         <div className={"game-postgame-playercard-wrapper"}>
             <div className={"game-playercard-username-wrapper" + (props.name === username ? " game-postgame-color-blue" : "")}>
                 {props.name}
-                {props.name === username && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                {props.name === username && 
+                    <Tooltip
+                        // options
+                        title="This is you"
+                        position="top"
+                        trigger="mouseenter"
+                        unmountHTMLWhenHide="true"
+                    >
+                        <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>
+                    </Tooltip>
+                }
             </div>
             <div class="game-playercard-username-wrapper">
                 <div class="game-playercard-points">

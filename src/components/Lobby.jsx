@@ -10,6 +10,9 @@ import { LOBBY_CODE, SOCKET, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN, PROFILE, G
 import Slider from '@material-ui/core/Slider';
 import Select from 'react-dropdown-select';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
+import {
+    Tooltip,
+} from 'react-tippy';
 
 
 function Player(props) {
@@ -31,7 +34,17 @@ function Player(props) {
             <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}> 
                 <div class="lobby-players-player-wrapper-left">
                     {props.name}
-                    {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                    {props.self && 
+                        <Tooltip
+                            // options
+                            title="This is you"
+                            position="top"
+                            trigger="mouseenter"
+                            unmountHTMLWhenHide="true"
+                        >
+                            <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>
+                        </Tooltip>
+                    }
                 </div>
                 <div class="lobby-players-switchteam-icon-wrapper" onClick={switchTeams}>
                     <SwapVertIcon style={{color: "grey", height: "25px"}}/>
@@ -43,7 +56,17 @@ function Player(props) {
             <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}>           
                 <div class="lobby-players-player-wrapper-left">
                     {props.name}
-                    {props.self && <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>}
+                    {props.self && 
+                        <Tooltip
+                            // options
+                            title="This is you"
+                            position="top"
+                            trigger="mouseenter"
+                            unmountHTMLWhenHide="true"
+                        >
+                            <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>
+                        </Tooltip>
+                    }
                 </div> 
             </div>
         )

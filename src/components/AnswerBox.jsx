@@ -15,6 +15,7 @@ import {
 } from 'react-tippy';
 import axios from "axios";
 
+// Switch that toggles voice buzzin
 const VoiceBuzzSwitch = (props) => {
     const [checked, setChecked] = useState(false);
     const handleChange = nextChecked => {
@@ -37,28 +38,31 @@ const VoiceBuzzSwitch = (props) => {
     );
   };
 
-  const UseClassifierSwitch = (props) => {
-    const [checked, setChecked] = useState(false);
-    const handleChange = nextChecked => {
-        setChecked(nextChecked);
-        props.setVoice(nextChecked);
-    };
-  
-    return (
-      <div>
-        <label class="answerbox-toggle-wrapper-2">
-          <Switch
-            onChange={handleChange}
-            checked={checked}
-            className={"answerbox-toggle-content-2"}
-            checkedIcon={<DoneOutlineIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
-            uncheckedIcon={<CloseIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
-          />
-        </label>
-      </div>
-    );
+// switch that toggles the classifier
+const UseClassifierSwitch = (props) => {
+  const [checked, setChecked] = useState(false);
+  const handleChange = nextChecked => {
+      setChecked(nextChecked);
+      props.setVoice(nextChecked);
   };
 
+  return (
+    <div>
+      <label class="answerbox-toggle-wrapper-2">
+        <Switch
+          onChange={handleChange}
+          checked={checked}
+          className={"answerbox-toggle-content-2"}
+          checkedIcon={<DoneOutlineIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+          uncheckedIcon={<CloseIcon style={{color: "white", width: "100%", height: "100%", position: "absolute", top: 0}}/>}
+        />
+      </label>
+    </div>
+  );
+};
+
+
+// Legacy function that enables you to store previous state values
 function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -67,6 +71,8 @@ function usePrevious(value) {
     return ref.current;
 }
 
+
+// Hook for the answer box at the bottom of all games
 function AnswerBox(props) {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
@@ -76,10 +82,12 @@ function AnswerBox(props) {
     const [useClassifier, setUseClassifier] = useState(false);
     const prevQuestionTime = usePrevious(props.questionTime)
     
+    // ASR always picks up the wake word, this function removes it
     function complete(answer) {
-        setAnswer(answer.substr(answer.indexOf(" ") + 1)); // drops the "listen" off
+        setAnswer(answer.substr(answer.indexOf(" ") + 1));
     }
 
+    // Sets answer when typed
     function setAnswer2(event) {
         setAnswer(event.target.value);
     }
@@ -119,20 +127,6 @@ function AnswerBox(props) {
         },
         onBuzzin: () => buzzin()
       });
-
-    // useOnlineAnswering({
-    //     keywords: { buzzin: 'Listen', buzzout: 'Submit' },
-    //     audio: {
-    //     buzzin:
-    //         'https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav',
-    //     buzzout:
-    //         'https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav'
-    //     },
-    //     timeout: 10000,
-    //     isReady: ready,
-    //     onComplete: async (answer) => complete(answer),
-    //     onBuzzin: () => setListening(true)
-    // })
 
     return (
         <div class="answerbox-answering-wrapper">
