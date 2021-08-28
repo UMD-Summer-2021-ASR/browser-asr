@@ -7,7 +7,7 @@ Features:
 * A "record" option to record reading transcripts aloud. Currently, it uses a placeholder transcript. Submitting a recording will send a POST request to `/upload` at port `5000`.
 
 ## Installation
-To install this application, clone this repository onto your machine and run `npm install` inside the newly-cloned repository.
+To install this application, clone this repository onto your machine and run `npm install` inside the newly-cloned repository. **Please ensure you are in the dev2 branch as this has the most up-to-date version**
 
 ## Available Scripts
 
