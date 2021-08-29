@@ -5,6 +5,7 @@ import VTT from "../assets/id01.vtt";
 import WavAudio from '../assets/id01.wav';
 import "../styles/Player.css";
 
+// button for playing an audio
 function PlayButton(props) {
     const [play, { stop, isPlaying }] = useSound(Audio);
     return (
@@ -22,6 +23,7 @@ function PlayButton(props) {
     );
   }
 
+  // class for playing an audio w/ VTT
 class Player extends React.Component {
     constructor(props) {
         super(props);

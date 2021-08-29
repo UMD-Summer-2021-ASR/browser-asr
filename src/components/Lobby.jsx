@@ -14,7 +14,7 @@ import {
     Tooltip,
 } from 'react-tippy';
 
-
+// player hook in lobby w/ switching functionality
 function Player(props) {
     const socket = useRecoilValue(SOCKET);
     const authtoken = useRecoilValue(AUTHTOKEN);
@@ -74,6 +74,8 @@ function Player(props) {
     
 }
 
+
+// lobby hook
 function Lobby() {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
@@ -155,6 +157,7 @@ function Lobby() {
         })
     }
 
+    //emits update to settings and the socket will emit settings back
     function updateSettings(updatedSettings) {
         socket.emit("updatesettings", {
             auth: authtoken,

@@ -12,6 +12,7 @@ import {
     Tooltip,
 } from 'react-tippy';
 
+// player display w/ score in-game
 function PlayerCard(props) {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
@@ -46,6 +47,7 @@ function PlayerCard(props) {
     )
 }
 
+// player display w/ score post-game
 function PostgamePlayerCard(props) {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
@@ -75,6 +77,7 @@ function PostgamePlayerCard(props) {
     )
 }
 
+// teamcard wrapping playercards
 function TeamCard(props) {
     if(props.points[0] === undefined) {
         const pointsArray = [];
@@ -139,6 +142,7 @@ function TeamCard(props) {
     
 }
 
+// game hook
 function Game() {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];

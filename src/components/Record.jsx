@@ -28,6 +28,7 @@ let qids = ["60f702c701166e43053ae613",
             "60f702c701166e43053ae60f",
             "60f702c701166e43053ae617"];
 
+// card for displaying a single transcript
 function TranscriptCard(props) {
     function record() {
         props.setTranscript(transcripts[props.id]);
@@ -56,6 +57,7 @@ function TranscriptCard(props) {
     );
 }
 
+// card that displays transcripts + reroll button
 function TranscriptDisplayCard(props) {
     return (
         <div class="record-recordingcard-wrapper" style={{borderColor: props.frameColor}}>
@@ -79,6 +81,7 @@ function TranscriptDisplayCard(props) {
     );
 }
 
+// legacy recording page
 class Record extends React.Component {
     constructor(props) {
         super(props);

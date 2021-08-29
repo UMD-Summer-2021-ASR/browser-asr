@@ -17,6 +17,7 @@ import AudioRecorder from './AudioRecorder.jsx';
 //ASSETS
 import LoopIcon from '@material-ui/icons/Loop';
 
+// displays bounty in coins for a single task
 function Taskbounty(props) {
     return (
         <div class="shop-taskbounty-wrapper">
@@ -27,6 +28,8 @@ function Taskbounty(props) {
     );
 }
 
+
+// coming soon card under the spending section
 function SpendComingSoon(props) {
     return (
         <div class="shop-spend-comingsoon-wrapper">
@@ -35,6 +38,7 @@ function SpendComingSoon(props) {
     );
 }
 
+// hook for displaying transcript options
 function TranscriptOption(props) {
 
     function handleRecord() {
@@ -65,6 +69,7 @@ function TranscriptOption(props) {
     );
 }
 
+// hook that formats recording into sentence by sentence
 function Sentence(props) {
     return (
         <div class="shop-sentence-wrapper">
@@ -76,6 +81,7 @@ function Sentence(props) {
     );
 }
 
+// hook for the shop
 function Shop() {
     const [shopScreen, setShopScreen] = useState("home");
     const [difficulty, setDifficulty] = useState("easy");

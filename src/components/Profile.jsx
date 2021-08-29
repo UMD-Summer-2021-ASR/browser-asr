@@ -45,7 +45,7 @@ function RatingCard(props) {
     );
 }
 
-// stats cards
+// 1 stats card
 function StatsCard(props) {
     return (
         <div class="profile-statscard-wrapper">
@@ -55,6 +55,7 @@ function StatsCard(props) {
     );
 }
 
+// all the stats cards
 function StatsCards(props) {
     return (
         <div class="profile-statscards-wrapper">
@@ -69,6 +70,7 @@ function StatsCards(props) {
     );
 }
 
+// button for looking at history
 function HistoryCard(props) {
     const alert = useAlert();
 
@@ -96,6 +98,7 @@ function HistoryCards(props) {
     );
 }
 
+// hook for entire profile page
 function Profile(props) {
     const [profileScreen, setProfileScreen] = useState('home')
 

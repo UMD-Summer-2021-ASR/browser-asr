@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 
 
+//hook for creating accounts
 function CreateAccount(props) {
     const [username, setUsername] = useState('');
     const [screen, setScreen] = useRecoilState(SCREEN);
@@ -15,10 +16,12 @@ function CreateAccount(props) {
     const [profile, setProfile] = useRecoilState(PROFILE);
     const alert = useAlert()
 
+    //restricts usernames to alphanumeric
     function handleUsername(event) {
         setUsername(event.target.value.replace(/[^a-z0-9]/gi,''));
     }
 
+    //registers the user
     function register() {
         axios.post('http://localhost:5000/profile', {
                 pfp: [1, 2, 3, 4],

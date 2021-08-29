@@ -68,7 +68,7 @@ const uiConfig = {
     },
 };
 
-
+// original login card
 function LoginCardItem(props) {
     return (
         <div class="login-card-item">
@@ -80,6 +80,7 @@ function LoginCardItem(props) {
     );
 }
 
+// body of login screen
 function LoginBody(props) {
     const [screen, setScreen] = useRecoilState(SCREEN);
     const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
@@ -117,6 +118,7 @@ function LoginBody(props) {
     );
 }
 
+// title in login screen
 function LoginTitle() {
     return (
         <div>
@@ -126,7 +128,7 @@ function LoginTitle() {
     );
 }
 
-
+// a single sidenav tab
 function SidenavItem(props) {
     return (
         <div class="sidenav-tab-wrapper" onClick={props.setScreen}>
@@ -136,6 +138,7 @@ function SidenavItem(props) {
     );
 }
 
+// the sidenav
 function Sidenav(props) {
     let MainColor = "#6287F7";
     let LogoutColor = "#b52121";
@@ -156,6 +159,7 @@ function Sidenav(props) {
     );
 }
 
+// page header w/ coins, title, and description
 function PageHeader(props) {
     const [screen, setScreen] = useRecoilState(SCREEN);
 
@@ -199,6 +203,7 @@ function PageHeader(props) {
     );
 }
 
+// wraps most pages, big white panel hook that enables page by page navigation
 function BigWhitePanel() {
     const [screen, setScreen] = useRecoilState(SCREEN);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);

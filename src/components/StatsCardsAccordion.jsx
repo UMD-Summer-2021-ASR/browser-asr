@@ -10,6 +10,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+// displays a single stat
 function Stat(props) {
     return (
         <div class="statscardsaccordion-stat">
@@ -18,6 +19,7 @@ function Stat(props) {
     );
 }
 
+// hook for all of the stats
 export default function StatsCardsAccordion() {
   const profile = useRecoilValue(PROFILE);
 

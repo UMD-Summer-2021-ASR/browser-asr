@@ -17,7 +17,7 @@ import GamemodeIcon6 from '../assets/gamemode-icon-6.svg';
 import GamemodeIcon7 from '../assets/gamemode-icon-7.svg';
 
 
-
+// class for gamesettings object
 class gameSettings {
     
     constructor({
@@ -126,6 +126,7 @@ const gameSettingsList = [
     }),
 ];
 
+// button for starting the lobby
 function StartLobbyButton(props) {
     const [socket, setSocket] = useRecoilState(SOCKET);
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
@@ -184,6 +185,7 @@ function GamemodeBtn(props) {
     );
 }
 
+// card for a gamemode that is coming soon
 function GamemodeComingSoonCard(props) {
     const alert = useAlert();
 
@@ -201,6 +203,7 @@ function GamemodeComingSoonCard(props) {
     );
 }
 
+// card for a gamemode
 function GamemodeCard(props) {
     return (
         <div class="play-gamemodecard-wrapper">
@@ -216,6 +219,7 @@ function GamemodeCard(props) {
     );
 }
 
+// card for joining a custom lobby
 function JoinCustomLobbyCard(props) {
     const [text, setText] = useState("");
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
@@ -272,6 +276,8 @@ function JoinCustomLobbyCard(props) {
     )
 }
 
+
+// play page hook
 function Play(props) {
     const [gamemode, setGamemode] = useState(0);
 

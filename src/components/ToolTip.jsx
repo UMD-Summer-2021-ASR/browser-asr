@@ -2,6 +2,7 @@ import React from "react";
 import TooltipTrigger from "react-popper-tooltip";
 import "react-popper-tooltip/dist/styles.css";
 
+// legacy hook for using react popper tooltips
 const Tooltip = ({ children, tooltip, hideArrow, ...props }) => (
   <TooltipTrigger
     {...props}

@@ -10,6 +10,8 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import TvIcon from '@material-ui/icons/Tv';
 
+
+// card in the news column
 function NewsCard(props) {
     return (
         <div class="newscard-wrapper">
@@ -30,6 +32,7 @@ function NewsCard(props) {
     );
 }
 
+// the news column
 function NewsColumn(props) {
     return (
         <div class="newscolumn-wrapper">
@@ -38,15 +41,14 @@ function NewsColumn(props) {
                 <div class="newscolumn-title">News</div>
             </div>
             <div class="newscolumn-cards-wrapper">
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
-                <NewsCard title="Official Beta Release!" date="July 20th, 2021" content="This is our very first news release- we are officially in Beta!"/>
+                <NewsCard title="Official Beta Release!" date="Aug 29th, 2021" content="This is our very first news release- we are officially in Beta!"/>
             </div>
         </div>
     );
 }
 
+
+// QuizzrTV Card
 function QuizzrTVCard(props) {
     const alert = useAlert();
     
@@ -66,11 +68,12 @@ function QuizzrTVCard(props) {
         // }}
         >
             <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>
-            QuizzrTV
+            COMING SOON
         </div>
     )
 }
 
+// Card for coming soon
 function ComingSoonCard(props) {
     return (
         <div class="dashboard-comingsoon-wrapper">
@@ -79,6 +82,7 @@ function ComingSoonCard(props) {
     )
 }
 
+// class for the dashboard page
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);

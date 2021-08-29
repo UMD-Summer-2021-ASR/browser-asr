@@ -8,6 +8,8 @@ import {
 // ASSETS
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
+
+//single user card
 function User(props) {
     return (
         <div class="leaderboards-board-user-wrapper">
@@ -32,6 +34,8 @@ function User(props) {
     );
 }
 
+
+// topic card
 function Topic(props) {
     return (
         <div className={"leaderboards-topic-wrapper " + (props.self === props.topic ? "leaderboards-topic-wrapper-selected" : "")}
@@ -69,6 +73,7 @@ function Topic(props) {
     )
 }
 
+//leaderboards hook
 function Leaderboards() {
     const [topic, setTopic] = useState("all");
     return (

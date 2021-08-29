@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//hook for recording
 const Recorder = (props) => {
   const [status, setStatus] = useState("");
   const [audioSrc, setAudioSrc] = useState(null);
