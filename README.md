@@ -9,6 +9,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+# Common Solutions to Running Errors
+- https://stackoverflow.com/questions/46013544/yarn-install-command-error-no-such-file-or-directory-install
+
 # File structure
 
 Most files are in 3 folders: `assets`, `components`, and `styles`. More documentation is available inside each file.
