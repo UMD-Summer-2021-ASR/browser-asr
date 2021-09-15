@@ -9,7 +9,7 @@ import MicOff from "@material-ui/icons/MicOff";
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CloseIcon from '@material-ui/icons/Close';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { PROFILE } from "../store";
+import { AUTHTOKEN, AUTHTOKEN, PROFILE } from "../store";
 import {
   Tooltip,
 } from 'react-tippy';
@@ -76,6 +76,8 @@ function usePrevious(value) {
 function AnswerBox(props) {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
+    const URLS = useRecoilValue(URLS);
+    const AUTHTOKEN = useRecoilValue(AUTHTOKEN);
 
     const [answer, setAnswer] = useState("");
     const [ready, setReady] = useState(false);
@@ -116,9 +118,10 @@ function AnswerBox(props) {
             if(setUseClassifier) {
               const formdata = new FormData();
               formdata.append("audio", blob);
+              formdata.append("auth", AUTHTOKEN);
 
-
-              axios.post('http://localhost:4000/audioanswer', 
+              //POST TO CLASSIFIER SERVER
+              axios.post(URLS['classifier'] + '/check', 
                 formdata
               );
             } else {

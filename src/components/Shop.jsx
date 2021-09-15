@@ -89,6 +89,7 @@ function Shop() {
     const alert = useAlert()
     const [transcript, setTranscript] = useState({"transcript": ""});
     const [audios, setAudios] = useState([]);
+    const URLS = useRecoilValue(URLS);
 
     function setAudio(index, audio) {
         let audiosCopy = [...audios];
@@ -107,7 +108,7 @@ function Shop() {
         let transcriptsArray = [];
         let requestsArray = [];
         for(let i = 0; i < 4; i++) {
-            requestsArray.push(axios.get('http://localhost:5000/question/unrec')
+            requestsArray.push(axios.get(URLS['dataflow'] + '/question/unrec')
                 .then(function (response) {
                     transcriptsArray.push(response['data']['results'][0]);
                 }));
@@ -162,7 +163,7 @@ function Shop() {
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         }
-        const response = await axios.post("http://localhost:5000/audio", formdata, config)
+        const response = await axios.post(URLS['dataflow'] + "/audio", formdata, config)
             .then(response => {
                 setShopScreen("home");
                 alert.success("Submitted recording");

@@ -10,6 +10,7 @@ import axios from 'axios';
 
 //hook for creating accounts
 function CreateAccount(props) {
+    const URLS = useRecoilValue(URLS);
     const [username, setUsername] = useState('');
     const [screen, setScreen] = useRecoilState(SCREEN);
     const placeholderUsername = "mickthemouse123";
@@ -23,12 +24,12 @@ function CreateAccount(props) {
 
     //registers the user
     function register() {
-        axios.post('http://localhost:5000/profile', {
+        axios.post(URLS['dataflow'] + '/profile', {
                 pfp: [1, 2, 3, 4],
                 username: username
             })
             .then(function (response) {
-                axios.get('http://localhost:5000/profile')
+                axios.get(URLS['dataflow'] + '/profile')
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);

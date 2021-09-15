@@ -1,8 +1,16 @@
-import { atom } from "recoil";
+import { atom, useRecoilValue } from "recoil";
 import socketIOClient from "socket.io-client";
 
+const URLS = atom({ // change to real URLS
+    key: 'URLS',
+    default: {
+        'classifier': 'no idea',
+        'dataflow': 'http://localhost:5000',
+        'socket': 'http://127.0.0.1:4000',
+        'HLS': 'http://localhost:7000'
+    }
+})
 
-const SOCKET_ENDPOINT = "http://127.0.0.1:4000"; // change to real endpoint
 function makeUsername(length) {
     var result           = 'guest';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -44,6 +52,7 @@ const LOBBY_CODE = atom({
     default: ""
 })
 
+const SOCKET_ENDPOINT = useRecoilValue(URLS)['socket'];
 const SOCKET = atom({
     key: 'SOCKET',
     default: socketIOClient(SOCKET_ENDPOINT)
@@ -90,5 +99,7 @@ const GAMESETTINGS = atom({
 })
 
 
-export { AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, SOCKET, PLAYERS, PROFILE, TRANSCRIPTS, AUTHTOKEN, GAMESETTINGS }
+
+
+export { URLS, AUDIO_BLOB, TEXT, SCREEN, PLAY_SCREEN, JOIN_CUSTOM_LOBBY_SCREEN, LOBBY_CODE, SOCKET, PLAYERS, PROFILE, TRANSCRIPTS, AUTHTOKEN, GAMESETTINGS }
 

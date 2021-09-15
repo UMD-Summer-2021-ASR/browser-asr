@@ -205,6 +205,7 @@ function PageHeader(props) {
 
 // wraps most pages, big white panel hook that enables page by page navigation
 function BigWhitePanel() {
+    const URLS = useRecoilValue(URLS);
     const [screen, setScreen] = useRecoilState(SCREEN);
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const [profile, setProfile] = useRecoilState(PROFILE);
@@ -242,7 +243,7 @@ function BigWhitePanel() {
             firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
                 setAuthtoken(idToken);
                 axios.defaults.headers.common['Authorization'] = idToken;
-                axios.get('http://localhost:5000/profile')
+                axios.get(URLS['dataflow'] + '/profile')
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);
@@ -276,7 +277,7 @@ function BigWhitePanel() {
         let transcriptsArray = [];
         let requestsArray = [];
         for(let i = 0; i < 4; i++) {
-            requestsArray.push(axios.get('http://localhost:5000/question/unrec')
+            requestsArray.push(axios.get(URLS['dataflow'] + '/question/unrec')
                 .then(function (response) {
                     transcriptsArray.push(response['data']['results'][0]);
                 }));

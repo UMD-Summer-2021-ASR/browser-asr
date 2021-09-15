@@ -4,13 +4,14 @@ import React, { useState, useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 import socketIOClient from "socket.io-client";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, AUTHTOKEN, PROFILE} from "../store";
+import { SCREEN, PLAY_SCREEN, PLAYERS, LOBBY_CODE, SOCKET, AUTHTOKEN, PROFILE, URLS} from "../store";
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from '@material-ui/icons/Person';
 import { useQuestion } from 'online-answering';
 import {
     Tooltip,
 } from 'react-tippy';
+import axios from "axios";
 
 // player display w/ score in-game
 function PlayerCard(props) {
@@ -172,6 +173,9 @@ function Game() {
     const [token, setToken] = useState("");
     const [rid, setRid] = useState("");
 
+    // URLS
+    const URLS = useRecoilValue(URLS);
+
     useEffect(() => {
         const buzzerListener = data => {
             var video = document.getElementById('hls');
@@ -239,6 +243,14 @@ function Game() {
         }
     });
 
+    useEffect(() => {
+        axios.post(URLS['HLS'] + '/verify', null, {params: {
+            rid, 
+            token
+        }});
+    }, [rid, token])
+    // when token/rid changes, send POST request to classifier (POST /verify?rid=<rid>&token=<token>)
+
     const [hls] = useQuestion({
         onCue: (cue) => {
             console.log(cue);
@@ -250,7 +262,7 @@ function Game() {
             
             if (div) div.innerHTML = div.innerHTML + '  \n' + cue
         },
-        backend_url: 'http://localhost:7000/hls',
+        backend_url: URLS['HLS'] + '/hls',
         recording_id: rid,
         token: token,
         header: 'x-gostreamer-token',
