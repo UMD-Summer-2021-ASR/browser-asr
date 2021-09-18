@@ -9,7 +9,7 @@ import MicOff from "@material-ui/icons/MicOff";
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CloseIcon from '@material-ui/icons/Close';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { AUTHTOKEN, AUTHTOKEN, PROFILE } from "../store";
+import { AUTHTOKEN, PROFILE } from "../store";
 import {
   Tooltip,
 } from 'react-tippy';
