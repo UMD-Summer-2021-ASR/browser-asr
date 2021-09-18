@@ -9,7 +9,8 @@ import MicOff from "@material-ui/icons/MicOff";
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CloseIcon from '@material-ui/icons/Close';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { AUTHTOKEN, PROFILE } from "../store";
+import { AUTHTOKEN, PROFILE, URLS, SOCKET } from "../store";
+import { useAlert } from 'react-alert';
 import {
   Tooltip,
 } from 'react-tippy';
@@ -77,7 +78,9 @@ function AnswerBox(props) {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
     const urls = useRecoilValue(URLS);
-    const AUTHTOKEN = useRecoilValue(AUTHTOKEN);
+    const authtoken = useRecoilValue(AUTHTOKEN);
+    const alert = useAlert();
+    const socket = useRecoilValue(SOCKET);
 
     const [answer, setAnswer] = useState("");
     const [ready, setReady] = useState(false);
@@ -86,7 +89,7 @@ function AnswerBox(props) {
     
     // ASR always picks up the wake word, this function removes it
     function complete(answer) {
-        setAnswer(answer.substr(answer.indexOf(" ") + 1));
+        setAnswer(answer.substr(answer.indexOf(" ") + 1).replace("stop",""));
     }
 
     // Sets answer when typed
@@ -115,15 +118,28 @@ function AnswerBox(props) {
         timeout: 3000,
         isReady: ready,
         onComplete: async (answer, blob) => {
-            if(setUseClassifier) {
+            if(useClassifier) {
               const formdata = new FormData();
               formdata.append("audio", blob);
-              formdata.append("auth", AUTHTOKEN);
+              formdata.append("auth", authtoken);
+
+              const config = {
+                  headers: { 'content-type': 'multipart/form-data' }
+              }
 
               //POST TO CLASSIFIER SERVER
-              axios.post(urls['classifier'] + '/check', 
-                formdata
-              );
+              const response = await axios.post(urls['socket_flask'] + '/audioanswerupload', formdata, config)
+                .then(response => {
+                  console.log(response);
+                  socket.emit("audioanswer", {
+                    auth: authtoken,
+                    filename: "george" // CHANGE
+                  })
+                })
+                .catch(error => {
+                  alert.error("Classification submission failed");
+                });
+              
             } else {
               complete(answer);
             }

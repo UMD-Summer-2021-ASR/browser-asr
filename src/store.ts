@@ -4,10 +4,10 @@ import socketIOClient from "socket.io-client";
 const URLS = atom({ // change to real URLS
     key: 'URLS',
     default: {
-        'classifier': 'no idea',
         'dataflow': 'http://localhost:5000',
         'socket': 'http://127.0.0.1:4000',
-        'HLS': 'http://localhost:7000'
+        'socket_flask': 'http://localhost:2000',
+        'HLS': 'http://localhost:7000',
     }
 })
 

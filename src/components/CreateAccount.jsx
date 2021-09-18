@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useAlert } from 'react-alert';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { PROFILE, SCREEN } from "../store";
+import { PROFILE, SCREEN, URLS } from "../store";
 import firebase from 'firebase';
 import axios from 'axios';
 
