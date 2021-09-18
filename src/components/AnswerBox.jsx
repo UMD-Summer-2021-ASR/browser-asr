@@ -76,7 +76,7 @@ function usePrevious(value) {
 function AnswerBox(props) {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
-    const URLS = useRecoilValue(URLS);
+    const urls = useRecoilValue(URLS);
     const AUTHTOKEN = useRecoilValue(AUTHTOKEN);
 
     const [answer, setAnswer] = useState("");
@@ -121,7 +121,7 @@ function AnswerBox(props) {
               formdata.append("auth", AUTHTOKEN);
 
               //POST TO CLASSIFIER SERVER
-              axios.post(URLS['classifier'] + '/check', 
+              axios.post(urls['classifier'] + '/check', 
                 formdata
               );
             } else {

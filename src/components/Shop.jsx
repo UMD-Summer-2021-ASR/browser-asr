@@ -9,7 +9,7 @@ import {
 import 'react-tippy/dist/tippy.css';
 import axios from 'axios';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { TRANSCRIPTS } from "../store";
+import { TRANSCRIPTS, URLS } from "../store";
 import AudioRecorder from './AudioRecorder.jsx';
 
 
@@ -89,7 +89,7 @@ function Shop() {
     const alert = useAlert()
     const [transcript, setTranscript] = useState({"transcript": ""});
     const [audios, setAudios] = useState([]);
-    const URLS = useRecoilValue(URLS);
+    const urls = useRecoilValue(URLS);
 
     function setAudio(index, audio) {
         let audiosCopy = [...audios];
@@ -108,7 +108,7 @@ function Shop() {
         let transcriptsArray = [];
         let requestsArray = [];
         for(let i = 0; i < 4; i++) {
-            requestsArray.push(axios.get(URLS['dataflow'] + '/question/unrec')
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec')
                 .then(function (response) {
                     transcriptsArray.push(response['data']['results'][0]);
                 }));
@@ -163,7 +163,7 @@ function Shop() {
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         }
-        const response = await axios.post(URLS['dataflow'] + "/audio", formdata, config)
+        const response = await axios.post(urls['dataflow'] + "/audio", formdata, config)
             .then(response => {
                 setShopScreen("home");
                 alert.success("Submitted recording");

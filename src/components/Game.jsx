@@ -174,7 +174,7 @@ function Game() {
     const [rid, setRid] = useState("");
 
     // URLS
-    const URLS = useRecoilValue(URLS);
+    const urls = useRecoilValue(URLS);
 
     useEffect(() => {
         const buzzerListener = data => {
@@ -244,7 +244,7 @@ function Game() {
     });
 
     useEffect(() => {
-        axios.post(URLS['HLS'] + '/verify', null, {params: {
+        axios.post(urls['HLS'] + '/verify', null, {params: {
             rid, 
             token
         }});
@@ -262,7 +262,7 @@ function Game() {
             
             if (div) div.innerHTML = div.innerHTML + '  \n' + cue
         },
-        backend_url: URLS['HLS'] + '/hls',
+        backend_url: urls['HLS'] + '/hls',
         recording_id: rid,
         token: token,
         header: 'x-gostreamer-token',
