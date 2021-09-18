@@ -8,7 +8,7 @@ import {
 } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import axios from 'axios';
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { TRANSCRIPTS } from "../store";
 import AudioRecorder from './AudioRecorder.jsx';
 
