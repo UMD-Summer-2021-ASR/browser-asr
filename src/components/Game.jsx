@@ -243,14 +243,6 @@ function Game() {
         }
     });
 
-    useEffect(() => {
-        axios.post(urls['HLS'] + '/verify', null, {params: {
-            rid, 
-            token
-        }});
-    }, [rid, token])
-    // when token/rid changes, send POST request to classifier (POST /verify?rid=<rid>&token=<token>)
-
     const [hls] = useQuestion({
         onCue: (cue) => {
             console.log(cue);

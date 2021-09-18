@@ -133,7 +133,7 @@ function AnswerBox(props) {
                   console.log(response);
                   socket.emit("audioanswer", {
                     auth: authtoken,
-                    filename: "george" // CHANGE
+                    filename: response.data['filename'] // CHANGE
                   })
                 })
                 .catch(error => {
