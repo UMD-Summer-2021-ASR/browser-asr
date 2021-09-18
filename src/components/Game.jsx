@@ -172,6 +172,7 @@ function Game() {
     // for HLS
     const [token, setToken] = useState("");
     const [rid, setRid] = useState("");
+    const [classifiable, setClassifiable] = useState(true);
 
     // URLS
     const urls = useRecoilValue(URLS);
@@ -221,6 +222,7 @@ function Game() {
             console.log(data['rid']);
             setToken(data['token']);
             setRid(data['rid']);
+            setClassifiable(data['classifiable'])
             setTimeout(() => {
                 var video = document.getElementById('hls');
                 video.play()
@@ -306,7 +308,7 @@ function Game() {
                             </div>
     
                             <div class="game-menubox">
-                                <AnswerBox buzz={buzz} buzzer={state.buzzer} submit={answer} questionTime={state.questionTime} state={state}/>
+                                <AnswerBox buzz={buzz} buzzer={state.buzzer} submit={answer} questionTime={state.questionTime} state={state} classifiable={classifiable}/>
                             </div>
                             
                         </div>

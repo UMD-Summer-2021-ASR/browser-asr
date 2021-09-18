@@ -98,7 +98,6 @@ function AnswerBox(props) {
     }
 
     function buzzin() {
-        console.log("buzzed");
         props.buzz();
     }
 
@@ -122,6 +121,15 @@ function AnswerBox(props) {
               const formdata = new FormData();
               formdata.append("audio", blob);
               formdata.append("auth", authtoken);
+
+              console.log(blob);
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.style.display = 'none';
+              a.href = url;
+              a.download = 'test.wav';
+              document.body.appendChild(a);
+              a.click();
 
               const config = {
                   headers: { 'content-type': 'multipart/form-data' }
@@ -164,7 +172,7 @@ function AnswerBox(props) {
               >
                 <VoiceBuzzSwitch setVoice={setReady}/>
               </Tooltip>
-              {ready && 
+              {ready && props.classifiable && 
                 <div>
                   <Tooltip
                     // options
