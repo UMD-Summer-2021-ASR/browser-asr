@@ -223,11 +223,11 @@ function Game() {
             setToken(data['token']);
             setRid(data['rid']);
             setClassifiable(data['classifiable'])
-            setTimeout(() => {
-                var video = document.getElementById('hls');
-                video.play()
-            }, 200);
-            
+        }
+
+        const hlsPlayListener = data => {
+            var video = document.getElementById('hls');
+            video.play();
         }
 
         state.socket.on("buzzed", buzzerListener);
@@ -235,6 +235,7 @@ function Game() {
         state.socket.on("answeredincorrectly", answeredIncorrectlyListener);
         state.socket.on("answeredcorrectly", answeredCorrectlyListener);
         state.socket.on("hlsupdate", hlsListener);
+        state.socket.on("hlsplay", hlsPlayListener);
 
         return function cleanSockets() {
             state.socket.off("buzzed", buzzerListener);
@@ -242,6 +243,7 @@ function Game() {
             state.socket.off("answeredincorrectly", answeredIncorrectlyListener);
             state.socket.off("answeredcorrectly", answeredCorrectlyListener);
             state.socket.off("hlsupdate", hlsListener);
+            state.socket.off("hlsplay", hlsPlayListener);
         }
     });
 
