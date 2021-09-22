@@ -243,7 +243,6 @@ function Game() {
 
     const answeredCorrectlyListener = (data) => {
       var video = document.getElementById("hls");
-      video.play();
       console.log(data);
       // this.setBuzzTime(time);
       // TODO correct animation
