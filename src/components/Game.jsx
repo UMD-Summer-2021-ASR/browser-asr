@@ -207,6 +207,9 @@ function Game() {
   // URLS
   const urls = useRecoilValue(URLS);
 
+  // ANSWER BOX
+  const [answerText, setAnswerText] = useState("");
+
   useEffect(() => {
     const buzzerListener = (data) => {
       var video = document.getElementById("hls");
@@ -240,6 +243,7 @@ function Game() {
 
     const answeredCorrectlyListener = (data) => {
       var video = document.getElementById("hls");
+      video.play();
       console.log(data);
       // this.setBuzzTime(time);
       // TODO correct animation
@@ -253,6 +257,7 @@ function Game() {
       setToken(data["token"]);
       setRid(data["rid"]);
       setClassifiable(data["classifiable"]);
+      setAnswerText("");
     };
 
     const hlsPlayListener = (data) => {
@@ -353,6 +358,8 @@ function Game() {
                   questionTime={state.questionTime}
                   state={state}
                   classifiable={classifiable}
+                  answer={answerText}
+                  setAnswer={setAnswerText}
                 />
               </div>
             </div>

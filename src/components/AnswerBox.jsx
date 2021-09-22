@@ -82,19 +82,19 @@ function AnswerBox(props) {
     const alert = useAlert();
     const socket = useRecoilValue(SOCKET);
 
-    const [answer, setAnswer] = useState("");
+    
     const [ready, setReady] = useState(false);
     const [useClassifier, setUseClassifier] = useState(false);
     const prevQuestionTime = usePrevious(props.questionTime)
     
     // ASR always picks up the wake word, this function removes it
     function complete(answer) {
-        setAnswer(answer.substr(answer.indexOf(" ") + 1).replace("stop",""));
+        props.setAnswer(answer.substr(answer.indexOf(" ") + 1).replace("stop",""));
     }
 
     // Sets answer when typed
     function setAnswer2(event) {
-        setAnswer(event.target.value);
+        props.setAnswer(event.target.value);
     }
 
     function buzzin() {
@@ -102,8 +102,8 @@ function AnswerBox(props) {
     }
 
     function submit() {
-        props.submit(answer);
-        setAnswer("");
+        props.submit(props.answer);
+        props.setAnswer("");
     }
 
     useOnlineAnswering({
@@ -149,7 +149,7 @@ function AnswerBox(props) {
                 });
               
             } else {
-              complete(answer);
+              complete(props.answer);
             }
         },
         onBuzzin: () => buzzin()
@@ -159,7 +159,7 @@ function AnswerBox(props) {
         <div class="answerbox-answering-wrapper">
             <form class="answerbox-textbox">
                 <label>
-                    <input type="text" name="name" value={answer} onChange={setAnswer2} className={"answerbox-textbox-text"}/>
+                    <input type="text" name="name" value={props.answer} onChange={setAnswer2} className={"answerbox-textbox-text"}/>
                 </label>
             </form>
             <div class="answerbox-switch-wrapper">
