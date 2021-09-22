@@ -342,15 +342,6 @@ function Game() {
               <div class="game-transcriptbox" id="transcript-box"></div>
 
               <div class="game-menubox">
-                <button
-                  onClick={() => {
-                    var video = document.getElementById("hls");
-                    console.log("Triggering Play");
-                    video.play();
-                  }}
-                >
-                  PLAY{" "}
-                </button>
                 <AnswerBox
                   buzz={buzz}
                   buzzer={state.buzzer}
