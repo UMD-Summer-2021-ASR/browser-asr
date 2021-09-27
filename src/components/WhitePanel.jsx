@@ -9,10 +9,11 @@ import Microphone from '../assets/microphone.png';
 import Recorder from './AudioRecorder.jsx'
 import Player from './Player.jsx';
 import Game from './Game.jsx';
+import Tutorial from './Tutorial.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS } from "../store";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS, TUTORIAL_PIN, SHOW_TUTORIAL } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -26,6 +27,7 @@ import Leaderboards from './Leaderboards.jsx';
 import CreateAccount from './CreateAccount.jsx';
 
 // ASSETS
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 // Sidenav
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
@@ -155,8 +157,19 @@ function Sidenav(props) {
                 <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(5)} textColor={MainColor}/>
                 <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor} setScreen={() => firebase.auth().signOut()}/>
             </div>
+            
         </div>
     );
+}
+
+function TutorialBtn(props) {
+    const [screen, setScreen] = useRecoilState(SCREEN);
+    return (
+        <div class="whitepanel-tutorial button" onClick={() => {setScreen(8);}}>
+            <HelpOutlineIcon/>
+            <span class="label-hidden">Tutorial</span>
+        </div>
+    )
 }
 
 // page header w/ coins, title, and description
@@ -323,6 +336,7 @@ function BigWhitePanel() {
                     <LoginTitle/>
                     <LoginBody/>
                 </div>
+                
             </div>
         );
     } else if(screen === 1) { // profile
@@ -339,6 +353,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
+                <TutorialBtn/>
             </div>
         );
     } else if(screen === 3) { // select gamemode / lobby
@@ -356,6 +371,7 @@ function BigWhitePanel() {
                             </div>
                         </div>
                     </div>
+                    <TutorialBtn/>
                 </div>
             );
         } else {
@@ -372,6 +388,7 @@ function BigWhitePanel() {
                             </div>
                         </div>
                     </div>
+                    <TutorialBtn/>
                 </div>
             );
         }
@@ -389,6 +406,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
+                <TutorialBtn/>
             </div>
         );
     } else if(screen === 5) { // leaderboards
@@ -405,6 +423,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
+                <TutorialBtn/>
             </div>
         );
     } else if(screen === 6){ // in-game
@@ -418,6 +437,15 @@ function BigWhitePanel() {
                     <div class="content-wrapper">
                         <CreateAccount/>
                     </div>
+                </div>
+                
+            </div>
+        );
+    } else if(screen === 8) { // Tutorial
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <Tutorial/>
                 </div>
             </div>
         );
@@ -435,6 +463,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
+                <TutorialBtn/>
             </div>
         );
     } 

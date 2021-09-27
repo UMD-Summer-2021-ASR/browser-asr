@@ -328,3 +328,39 @@
     font-size: 2rem;
     font-weight: 800;
 }
+
+.whitepanel-tutorial {
+    color: #000;
+    text-decoration: none;
+}
+.whitepanel-tutorial.button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.whitepanel-tutorial .button .icons {
+    font-size: 24px;
+    transition: 0.2s;
+}
+.whitepanel-tutorial.button .label-hidden {
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.whitepanel-tutorial.button:hover .label-hidden {
+    max-width: 200px;
+    margin-left: 8px;
+    opacity: 1;
+}
