@@ -194,6 +194,19 @@ function Game() {
       lobby: useRecoilValue(LOBBY_CODE),
     }
   );
+
+  navigator.mediaSession.setActionHandler("play", async function () {
+    console.log('> User clicked "Play" icon.');
+    // await video.play();
+    // Do something more than just playing video...
+  });
+
+  navigator.mediaSession.setActionHandler("pause", function () {
+    console.log('> User clicked "Pause" icon.');
+    // video.pause();
+    // Do something more than just pausing video...
+  });
+
   const authtoken = useRecoilValue(AUTHTOKEN);
   const [gameScreen, setGameScreen] = useState("ingame");
   const [screen, setScreen] = useRecoilState(SCREEN);
@@ -263,6 +276,15 @@ function Game() {
       var video = document.getElementById("hls");
       video.play();
     };
+
+    var video = document.getElementById("hls");
+    video.addEventListener("play", function () {
+      navigator.mediaSession.playbackState = "playing";
+    });
+
+    video.addEventListener("pause", function () {
+      navigator.mediaSession.playbackState = "paused";
+    });
 
     state.socket.on("buzzed", buzzerListener);
     state.socket.on("gamestate", gameStateListener);
