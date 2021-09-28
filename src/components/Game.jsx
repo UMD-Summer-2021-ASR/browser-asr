@@ -278,13 +278,18 @@ function Game() {
     };
 
     var video = document.getElementById("hls");
-    video.addEventListener("play", function () {
-      navigator.mediaSession.playbackState = "playing";
-    });
+    if(video) {
+      video.addEventListener("play", function () {
+        navigator.mediaSession.playbackState = "playing";
+      });
 
-    video.addEventListener("pause", function () {
-      navigator.mediaSession.playbackState = "paused";
-    });
+      video.addEventListener("pause", function () {
+        navigator.mediaSession.playbackState = "paused";
+      });
+    }
+    
+
+   
 
     state.socket.on("buzzed", buzzerListener);
     state.socket.on("gamestate", gameStateListener);
