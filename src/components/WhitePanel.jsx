@@ -150,6 +150,16 @@ function TutorialBtn(props) {
     )
 }
 
+function TutorialBtn2(props) {
+    const [screen, setScreen] = useRecoilState(SCREEN);
+    return (
+        <div class="whitepanel-tutorial-2 button" onClick={() => {setScreen(8);}}>
+            <HelpOutlineIcon className={"whitepanel-tutorial-icon-2"} style={{color: "grey"}}/>
+            <span class="label-hidden">Tutorial</span>
+        </div>
+    )
+}
+
 // the sidenav
 function Sidenav(props) {
     let MainColor = "#6287F7";
@@ -363,7 +373,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
-                <TutorialBtn/>
+                <TutorialBtn2/>
             </div>
         );
     } else if(screen === 3) { // select gamemode / lobby
@@ -381,7 +391,7 @@ function BigWhitePanel() {
                             </div>
                         </div>
                     </div>
-                    <TutorialBtn/>
+                    <TutorialBtn2/>
                 </div>
             );
         } else {
@@ -398,7 +408,7 @@ function BigWhitePanel() {
                             </div>
                         </div>
                     </div>
-                    <TutorialBtn/>
+                    <TutorialBtn2/>
                 </div>
             );
         }
@@ -416,7 +426,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
-                <TutorialBtn/>
+                <TutorialBtn2/>
             </div>
         );
     } else if(screen === 5) { // leaderboards
@@ -433,7 +443,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
-                <TutorialBtn/>
+                <TutorialBtn2/>
             </div>
         );
     } else if(screen === 6){ // in-game
@@ -474,7 +484,7 @@ function BigWhitePanel() {
                         </div>
                     </div>
                 </div>
-                <TutorialBtn/>
+                <TutorialBtn2/>
             </div>
         );
     } 
