@@ -342,7 +342,7 @@
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    padding: 8px;
+    padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background: white;
@@ -358,9 +358,13 @@
     opacity: 0;
     white-space: nowrap;
     transition: 0.2s;
+    font-size: 1.2rem;
 }
 .whitepanel-tutorial.button:hover .label-hidden {
     max-width: 200px;
-    margin-left: 8px;
+    margin-left: 16px;
     opacity: 1;
+}
+.whitepanel-tutorial-icon {
+    transform: scale(2);
 }

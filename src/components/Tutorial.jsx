@@ -1,7 +1,7 @@
 import '../styles/Tutorial.css';
 import React, { useState, useEffect } from "react";
 import { isBuffer } from 'util';
-import { SCREEN } from '../store';
+import { SCREEN, PREVSCREEN } from '../store';
 import { useRecoilState, useRecoilValue } from "recoil";
 import Tutorial1 from '../assets/Tutorial1.png';
 import Tutorial2 from '../assets/Tutorial2.png';
@@ -14,9 +14,11 @@ import Tutorial8 from '../assets/Tutorial8.png';
 import Tutorial9 from '../assets/Tutorial9.png';
 import Tutorial10 from '../assets/Tutorial9.png';
 import Tutorial11 from '../assets/Tutorial1.png';
+
 function Tutorial(props) {
     const [page, setPage] = useState(0);
     const [screen, setScreen] = useRecoilState(SCREEN);
+    const prevScreen = useRecoilValue(PREVSCREEN);
     var tutorialItems = [
         {
             img: Tutorial1,
@@ -83,7 +85,7 @@ function Tutorial(props) {
                     </div>
                 </div>
                 <div class="tutorial-footer-btns-exit" onClick={() => {
-                    setScreen(10);
+                    setScreen(prevScreen);
                 }}>
                     Exit
                 </div>

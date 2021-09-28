@@ -13,7 +13,7 @@ import Tutorial from './Tutorial.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS, TUTORIAL_PIN, SHOW_TUTORIAL } from "../store";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS, TUTORIAL_PIN, SHOW_TUTORIAL, PREVSCREEN } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -140,6 +140,16 @@ function SidenavItem(props) {
     );
 }
 
+function TutorialBtn(props) {
+    const [screen, setScreen] = useRecoilState(SCREEN);
+    return (
+        <div class="whitepanel-tutorial button" onClick={() => {setScreen(8);}}>
+            <HelpOutlineIcon className={"whitepanel-tutorial-icon"} style={{color: "grey"}}/>
+            <span class="label-hidden">Tutorial</span>
+        </div>
+    )
+}
+
 // the sidenav
 function Sidenav(props) {
     let MainColor = "#6287F7";
@@ -157,20 +167,11 @@ function Sidenav(props) {
                 <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => props.setScreen(5)} textColor={MainColor}/>
                 <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor} setScreen={() => firebase.auth().signOut()}/>
             </div>
-            
         </div>
     );
 }
 
-function TutorialBtn(props) {
-    const [screen, setScreen] = useRecoilState(SCREEN);
-    return (
-        <div class="whitepanel-tutorial button" onClick={() => {setScreen(8);}}>
-            <HelpOutlineIcon/>
-            <span class="label-hidden">Tutorial</span>
-        </div>
-    )
-}
+
 
 // page header w/ coins, title, and description
 function PageHeader(props) {
@@ -188,6 +189,7 @@ function PageHeader(props) {
                 </div>
             </div>
             <div class="page-header-right-wrapper">
+                
                 {/* Energy */}
                 {/* <div class="page-header-energy-wrapper">
                     <div class="page-header-energy-cooldowntext"></div>
@@ -226,6 +228,13 @@ function BigWhitePanel() {
     const socket = useRecoilValue(SOCKET);
     const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
     const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
+    const [prevScreen, setPrevScreen] = useRecoilState(PREVSCREEN);
+
+    useEffect(() => {
+        if(screen != 8) {
+            setPrevScreen(screen);
+        }
+    }, [screen]);
 
     
     // connecting to socket server errors
@@ -335,6 +344,7 @@ function BigWhitePanel() {
                 <div class="login-white-panel">
                     <LoginTitle/>
                     <LoginBody/>
+                    <TutorialBtn/>
                 </div>
                 
             </div>
@@ -436,6 +446,7 @@ function BigWhitePanel() {
                 <div class="big-white-panel">
                     <div class="content-wrapper">
                         <CreateAccount/>
+                        <TutorialBtn/>
                     </div>
                 </div>
                 
