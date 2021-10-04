@@ -38,7 +38,7 @@ function Tutorial(props) {
         },
         {
             img: Tutorial5,
-            text: "Every custom game has game settings you can adjust, and a gamecode so you can play with friends. When, you're ready, click start."
+            text: "Every custom game has game settings you can adjust, and a gamecode so you can play with friends. For now, only 1 round of gameplay is supported. When, you're ready, click start."
         },
         {
             img: Tutorial6,
@@ -46,7 +46,7 @@ function Tutorial(props) {
         },
         {
             img: Tutorial7,
-            text: "When you think you know the answer, click the buzz button, type your answer into the answer box, and hit submit."
+            text: "When you think you know the answer, click the buzz button, type your answer into the answer box, and hit submit. If it's correct, the lobby will skip to the next question. If it's wrong, the question will continue to play."
         },
         {
             img: Tutorial8,
