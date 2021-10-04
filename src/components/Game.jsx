@@ -329,7 +329,15 @@ function Game() {
     };
   });
 
-  useEffect(() => {});
+
+  //Confetti
+  const [prevState, setPrevState] = useState(state);
+  useEffect(() => {
+    if(prevState.points[username] < state.points[username]) {
+      console.log("do confetti");
+    }
+    setPrevState(state);
+  }, [state]);
 
   const [hls, isParsed] = useQuestion({
     onCue: (cue) => {
