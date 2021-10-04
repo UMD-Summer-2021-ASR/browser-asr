@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./StackedProgressBar.css";
 import { ProgressBar } from "react-bootstrap";
 
 export enum ProgressBarVariant {
