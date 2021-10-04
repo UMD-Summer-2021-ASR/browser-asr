@@ -381,54 +381,75 @@ function Game() {
                 <div class="game-header-rq">
                   R: {state.round} / Q: {state.question}
                 </div>
-                <div class="game-header-time">
-                  {state.questionTime}
-                  <div style={{ width: "18rem" }}>
-                    <StackedProgressBar
-                      barData={[
-                        {
-                          width:
-                            100 -
-                            Math.round(
+
+                {state.gapTime < gameSettings.post_buzz_time &&
+                  <div class="game-header-time">
+                    <div class="game-header-time-sep">
+                      {state.gapTime}s
+                    </div>
+                    <div style={{ width: "21rem" }}>
+                      <StackedProgressBar
+                        barData={[{width: 100}]}
+                        progressData={[Math.round( state.gapTime / gameSettings.post_buzz_time * 100)]}
+                        striped={true}
+                        // animated={true}
+                      ></StackedProgressBar>
+                    </div>
+                  </div>
+                }
+                {state.gapTime >= gameSettings.post_buzz_time && 
+                  <div class="game-header-time">
+                    <div class="game-header-time-sep">
+                      {state.questionTime}s
+                    </div>
+                    <div style={{ width: "21rem" }}>
+                      <StackedProgressBar
+                        barData={[
+                          {
+                            width:
+                              100 -
+                              Math.round(
+                                ((totalTime - gameSettings.post_buzz_time) /
+                                  totalTime) *
+                                  100
+                              ),
+                            color: ProgressBarVariant.red,
+                          },
+                          {
+                            width: Math.round(
                               ((totalTime - gameSettings.post_buzz_time) /
                                 totalTime) *
                                 100
                             ),
-                          color: ProgressBarVariant.red,
-                        },
-                        {
-                          width: Math.round(
-                            ((totalTime - gameSettings.post_buzz_time) /
-                              totalTime) *
+                            color: ProgressBarVariant.blue,
+                          },
+                        ]}
+                        progressData={[
+                          Math.round(
+                            (Math.min(
+                              state.questionTime,
+                              gameSettings.post_buzz_time
+                            ) /
+                              gameSettings.post_buzz_time) *
                               100
                           ),
-                          color: ProgressBarVariant.blue,
-                        },
-                      ]}
-                      progressData={[
-                        Math.round(
-                          (Math.min(
-                            state.questionTime,
-                            gameSettings.post_buzz_time
-                          ) /
-                            gameSettings.post_buzz_time) *
-                            100
-                        ),
-                        Math.max(
-                          0,
-                          Math.round(
-                            ((state.questionTime -
-                              gameSettings.post_buzz_time) /
-                              (totalTime - gameSettings.post_buzz_time)) *
-                              100
-                          )
-                        ),
-                      ]}
-                      striped={true}
-                      animated={true}
-                    ></StackedProgressBar>
+                          Math.max(
+                            0,
+                            Math.round(
+                              ((state.questionTime -
+                                gameSettings.post_buzz_time) /
+                                (totalTime - gameSettings.post_buzz_time)) *
+                                100
+                            )
+                          ),
+                        ]}
+                        striped={true}
+                        animated={true}
+                      ></StackedProgressBar>
+                    </div>
                   </div>
-                </div>
+                }
+                
               </div>
 
               <div

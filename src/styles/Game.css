@@ -114,8 +114,13 @@
 
 .game-header-time {
   color: #6287f7;
-  width: 20rem;
+  width: 24rem;
   display: flex;
+  align-items: center;
+}
+
+.game-header-time-sep {
+    margin-right: 0.5rem;
 }
 
 .game-transcriptbox {
