@@ -1943,7 +1943,7 @@
   dependencies:
     "dequal" "^2.0.2"
 
-"@restart/ui@^0.2.1":
+"@restart/ui@^0.2.3":
   "integrity" "sha512-FDhtjIR9QvUfMwvFsgVurRA1qdYxM0F0S07acywjG7gNI2YmQo78rtCYIe553V/pyBjEjaKAg3fzBFCocFTqyQ=="
   "resolved" "https://registry.npmjs.org/@restart/ui/-/ui-0.2.3.tgz"
   "version" "0.2.3"
@@ -3560,7 +3560,7 @@
   "resolved" "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   "version" "1.0.0"
 
-"bootstrap@^5.1.0":
+"bootstrap@5.1.1":
   "integrity" "sha512-/jUa4sSuDZWlDLQ1gwQQR8uoYSvLJzDd8m5o6bPKh3asLAMYVZKdRCjb1joUd5WXf0WwCNzd2EjwQQhupou0dA=="
   "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-5.1.1.tgz"
   "version" "5.1.1"
@@ -10237,15 +10237,15 @@
   "resolved" "https://registry.npmjs.org/react-audio-analyser/-/react-audio-analyser-0.3.1.tgz"
   "version" "0.3.1"
 
-"react-bootstrap@^2.0.0-beta.5":
-  "integrity" "sha512-eHEkmESWYYgNLjqbz31G696Eytu+6GeF8CPHQ8t9Se12dUEej8OjBakyQP0OGms9yy1ZZeLG/Fvuo7VxiwMcuQ=="
-  "resolved" "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.0.0-beta.6.tgz"
-  "version" "2.0.0-beta.6"
+"react-bootstrap@^2.0.0-rc.0":
+  "integrity" "sha512-E2z/FQ/sDUfyFTPxNwd/BjUq319151TAQ3vosArgljBPLMiEAP9PHKCqxW82auta3IcM1T/zEl7ETU7nk3V3aA=="
+  "resolved" "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.0.0-rc.0.tgz"
+  "version" "2.0.0-rc.0"
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@restart/context" "^2.1.4"
     "@restart/hooks" "^0.3.26"
-    "@restart/ui" "^0.2.1"
+    "@restart/ui" "^0.2.3"
     "@types/invariant" "^2.2.33"
     "@types/prop-types" "^15.7.3"
     "@types/react" ">=16.14.8"
