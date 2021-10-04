@@ -24,6 +24,8 @@ import {
   ProgressBarVariant,
   StackedProgressBar,
 } from "../pkg/StackedProgressBar";
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 // player display w/ score in-game
 function PlayerCard(props) {
@@ -230,6 +232,9 @@ function Game() {
   const gameSettings = useRecoilValue(GAMESETTINGS);
   const [totalTime, setTotalTime] = useState(40);
   const [totalTimeBeenSet, setTotalTimeBeenSet] = useState(false);
+  const [showConffeti, setShowConfetti] = useState(false);
+
+  const { width, height } = useWindowSize();
 
   // for HLS
   const [token, setToken] = useState("");
@@ -329,12 +334,14 @@ function Game() {
     };
   });
 
-
   //Confetti
   const [prevState, setPrevState] = useState(state);
   useEffect(() => {
-    if(prevState.points[username] < state.points[username]) {
-      console.log("do confetti");
+    if (prevState.points[username] < state.points[username]) {
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 5000);
     }
     setPrevState(state);
   }, [state]);
@@ -375,122 +382,127 @@ function Game() {
 
   if (gameScreen === "ingame") {
     return (
-      <div class="game1-big-white-panel-wrapper">
-        <div>
+      <React.Fragment>
+        {showConffeti && <Confetti width={width} height={height} />}
+        <div class="game1-big-white-panel-wrapper">
           <div>
-            <video id="hls" controls hidden></video>
+            <div>
+              <video id="hls" controls hidden></video>
+            </div>
           </div>
-        </div>
 
-        <div class="game1-big-white-panel">
-          <div class="game1-content-wrapper">
-            <div class="game-content-wrapper">
-              <div class="game-header-wrapper">
-                <div class="game-header-rq">
-                  R: {state.round} / Q: {state.question}
-                </div>
-
-                {state.gapTime < gameSettings.post_buzz_time &&
-                  <div class="game-header-time">
-                    <div class="game-header-time-sep">
-                      {state.gapTime}s
-                    </div>
-                    <div style={{ width: "21rem" }}>
-                      <StackedProgressBar
-                        barData={[{width: 100}]}
-                        progressData={[Math.round( state.gapTime / gameSettings.post_buzz_time * 100)]}
-                        striped={true}
-                        // animated={true}
-                      ></StackedProgressBar>
-                    </div>
+          <div class="game1-big-white-panel">
+            <div class="game1-content-wrapper">
+              <div class="game-content-wrapper">
+                <div class="game-header-wrapper">
+                  <div class="game-header-rq">
+                    R: {state.round} / Q: {state.question}
                   </div>
-                }
-                {state.gapTime >= gameSettings.post_buzz_time && 
-                  <div class="game-header-time">
-                    <div class="game-header-time-sep">
-                      {state.questionTime}s
+
+                  {state.gapTime < gameSettings.post_buzz_time && (
+                    <div class="game-header-time">
+                      <div class="game-header-time-sep">{state.gapTime}s</div>
+                      <div style={{ width: "21rem" }}>
+                        <StackedProgressBar
+                          barData={[{ width: 100 }]}
+                          progressData={[
+                            Math.round(
+                              (state.gapTime / gameSettings.post_buzz_time) *
+                                100
+                            ),
+                          ]}
+                          striped={true}
+                          // animated={true}
+                        ></StackedProgressBar>
+                      </div>
                     </div>
-                    <div style={{ width: "21rem" }}>
-                      <StackedProgressBar
-                        barData={[
-                          {
-                            width:
-                              100 -
-                              Math.round(
+                  )}
+                  {state.gapTime >= gameSettings.post_buzz_time && (
+                    <div class="game-header-time">
+                      <div class="game-header-time-sep">
+                        {state.questionTime}s
+                      </div>
+                      <div style={{ width: "21rem" }}>
+                        <StackedProgressBar
+                          barData={[
+                            {
+                              width:
+                                100 -
+                                Math.round(
+                                  ((totalTime - gameSettings.post_buzz_time) /
+                                    totalTime) *
+                                    100
+                                ),
+                              color: ProgressBarVariant.red,
+                            },
+                            {
+                              width: Math.round(
                                 ((totalTime - gameSettings.post_buzz_time) /
                                   totalTime) *
                                   100
                               ),
-                            color: ProgressBarVariant.red,
-                          },
-                          {
-                            width: Math.round(
-                              ((totalTime - gameSettings.post_buzz_time) /
-                                totalTime) *
+                              color: ProgressBarVariant.blue,
+                            },
+                          ]}
+                          progressData={[
+                            Math.round(
+                              (Math.min(
+                                state.questionTime,
+                                gameSettings.post_buzz_time
+                              ) /
+                                gameSettings.post_buzz_time) *
                                 100
                             ),
-                            color: ProgressBarVariant.blue,
-                          },
-                        ]}
-                        progressData={[
-                          Math.round(
-                            (Math.min(
-                              state.questionTime,
-                              gameSettings.post_buzz_time
-                            ) /
-                              gameSettings.post_buzz_time) *
-                              100
-                          ),
-                          Math.max(
-                            0,
-                            Math.round(
-                              ((state.questionTime -
-                                gameSettings.post_buzz_time) /
-                                (totalTime - gameSettings.post_buzz_time)) *
-                                100
-                            )
-                          ),
-                        ]}
-                        striped={true}
-                        animated={true}
-                      ></StackedProgressBar>
+                            Math.max(
+                              0,
+                              Math.round(
+                                ((state.questionTime -
+                                  gameSettings.post_buzz_time) /
+                                  (totalTime - gameSettings.post_buzz_time)) *
+                                  100
+                              )
+                            ),
+                          ]}
+                          striped={true}
+                          animated={true}
+                        ></StackedProgressBar>
+                      </div>
                     </div>
-                  </div>
-                }
-                
-              </div>
+                  )}
+                </div>
 
-              <div
-                class="game-transcriptbox"
-                id="transcript-box"
-                className={
-                  "game-transcriptbox " +
-                  (state.buzzer !== "" ? "game-buzzedin-blur" : "")
-                }
-              ></div>
+                <div
+                  class="game-transcriptbox"
+                  id="transcript-box"
+                  className={
+                    "game-transcriptbox " +
+                    (state.buzzer !== "" ? "game-buzzedin-blur" : "")
+                  }
+                ></div>
 
-              <div class="game-menubox">
-                <AnswerBox
-                  buzz={buzz}
-                  buzzer={state.buzzer}
-                  submit={answer}
-                  questionTime={state.questionTime}
-                  state={state}
-                  classifiable={classifiable}
-                  answer={answerText}
-                  setAnswer={setAnswerText}
-                />
+                <div class="game-menubox">
+                  <AnswerBox
+                    buzz={buzz}
+                    buzzer={state.buzzer}
+                    submit={answer}
+                    questionTime={state.questionTime}
+                    state={state}
+                    classifiable={classifiable}
+                    answer={answerText}
+                    setAnswer={setAnswerText}
+                  />
+                </div>
               </div>
             </div>
           </div>
+          <TeamCard
+            color="standings"
+            points={state.points}
+            buzzer={state.buzzer}
+            buzzTime={state.buzzTime}
+          />
         </div>
-        <TeamCard
-          color="standings"
-          points={state.points}
-          buzzer={state.buzzer}
-          buzzTime={state.buzzTime}
-        />
-      </div>
+      </React.Fragment>
     );
   } else {
     if (state.points[0] === undefined) {
