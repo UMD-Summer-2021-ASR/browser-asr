@@ -94,6 +94,8 @@ function PostgamePlayerCard(props) {
 
 // teamcard wrapping playercards
 function TeamCard(props) {
+  const [screen, setScreen] = useRecoilState(SCREEN);
+  const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
   if (props.points[0] === undefined) {
     const pointsArray = [];
     for (const key in props.points) {
@@ -118,6 +120,15 @@ function TeamCard(props) {
               buzzTime={props.buzzTime}
             />
           ))}
+        </div>
+        <div
+          onClick={() => {
+            setPlayScreen(0);
+            setScreen(3);
+          }}
+          class="game-quitbtn"
+        >
+          Quit
         </div>
       </div>
     );

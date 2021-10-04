@@ -179,7 +179,10 @@ function GamemodeBtn(props) {
     }
     
     return (
-        <div className={"play-gamemode-btn " + (props.gamemode === props.self ? "play-gamemode-btn-selected" : "")} onClick={setGamemodeHandler}>
+        <div className={"play-gamemode-btn " + (props.gamemode === props.self ? "play-gamemode-btn-selected" : "")} onClick={ () => {
+            document.location.hash = props.self;
+            props.setGamemode(props.self);
+        }}>
             {props.name}
         </div>
     );
@@ -279,36 +282,36 @@ function JoinCustomLobbyCard(props) {
 
 // play page hook
 function Play(props) {
-    const [gamemode, setGamemode] = useState(0);
+    const [gamemode, setGamemode] = useState("casual");
 
     return (
         <div class="play-content-wrapper">
             <div class="play-gamemode-wrapper">
-                <GamemodeBtn name={"Casual"} self={0} gamemode={gamemode} setGamemode={setGamemode}/>
-                <GamemodeBtn name={"Ranked"} self={1} gamemode={gamemode} setGamemode={setGamemode}/>
-                <GamemodeBtn name={"Solo"} self={2} gamemode={gamemode} setGamemode={setGamemode}/>
-                <GamemodeBtn name={"Custom"} self={3} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Casual"} self={"casual"} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Ranked"} self={"ranked"} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Solo"} self={"solo"} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Custom"} self={"custom"} gamemode={gamemode} setGamemode={setGamemode}/>
             </div>
 
             <div class="play-gamemodecards-wrapper">
-                { gamemode === 0 && // casual
+                { gamemode === "casual" && // casual
                     <>
                         <GamemodeComingSoonCard icon={GamemodeIcon1}/>
                         <GamemodeComingSoonCard icon={GamemodeIcon6}/>
                     </>
                 }
-                { gamemode === 1 && // Ranked
+                { gamemode === "ranked" && // Ranked
                     <>
                         <GamemodeComingSoonCard icon={GamemodeIcon3}/>
                         <GamemodeComingSoonCard icon={GamemodeIcon2}/>
                     </>
                 }
-                { gamemode === 2 && // Solo
+                { gamemode === "solo" && // Solo
                     <>
                         <GamemodeComingSoonCard icon={GamemodeIcon5}/>
                     </>
                 }
-                { gamemode === 3 && // Custom
+                { gamemode === "custom" && // Custom
                     <>
                         <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[5]}/>
                         <JoinCustomLobbyCard icon={GamemodeIcon7}/>

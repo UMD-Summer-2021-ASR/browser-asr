@@ -183,7 +183,7 @@ function Lobby() {
                                 <div onClick={() => {
                                     updateSettings({'teams': 0});
                                 }} className={"lobby-gamesettings-selector-item " + (gameSettings['teams'] === 0 ? "lobby-gamesettings-selector-selected" : "")}>
-                                    0
+                                    None (FFA)
                                 </div>
                                 <div onClick={() => {
                                     updateSettings({'teams': 2});
@@ -234,7 +234,7 @@ function Lobby() {
                             </div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
-                            <div>Time between questions</div>
+                            <div>Time between questions (s)</div>
                             <div class="lobby-gamesettings-hor-flex">
                                 <div class="lobby-gamesettings-slider-wrapper">
                                     <Slider
@@ -253,7 +253,7 @@ function Lobby() {
                             </div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
-                            <div>Buzz time after questions</div>
+                            <div>Buzz time after questions (s)</div>
                             <div class="lobby-gamesettings-hor-flex">
                                 <div class="lobby-gamesettings-slider-wrapper">
                                     <Slider
@@ -287,7 +287,7 @@ function Lobby() {
                             Players {typeof gameSettings['players'][0] === 'string' ? gameSettings['players'].length : gameSettings['players'][0].length + gameSettings['players'][1].length}/{gameSettings['max_players']}
                         </div>
                         <div>
-                            Room: {lobbyCode}
+                            Lobby: {lobbyCode}
                         </div>
                     </div>
                     {typeof gameSettings['players'][0] === 'string' &&

@@ -200,11 +200,18 @@ function AnswerBox(props) {
     console.log(answer);
   }, [answer]);
 
+  useEffect(() => {
+    if(props.buzzer !== username) {
+      props.setAnswer("");
+    }
+  }, [props.buzzer])
+
   return (
     <div class="answerbox-answering-wrapper">
       <form class="answerbox-textbox">
         <label>
           <input
+            disabled={props.buzzer !== username}
             type="text"
             name="name"
             value={props.answer}

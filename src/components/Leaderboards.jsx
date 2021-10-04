@@ -85,7 +85,7 @@ function Leaderboards() {
                 </div>
                 <div class="leaderboards-board-content-wrapper-wrapper">
                     <div class="leaderboards-board-content-wrapper">
-                        <User rank="1" rating={3798} username="bob1"/>
+                        {/* <User rank="1" rating={3798} username="bob1"/>
                         <User rank="2" rating={3564} username="bob2"/>
                         <User rank="3" rating={3543} username="bob3"/>
                         <User rank="4" rating={3489} username="bob4"/>
@@ -94,7 +94,7 @@ function Leaderboards() {
                         <User rank="7" rating={3364} username="bob7"/>
                         <User rank="8" rating={3362} username="bob8"/>
                         <User rank="9" rating={3351} username="bob9"/>
-                        <User rank="10" rating={3340} username="bob10"/>
+                        <User rank="10" rating={3340} username="bob10"/> */}
                     </div>
                 </div>
                 
@@ -105,18 +105,18 @@ function Leaderboards() {
                 </div>
                 <div class="leaderboards-topics-title-divider"></div>
                 <div class="leaderboards-topic-list-wrapper">
-                    <Topic name="Overall" rank={5} percentile={0.02} self={"all"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Current Events" rank={5} percentile={0.02} self={"currentevents"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Fine Arts" rank={5} percentile={0.02} self={"finearts"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Geography" rank={5} percentile={0.02} self={"geography"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="History" rank={5} percentile={0.02} self={"history"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Literature" rank={5} percentile={0.02} self={"literature"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Mythology" rank={5} percentile={0.02} self={"mythology"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Philosophy" rank={5} percentile={0.02} self={"philosophy"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Religion" rank={5} percentile={0.02} self={"religion"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Science" rank={5} percentile={0.02} self={"science"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Social Science" rank={5} percentile={0.02} self={"socialscience"} topic={topic} setTopic={setTopic}/>
-                    <Topic name="Trash" rank={5} percentile={0.02} self={"trash"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Overall" rank="--" percentile="--" self={"all"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Current Events" rank="--" percentile="--" self={"currentevents"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Fine Arts" rank="--" percentile="--" self={"finearts"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Geography" rank="--" percentile="--" self={"geography"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="History" rank="--" percentile="--" self={"history"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Literature" rank="--" percentile="--" self={"literature"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Mythology" rank="--" percentile="--" self={"mythology"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Philosophy" rank="--" percentile="--" self={"philosophy"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Religion" rank="--" percentile="--" self={"religion"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Science" rank="--" percentile="--" self={"science"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Social Science" rank="--" percentile="--" self={"socialscience"} topic={topic} setTopic={setTopic}/>
+                    <Topic name="Trash" rank="--" percentile="--" self={"trash"} topic={topic} setTopic={setTopic}/>
                 </div>
             </div>
         </div>
