@@ -22,8 +22,8 @@ import { Tooltip } from "react-tippy";
 import axios from "axios";
 import {
   ProgressBarVariant,
-  StackedProgressBar
-} from '../pkg/StackedProgressBar';
+  StackedProgressBar,
+} from "../pkg/StackedProgressBar";
 
 // player display w/ score in-game
 function PlayerCard(props) {
@@ -253,7 +253,7 @@ function Game() {
       if (data[0] === false) {
         setGameScreen("postgame");
       }
-      if(!totalTimeBeenSet) {
+      if (!totalTimeBeenSet) {
         setTotalTime(data[3]);
         setTotalTimeBeenSet(true);
       }
@@ -302,7 +302,7 @@ function Game() {
     };
 
     var video = document.getElementById("hls");
-    if(video) {
+    if (video) {
       video.addEventListener("play", function () {
         navigator.mediaSession.playbackState = "playing";
       });
@@ -311,9 +311,6 @@ function Game() {
         navigator.mediaSession.playbackState = "paused";
       });
     }
-    
-
-   
 
     state.socket.on("buzzed", buzzerListener);
     state.socket.on("gamestate", gameStateListener);
@@ -386,19 +383,62 @@ function Game() {
                 </div>
                 <div class="game-header-time">
                   {state.questionTime}
-                  <StackedProgressBar
-                    barData={[
-                      { width: 100-Math.round((totalTime-gameSettings.post_buzz_time) / totalTime * 100), color: ProgressBarVariant.red },
-                      { width: Math.round((totalTime-gameSettings.post_buzz_time) / totalTime * 100), color: ProgressBarVariant.blue }
-                    ]}
-                    progressData={[Math.round(Math.min(state.questionTime, gameSettings.post_buzz_time) / gameSettings.post_buzz_time*100), Math.max(0, Math.round((state.questionTime-gameSettings.post_buzz_time) / (totalTime-gameSettings.post_buzz_time) * 100))]}
-                    striped={true}
-                    animated={true}
-                  ></StackedProgressBar>
+                  <div style={{ width: "18rem" }}>
+                    <StackedProgressBar
+                      barData={[
+                        {
+                          width:
+                            100 -
+                            Math.round(
+                              ((totalTime - gameSettings.post_buzz_time) /
+                                totalTime) *
+                                100
+                            ),
+                          color: ProgressBarVariant.red,
+                        },
+                        {
+                          width: Math.round(
+                            ((totalTime - gameSettings.post_buzz_time) /
+                              totalTime) *
+                              100
+                          ),
+                          color: ProgressBarVariant.blue,
+                        },
+                      ]}
+                      progressData={[
+                        Math.round(
+                          (Math.min(
+                            state.questionTime,
+                            gameSettings.post_buzz_time
+                          ) /
+                            gameSettings.post_buzz_time) *
+                            100
+                        ),
+                        Math.max(
+                          0,
+                          Math.round(
+                            ((state.questionTime -
+                              gameSettings.post_buzz_time) /
+                              (totalTime - gameSettings.post_buzz_time)) *
+                              100
+                          )
+                        ),
+                      ]}
+                      striped={true}
+                      animated={true}
+                    ></StackedProgressBar>
+                  </div>
                 </div>
               </div>
 
-              <div class="game-transcriptbox" id="transcript-box" className={"game-transcriptbox " + (state.buzzer !== ""? "game-buzzedin-blur" : "")}></div>
+              <div
+                class="game-transcriptbox"
+                id="transcript-box"
+                className={
+                  "game-transcriptbox " +
+                  (state.buzzer !== "" ? "game-buzzedin-blur" : "")
+                }
+              ></div>
 
               <div class="game-menubox">
                 <AnswerBox
