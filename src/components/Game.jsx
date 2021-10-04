@@ -13,12 +13,17 @@ import {
   AUTHTOKEN,
   PROFILE,
   URLS,
+  GAMESETTINGS,
 } from "../store";
 import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from "@material-ui/icons/Person";
 import { useQuestion } from "online-answering";
 import { Tooltip } from "react-tippy";
 import axios from "axios";
+import {
+  ProgressBarVariant,
+  StackedProgressBar
+} from '../pkg/StackedProgressBar';
 
 // player display w/ score in-game
 function PlayerCard(props) {
@@ -222,6 +227,9 @@ function Game() {
   const [gameScreen, setGameScreen] = useState("ingame");
   const [screen, setScreen] = useRecoilState(SCREEN);
   const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+  const gameSettings = useRecoilValue(GAMESETTINGS);
+  const [totalTime, setTotalTime] = useState(40);
+  const [totalTimeBeenSet, setTotalTimeBeenSet] = useState(false);
 
   // for HLS
   const [token, setToken] = useState("");
@@ -244,6 +252,10 @@ function Game() {
     const gameStateListener = (data) => {
       if (data[0] === false) {
         setGameScreen("postgame");
+      }
+      if(!totalTimeBeenSet) {
+        setTotalTime(data[3]);
+        setTotalTimeBeenSet(true);
       }
       setState({
         inGame: data[0],
@@ -281,6 +293,7 @@ function Game() {
       setRid(data["rid"]);
       setClassifiable(data["classifiable"]);
       setAnswerText("");
+      setTotalTimeBeenSet(false);
     };
 
     const hlsPlayListener = (data) => {
@@ -372,11 +385,20 @@ function Game() {
                   R: {state.round} / Q: {state.question}
                 </div>
                 <div class="game-header-time">
-                  Current: {state.questionTime} / Next in: {state.gapTime}
+                  {state.questionTime}
+                  <StackedProgressBar
+                    barData={[
+                      { width: 100-Math.round((totalTime-gameSettings.post_buzz_time) / totalTime * 100), color: ProgressBarVariant.red },
+                      { width: Math.round((totalTime-gameSettings.post_buzz_time) / totalTime * 100), color: ProgressBarVariant.blue }
+                    ]}
+                    progressData={[Math.round(Math.min(state.questionTime, gameSettings.post_buzz_time) / gameSettings.post_buzz_time*100), Math.max(0, Math.round((state.questionTime-gameSettings.post_buzz_time) / (totalTime-gameSettings.post_buzz_time) * 100))]}
+                    striped={true}
+                    animated={true}
+                  ></StackedProgressBar>
                 </div>
               </div>
 
-              <div class="game-transcriptbox" id="transcript-box"></div>
+              <div class="game-transcriptbox" id="transcript-box" className={"game-transcriptbox " + (state.buzzer !== ""? "game-buzzedin-blur" : "")}></div>
 
               <div class="game-menubox">
                 <AnswerBox

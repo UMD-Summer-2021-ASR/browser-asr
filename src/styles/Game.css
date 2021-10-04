@@ -98,6 +98,7 @@
     margin-right: 1rem;
     background-color: white;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 1rem;
     font-size: 1.25rem;
@@ -114,6 +115,7 @@
 
 .game-header-time {
     color: #6287F7;
+    width: 20rem;
 }
 
 .game-transcriptbox {
@@ -254,4 +256,8 @@
     font-size: 1.25rem;
     font-weight: 600;
     cursor: pointer;
+}
+
+.game-buzzedin-blur {
+    opacity: 30%;
 }
