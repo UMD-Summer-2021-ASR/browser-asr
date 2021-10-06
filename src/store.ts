@@ -39,7 +39,7 @@ const SCREEN = atom({
 
 const PLAY_SCREEN = atom({
     key: 'PLAY_SCREEN', // 0 = select gamemode screen, 1 = in-lobby screen
-    default: 0
+    default: "home"
 })
 
 const JOIN_CUSTOM_LOBBY_SCREEN = atom({

@@ -76,7 +76,7 @@ function Player(props) {
 
 
 // lobby hook
-function Lobby() {
+function StandardLobby() {
     const profile = useRecoilValue(PROFILE);
     const username = profile['username'];
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
@@ -170,26 +170,17 @@ function Lobby() {
             <div class="lobby-wrapper">
                 <div class="lobby-gamesettings-wrapper">
                     <div class="lobby-title">
-                        Game Settings (Custom)
+                        Game Settings
                     </div>
                     <div class="lobby-gamesettings-list-wrapper">
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Max players</div>
-                            <div>{gameSettings['max_players']}</div>
+                            <div>1</div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Teams</div>
                             <div class="lobby-gamesettings-hor-flex">
-                                <div onClick={() => {
-                                    updateSettings({'teams': 0});
-                                }} className={"lobby-gamesettings-selector-item " + (gameSettings['teams'] === 0 ? "lobby-gamesettings-selector-selected" : "")}>
-                                    None (FFA)
-                                </div>
-                                <div onClick={() => {
-                                    updateSettings({'teams': 2});
-                                }} className={"lobby-gamesettings-selector-item " + (gameSettings['teams'] === 2 ? "lobby-gamesettings-selector-selected" : "")}>
-                                    2
-                                </div>
+                                2
                             </div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
@@ -216,60 +207,15 @@ function Lobby() {
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Questions per round</div>
-                            <div class="lobby-gamesettings-hor-flex">
-                                <div class="lobby-gamesettings-slider-wrapper">
-                                    <Slider
-                                        defaultValue={gameSettings['questions_num']}
-                                        valueLabelDisplay="auto"
-                                        step={1}
-                                        min={1}
-                                        max={7}
-                                        value={gameSettings['questions_num']}
-                                        onChange={(event, value) => {
-                                            updateSettings({'questions_num': value});
-                                        }}
-                                        classes={"lobby-gamesettings-slider-wrapper"}
-                                    />
-                                </div>
-                            </div>
+                            <div>{gameSettings['questions_num']}</div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Time between questions (s)</div>
-                            <div class="lobby-gamesettings-hor-flex">
-                                <div class="lobby-gamesettings-slider-wrapper">
-                                    <Slider
-                                        defaultValue={gameSettings['gap_time']}
-                                        valueLabelDisplay="auto"
-                                        step={1}
-                                        min={0}
-                                        max={30}
-                                        value={gameSettings['gap_time']}
-                                        onChange={(event, value) => {
-                                            updateSettings({'gap_time': value});
-                                        }}
-                                        classes={"lobby-gamesettings-slider-wrapper"}
-                                    />
-                                </div>
-                            </div>
+                            <div>{gameSettings['gap_time']}</div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Buzz time after questions (s)</div>
-                            <div class="lobby-gamesettings-hor-flex">
-                                <div class="lobby-gamesettings-slider-wrapper">
-                                    <Slider
-                                        defaultValue={gameSettings['post_buzz_time']}
-                                        valueLabelDisplay="auto"
-                                        step={1}
-                                        min={0}
-                                        max={10}
-                                        value={gameSettings['post_buzz_time']}
-                                        onChange={(event, value) => {
-                                            updateSettings({'post_buzz_time': value});
-                                        }}
-                                        classes={"lobby-gamesettings-slider-wrapper"}
-                                    />
-                                </div>
-                            </div>
+                            <div>{gameSettings['post_buzz_time']}</div>
                         </div>
                     </div>
                     <div class="lobby-gamesettings-buttons-wrapper">
@@ -331,4 +277,4 @@ function Lobby() {
     
 }
 
-export default Lobby;
+export default StandardLobby;

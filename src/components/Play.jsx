@@ -83,7 +83,7 @@ const gameSettingsList = [
     }),
     new gameSettings({ // gamemode = 3 (1v1 casual)
         title: "1v1",
-        description: "Queue up to play casual 1v1 against others!",
+        description: "Play casual 1v1s against others!",
         cost: "10 energy per player per game",
         maxPlayers: "2",
         teams: "2",
@@ -126,51 +126,6 @@ const gameSettingsList = [
     }),
 ];
 
-// button for starting the lobby
-function StartLobbyButton(props) {
-    const [socket, setSocket] = useRecoilState(SOCKET);
-    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
-    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
-    const authtoken = useRecoilValue(AUTHTOKEN);
-
-
-    useEffect(() => {
-        const lobbyStateListener = (data) => {
-            setGameSettings({
-                'players': data['players'],
-                'teams': data['teams'],
-                'max_players': data['max_players'],
-                'rounds': data['rounds'],
-                'questions_num': data['questions_num'],
-                'gap_time': data['gap_time'],
-                'post_buzz_time': data['post_buzz_time'],
-            });
-            setLobbyCode(data['code']);
-            setPlayScreen(1);
-        };
-
-        socket.on("lobbystate", lobbyStateListener);
-
-        return function cleanSockets() {
-            socket.off("lobbystate", lobbyStateListener);
-        }
-    });
-
-    function StartLobby() {
-        setPlayScreen()
-        socket.emit("startlobby", {
-            auth: authtoken,
-            gamemode: props.gamemode,
-        });
-    }
-
-    return (
-        <div class="play-gamemodecard-start play-hvr-grow" onClick={StartLobby}>
-            START
-        </div>
-    )
-}
 
 // name = display name, gamemode = gamemode state, layer = layer of button, self = which button on the layer is it
 function GamemodeBtn(props) {
@@ -217,12 +172,106 @@ function GamemodeCard(props) {
             <div class="play-gamemodecard-description">
                 {props.gamesettings.description}
             </div>
-            <StartLobbyButton gamemode={props.gamesettings.gamemode}/>
+            {props.gamemode === 'custom' &&
+                <StartCustomLobbyButton/>
+            }
+            {props.gamemode === 'casualsolo' &&
+                <StartCasualSoloLobbyButton/>
+            }
         </div>
     );
 }
 
-// card for joining a custom lobby
+// CASUAL LOBBY
+function StartCasualSoloLobbyButton(props) {
+    const [socket, setSocket] = useRecoilState(SOCKET);
+    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
+    const authtoken = useRecoilValue(AUTHTOKEN);
+
+
+    useEffect(() => {
+        const lobbyStateListener = (data) => {
+            setGameSettings({
+                'players': data['players'],
+                'teams': data['teams'],
+                'max_players': data['max_players'],
+                'rounds': data['rounds'],
+                'questions_num': data['questions_num'],
+                'gap_time': data['gap_time'],
+                'post_buzz_time': data['post_buzz_time'],
+            });
+            setLobbyCode(data['code']);
+            setPlayScreen("casualsolo");
+        };
+
+        socket.on("lobbystate", lobbyStateListener);
+
+        return function cleanSockets() {
+            socket.off("lobbystate", lobbyStateListener);
+        }
+    });
+
+    function StartLobby() {
+        socket.emit("startlobby", {
+            auth: authtoken,
+            gamemode: "casualsolo",
+        });
+    }
+
+    return (
+        <div class="play-gamemodecard-start play-hvr-grow" onClick={StartLobby}>
+            START
+        </div>
+    )
+}
+
+// CUSTOM LOBBY
+function StartCustomLobbyButton(props) {
+    const [socket, setSocket] = useRecoilState(SOCKET);
+    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
+    const authtoken = useRecoilValue(AUTHTOKEN);
+
+
+    useEffect(() => {
+        const lobbyStateListener = (data) => {
+            setGameSettings({
+                'players': data['players'],
+                'teams': data['teams'],
+                'max_players': data['max_players'],
+                'rounds': data['rounds'],
+                'questions_num': data['questions_num'],
+                'gap_time': data['gap_time'],
+                'post_buzz_time': data['post_buzz_time'],
+            });
+            setLobbyCode(data['code']);
+            setPlayScreen("custom");
+        };
+
+        socket.on("lobbystate", lobbyStateListener);
+
+        return function cleanSockets() {
+            socket.off("lobbystate", lobbyStateListener);
+        }
+    });
+
+    function StartLobby() {
+        socket.emit("startlobby", {
+            auth: authtoken,
+            gamemode: "custom",
+        });
+    }
+
+    return (
+        <div class="play-gamemodecard-start play-hvr-grow" onClick={StartLobby}>
+            START
+        </div>
+    )
+}
+
 function JoinCustomLobbyCard(props) {
     const [text, setText] = useState("");
     const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
@@ -243,7 +292,7 @@ function JoinCustomLobbyCard(props) {
                 'post_buzz_time': data['post_buzz_time'],
             });
             setLobbyCode(data['code']);
-            setPlayScreen(1);
+            setPlayScreen("custom");
         };
 
         socket.on("lobbystate", lobbyStateListener);
@@ -280,6 +329,8 @@ function JoinCustomLobbyCard(props) {
 }
 
 
+
+
 // play page hook
 function Play(props) {
     const [gamemode, setGamemode] = useState("casual");
@@ -296,7 +347,7 @@ function Play(props) {
             <div class="play-gamemodecards-wrapper">
                 { gamemode === "casual" && // casual
                     <>
-                        <GamemodeComingSoonCard icon={GamemodeIcon1}/>
+                        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[3]} gamemode="casualsolo"/>
                         <GamemodeComingSoonCard icon={GamemodeIcon6}/>
                     </>
                 }
@@ -313,7 +364,7 @@ function Play(props) {
                 }
                 { gamemode === "custom" && // Custom
                     <>
-                        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[5]}/>
+                        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[5]} gamemode="custom"/>
                         <JoinCustomLobbyCard icon={GamemodeIcon7}/>
                     </>
                 }

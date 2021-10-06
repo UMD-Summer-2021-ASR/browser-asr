@@ -43,6 +43,7 @@ import CoinIcon from '../assets/coin.png';
 //FIREBASE
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
+import StandardLobby from "./StandardLobby";
 const firebaseConfig = {
     apiKey: "AIzaSyCiKPy60wLQMYdttnGec8BFbUUs1Y60yuE",
     authDomain: "quizzrio.firebaseapp.com",
@@ -378,7 +379,7 @@ function BigWhitePanel() {
             </div>
         );
     } else if(screen === 3) { // select gamemode / lobby
-        if(playScreen === 0) {
+        if(playScreen === 'casualsolo'){
             return (
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
@@ -387,7 +388,7 @@ function BigWhitePanel() {
                             <div class="page-body-wrapper">
                                 <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
                                 <div class="page-body-content-wrapper">
-                                    <Play/>
+                                    <StandardLobby/>
                                 </div>
                             </div>
                         </div>
@@ -395,7 +396,7 @@ function BigWhitePanel() {
                     <TutorialBtn2/>
                 </div>
             );
-        } else {
+        } else if(playScreen === 'custom'){
             return (
                 <div class="big-white-panel-wrapper">
                     <div class="big-white-panel">
@@ -412,7 +413,24 @@ function BigWhitePanel() {
                     <TutorialBtn2/>
                 </div>
             );
-        }
+        } else {
+            return (
+                <div class="big-white-panel-wrapper">
+                    <div class="big-white-panel">
+                        <div class="content-wrapper">
+                            <Sidenav setScreen={setScreen}/>
+                            <div class="page-body-wrapper">
+                                <PageHeader title="Play" caption="Play with friends, solo, or compete on the ladder!"/>
+                                <div class="page-body-content-wrapper">
+                                    <Play/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <TutorialBtn2/>
+                </div>
+            );
+        } 
     } else if(screen === 4) { // Shop
         return (
             <div class="big-white-panel-wrapper">

@@ -103,6 +103,8 @@ function PostgamePlayerCard(props) {
 function TeamCard(props) {
   const [screen, setScreen] = useRecoilState(SCREEN);
   const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+  const [socket, setSocket] = useRecoilState(SOCKET);
+  const authtoken = useRecoilValue(AUTHTOKEN);
   if (props.points[0] === undefined) {
     const pointsArray = [];
     for (const key in props.points) {
@@ -130,7 +132,10 @@ function TeamCard(props) {
         </div>
         <div
           onClick={() => {
-            setPlayScreen(0);
+            socket.emit("leavelobby", {
+              auth: authtoken
+            });
+            setPlayScreen("home");
             setScreen(3);
           }}
           class="game-quitbtn"
