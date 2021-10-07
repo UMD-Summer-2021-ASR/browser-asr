@@ -54,8 +54,8 @@ export default function StatsCardsAccordion() {
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
                 <Stat name="Rating" value={profile['rating']}/>
-                <Stat name="Rating by category" value="????"/>
-                <Stat name="Rating over time" value="????"/>
+                <Stat name="Rating by category" value="--"/>
+                <Stat name="Rating over time" value="--"/>
             </div>
         </AccordionDetails>
       </Accordion>
@@ -68,17 +68,17 @@ export default function StatsCardsAccordion() {
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
                 <Stat name="Total questions played" value={profile['totalQuestionsPlayed']}/>
-                <Stat name="Total questions answered" value="????"/>
-                <Stat name="Questions played by category" value="????"/>
-                <Stat name="Questions answered by category" value="????"/>
-                <Stat name="Total buzzes" value="????"/>
-                <Stat name="Buzz rate" value="????"/>
-                <Stat name="Buzz accuracy" value="????"/>
-                <Stat name="Average % of question before buzzing" value="????"/>
-                <Stat name="Average # of hints before buzzing" value="????"/>
-                <Stat name="Average time elapsed before buzzing" value="????"/>
-                <Stat name="Total buzzer races" value="????"/>
-                <Stat name="Total buzzer races won" value="????"/>
+                <Stat name="Total questions answered" value="--"/>
+                <Stat name="Questions played by category" value="--"/>
+                <Stat name="Questions answered by category" value="--"/>
+                <Stat name="Total buzzes" value="--"/>
+                <Stat name="Buzz rate" value="--"/>
+                <Stat name="Buzz accuracy" value="--"/>
+                <Stat name="Average % of question before buzzing" value="--"/>
+                <Stat name="Average # of hints before buzzing" value="--"/>
+                <Stat name="Average time elapsed before buzzing" value="--"/>
+                <Stat name="Total buzzer races" value="--"/>
+                <Stat name="Total buzzer races won" value="--"/>
             </div>
         </AccordionDetails>
       </Accordion>
@@ -91,12 +91,12 @@ export default function StatsCardsAccordion() {
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
                 <Stat name="Games played" value={profile['totalGames']}/>
-                <Stat name="Ranked games played" value="????"/>
-                <Stat name="Ranked games won" value="????"/>
-                <Stat name="Ranked winrate" value="????"/>
-                <Stat name="Casual games played" value="????"/>
-                <Stat name="Casual games won" value="????"/>
-                <Stat name="Casual winrate" value="????"/>
+                <Stat name="Ranked games played" value="--"/>
+                <Stat name="Ranked games won" value="--"/>
+                <Stat name="Ranked winrate" value="--"/>
+                <Stat name="Casual games played" value="--"/>
+                <Stat name="Casual games won" value="--"/>
+                <Stat name="Casual winrate" value="--"/>
             </div>
         </AccordionDetails>
       </Accordion>
@@ -109,7 +109,7 @@ export default function StatsCardsAccordion() {
         <AccordionDetails>
             <div class="statscardsaccordion-stats-wrapper">
                 <Stat name="Recordings made" value={profile['recordedAudios'].length}/>
-                <Stat name="Average recording rating" value="????"/>
+                <Stat name="Average recording rating" value="--"/>
             </div>
         </AccordionDetails>
       </Accordion>

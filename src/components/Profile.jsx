@@ -91,9 +91,9 @@ function HistoryCards(props) {
     
     return (
         <div class="profile-historycards-wrapper">
-            <HistoryCard label="Match Log" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>
-            <HistoryCard label="Recordings" color="green" bgcolor="#D2FBD9" icon={<MusicVideoIcon style={{color: "green", height: "3rem", width: "auto"}}/>} />
-            <HistoryCard label="Inbox" color="purple" bgcolor="#F6E1FD" icon={<MailOutlineIcon style={{color: "purple", height: "3rem", width: "auto"}}/>}/>
+            <HistoryCard label="Coming soon" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>
+            <HistoryCard label="Coming soon" color="green" bgcolor="#D2FBD9" icon={<MusicVideoIcon style={{color: "green", height: "3rem", width: "auto"}}/>} />
+            <HistoryCard label="Coming soon" color="purple" bgcolor="#F6E1FD" icon={<MailOutlineIcon style={{color: "purple", height: "3rem", width: "auto"}}/>}/>
         </div>
     );
 }
