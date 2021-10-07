@@ -55,11 +55,11 @@ function TranscriptOption(props) {
                 </div>
             </div>
             <div class="shop-selectingtranscript-transcript-footer">
-                <div class="shop-taskbounty-wrapper">
+                {/* <div class="shop-taskbounty-wrapper">
                     Bounty: 
                     <img class="shop-selectingtranscript-coin-icon" src={CoinIcon} alt="Coins: "/>
                     {props.bounty}
-                </div>
+                </div> */}
 
                 <div onClick={handleRecord} class="shop-selectingtranscript-record-btn">
                     Record &#187;
@@ -200,7 +200,7 @@ function Shop() {
                             </div>
                         </div>
                         
-                        <Taskbounty bounty="10-30"/>
+                        {/* <Taskbounty bounty="10-30"/> */}
                     </div>
                     <div onClick={() => activateShopScreen("medium")} class="shop-earn-selector-wrapper shop-earn-selector-hvr-grow shop-earn-selector-medium">
                         <div>
@@ -212,7 +212,7 @@ function Shop() {
                             </div>
                         </div>
                         
-                        <Taskbounty bounty="30-50"/>
+                        {/* <Taskbounty bounty="30-50"/> */}
                     </div>
                     <div onClick={() => activateShopScreen("hard")} class="shop-earn-selector-wrapper shop-earn-selector-hvr-grow shop-earn-selector-hard">
                         <div>
@@ -224,7 +224,7 @@ function Shop() {
                             </div>
                         </div>
                         
-                        <Taskbounty bounty="50-100"/>
+                        {/* <Taskbounty bounty="50-100"/> */}
                     </div>
                 </div>
             </div>
