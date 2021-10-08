@@ -126,7 +126,7 @@ function LoginBody(props) {
 function LoginTitle() {
     return (
         <div>
-            <div class="login-title">Quizzr</div>
+            <div class="login-title">AQuA</div>
             <div class="login-subtitle"><b>the </b> quiz game</div>
         </div>
     );
@@ -169,7 +169,7 @@ function Sidenav(props) {
 
     return (
         <div class="sidenav-wrapper">
-            <div class="sidenav-logo-title">Quizzr</div>
+            <div class="sidenav-logo-title">AQuA</div>
             <div class="sidenav-logo-subtitle"><b>the</b> quiz game</div>
             <div class="sidenav-tabs-wrapper">
                 <SidenavItem label="Profile" icon={<AccountCircleIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(1); document.location.hash = "profile";}} textColor={MainColor}/>

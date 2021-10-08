@@ -26,7 +26,7 @@ function Tutorial(props) {
         },
         {
             img: Tutorial2,
-            text: "The 'Play' tab is the hub for playing Quizzr. Let's go there first!"
+            text: "The 'Play' tab is the hub for playing AQuA. Let's go there first!"
         },
         {
             img: Tutorial3,
