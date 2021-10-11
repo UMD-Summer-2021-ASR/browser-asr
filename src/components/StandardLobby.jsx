@@ -103,6 +103,7 @@ function StandardLobby() {
                 'questions_num': data['questions_num'],
                 'gap_time': data['gap_time'],
                 'post_buzz_time': data['post_buzz_time'],
+                'gamemode': data['gamemode']
             });
             setLobbyCode(data['code']);
         };
@@ -116,6 +117,10 @@ function StandardLobby() {
             setPlayScreen("home");
         }
 
+        const startLobbyFailedListener = (data) => {
+            setPlayScreen("home");
+        }
+
         const startGameFailedListener = (data) => {
             setPlayScreen("home");
         }
@@ -124,19 +129,30 @@ function StandardLobby() {
             setLobbyScreen("loading");
         }
 
+        const joinRoomListener = (data) => {
+            socket.emit("joinroom", {
+                auth: authtoken,
+                room: data['room']
+            });
+        }
+
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
         socket.on("closelobby", closeLobbyListener);
+        socket.on("startlobbyfailed", startLobbyFailedListener);
         socket.on("startgamefailed", startGameFailedListener);
         socket.on("lobbyloading", lobbyLoadingListener);
-
+        socket.on("joinroom", joinRoomListener);
+    
 
         return function cleanSockets() {
             socket.off("lobbystate", lobbyStateListener);
             socket.off("gamestarted", gameStartedListener);
             socket.off("closelobby", closeLobbyListener);
+            socket.off("startlobbyfailed", startLobbyFailedListener);
             socket.off("startgamefailed", startGameFailedListener);
             socket.off("lobbyloading", lobbyLoadingListener);
+            socket.off("joinroom", joinRoomListener);
         }
     });
     
@@ -149,12 +165,9 @@ function StandardLobby() {
     }
 
     function start() {
-        socket.emit("startgame", {
+        socket.emit("joinqueue", {
             auth: authtoken
         });
-        socket.emit("lobbyloading", {
-            auth: authtoken
-        })
     }
 
     //emits update to settings and the socket will emit settings back

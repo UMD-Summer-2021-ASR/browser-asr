@@ -65,7 +65,8 @@ const gameSettingsList = [
         rounds: "3",
         questionsPerRound: "5",
         isTextDisabled: "No",
-        tiebreaker: "Tiebreaker question"
+        tiebreaker: "Tiebreaker question",
+        gamemode: "rankedsolo"
     }),
     new gameSettings({ // gamemode = 2 (ranked 2v2)
         title: "Ranked 2v2",
@@ -79,7 +80,8 @@ const gameSettingsList = [
         rounds: "3",
         questionsPerRound: "5",
         isTextDisabled: "Yes",
-        tiebreaker: "Tiebreaker question"
+        tiebreaker: "Tiebreaker question",
+        gamemode: "rankedduo"
     }),
     new gameSettings({ // gamemode = 3 (1v1 casual)
         title: "1v1",
@@ -93,7 +95,8 @@ const gameSettingsList = [
         rounds: "3",
         questionsPerRound: "5",
         isTextDisabled: "Yes",
-        tiebreaker: "Tiebreaker question"
+        tiebreaker: "Tiebreaker question",
+        gamemode: "casualsolo",
     }),
     new gameSettings({ // gamemode = 4 (4v4 custom)
         title: "Casual 4v4",
@@ -107,7 +110,7 @@ const gameSettingsList = [
         rounds: "3",
         questionsPerRound: "25",
         isTextDisabled: "No",
-        tiebreaker: "Tiebreaker question"
+        tiebreaker: "Tiebreaker question",
     }),
     new gameSettings({ // gamemode = 5 (Custom)
         title: "Custom Lobby",
