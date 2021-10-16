@@ -1,7 +1,7 @@
 import '../styles/Tutorial.css';
 import React, { useState, useEffect } from "react";
 import { isBuffer } from 'util';
-import { SCREEN, PREVSCREEN } from '../store';
+import { SCREEN, PREVSCREEN, INTERFACE_NAME } from '../store';
 import { useRecoilState, useRecoilValue } from "recoil";
 import Tutorial1 from '../assets/Tutorial1.png';
 import Tutorial2 from '../assets/Tutorial2.png';
@@ -19,6 +19,7 @@ function Tutorial(props) {
     const [page, setPage] = useState(0);
     const [screen, setScreen] = useRecoilState(SCREEN);
     const prevScreen = useRecoilValue(PREVSCREEN);
+    const interface_name = useRecoilValue(INTERFACE_NAME);
     var tutorialItems = [
         {
             img: Tutorial1,
@@ -26,7 +27,7 @@ function Tutorial(props) {
         },
         {
             img: Tutorial2,
-            text: "The 'Play' tab is the hub for playing AQuA. Let's go there first!"
+            text: "The 'Play' tab is the hub for playing" + interface_name + ". Let's go there first!"
         },
         {
             img: Tutorial3,

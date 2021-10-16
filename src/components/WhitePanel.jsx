@@ -13,7 +13,7 @@ import Tutorial from './Tutorial.jsx';
 import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS, TUTORIAL_PIN, SHOW_TUTORIAL, PREVSCREEN } from "../store";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS, TUTORIAL_PIN, SHOW_TUTORIAL, PREVSCREEN, INTERFACE_NAME } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -124,9 +124,10 @@ function LoginBody(props) {
 
 // title in login screen
 function LoginTitle() {
+    const interface_name = useRecoilValue(INTERFACE_NAME);
     return (
         <div>
-            <div class="login-title">AQuA</div>
+            <div class="login-title">{interface_name}</div>
             <div class="login-subtitle"><b>the </b> quiz game</div>
         </div>
     );
@@ -164,12 +165,14 @@ function TutorialBtn2(props) {
 
 // the sidenav
 function Sidenav(props) {
-    let MainColor = "#6287F7";
-    let LogoutColor = "#b52121";
+    const MainColor = "#6287F7";
+    const LogoutColor = "#b52121";
+
+    const interface_name = useRecoilValue(INTERFACE_NAME);
 
     return (
         <div class="sidenav-wrapper">
-            <div class="sidenav-logo-title">AQuA</div>
+            <div class="sidenav-logo-title">{interface_name}</div>
             <div class="sidenav-logo-subtitle"><b>the</b> quiz game</div>
             <div class="sidenav-tabs-wrapper">
                 <SidenavItem label="Profile" icon={<AccountCircleIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(1); document.location.hash = "profile";}} textColor={MainColor}/>
