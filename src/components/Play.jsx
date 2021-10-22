@@ -347,8 +347,7 @@ function Play(props) {
             <div class="play-gamemodecards-wrapper">
                 { gamemode === "casual" && // casual
                     <>
-                        <GamemodeComingSoonCard icon={GamemodeIcon1}/>
-                        {/* <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[3]} gamemode="casualsolo"/> */}
+                        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[3]} gamemode="casualsolo"/>
                         <GamemodeComingSoonCard icon={GamemodeIcon6}/>
                     </>
                 }
