@@ -1,8 +1,7 @@
 import '../styles/Tutorial.css';
-import React, { useState, useEffect } from "react";
-import { isBuffer } from 'util';
+import { useState } from "react";
 import { SCREEN, PREVSCREEN, INTERFACE_NAME } from '../store';
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import Tutorial1 from '../assets/Tutorial1.png';
 import Tutorial2 from '../assets/Tutorial2.png';
 import Tutorial3 from '../assets/Tutorial3.png';
@@ -15,9 +14,9 @@ import Tutorial9 from '../assets/Tutorial9.png';
 import Tutorial10 from '../assets/Tutorial9.png';
 import Tutorial11 from '../assets/Tutorial1.png';
 
-function Tutorial(props) {
+function Tutorial() {
     const [page, setPage] = useState(0);
-    const [screen, setScreen] = useRecoilState(SCREEN);
+    const setScreen = useSetRecoilState(SCREEN);
     const prevScreen = useRecoilValue(PREVSCREEN);
     const interface_name = useRecoilValue(INTERFACE_NAME);
     var tutorialItems = [
@@ -97,7 +96,7 @@ function Tutorial(props) {
     return (
         <div class="tutorial-wrapper">
             <div class="tutorial-img-wrapper">
-                <img src={tutorialItems[page].img} alt="tutorial image" class="tutorial-img"/>
+                <img src={tutorialItems[page].img} alt="tutorial" class="tutorial-img"/>
             </div>
             <div class="tutorial-img-divider"></div>
             <div class="tutorial-footer-wrapper">

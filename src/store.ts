@@ -1,4 +1,4 @@
-import { atom, useRecoilValue } from "recoil";
+import { atom } from "recoil";
 import socketIOClient from "socket.io-client";
 
 const URLS = atom({ // change to real URLS
@@ -10,17 +10,6 @@ const URLS = atom({ // change to real URLS
         'HLS': 'http://localhost:7000',
     }
 })
-
-function makeUsername(length) {
-    var result           = 'guest';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * 
-        charactersLength));
-    }
-    return result;
-}
 
 const INTERFACE_NAME = atom({
     key: 'INTERFACE_NAME',

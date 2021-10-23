@@ -1,8 +1,7 @@
 import '../styles/CreateAccount.css';
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import { useState } from "react";
 import { useAlert } from 'react-alert';
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { PROFILE, SCREEN, URLS } from "../store";
 import firebase from 'firebase';
 import axios from 'axios';
@@ -12,9 +11,9 @@ import axios from 'axios';
 function CreateAccount(props) {
     const urls = useRecoilValue(URLS);
     const [username, setUsername] = useState('');
-    const [screen, setScreen] = useRecoilState(SCREEN);
+    const setScreen = useSetRecoilState(SCREEN);
     const placeholderUsername = "mickthemouse123";
-    const [profile, setProfile] = useRecoilState(PROFILE);
+    const setProfile = useSetRecoilState(PROFILE);
     const alert = useAlert()
 
     //restricts usernames to alphanumeric
@@ -28,7 +27,7 @@ function CreateAccount(props) {
                 pfp: [1, 2, 3, 4],
                 username: username
             })
-            .then(function (response) {
+            .then(function () {
                 axios.get(urls['dataflow'] + '/profile')
                     .then(function (response) {
                         // handle success

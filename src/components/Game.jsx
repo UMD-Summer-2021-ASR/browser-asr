@@ -1,13 +1,10 @@
 import "../styles/Game.css";
 import "../styles/WhitePanel.css";
 import React, { useState, useEffect, useReducer } from "react";
-import ReactDOM from "react-dom";
-import socketIOClient from "socket.io-client";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   SCREEN,
   PLAY_SCREEN,
-  PLAYERS,
   LOBBY_CODE,
   SOCKET,
   AUTHTOKEN,
@@ -19,7 +16,6 @@ import AnswerBox from "./AnswerBox.jsx";
 import PersonIcon from "@material-ui/icons/Person";
 import { useQuestion } from "online-answering";
 import { Tooltip } from "react-tippy";
-import axios from "axios";
 import {
   ProgressBarVariant,
   StackedProgressBar,
@@ -101,9 +97,9 @@ function PostgamePlayerCard(props) {
 
 // teamcard wrapping playercards
 function TeamCard(props) {
-  const [screen, setScreen] = useRecoilState(SCREEN);
-  const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-  const [socket, setSocket] = useRecoilState(SOCKET);
+  const setScreen = useSetRecoilState(SCREEN);
+  const setPlayScreen = useSetRecoilState(PLAY_SCREEN);
+  const socket = useRecoilValue(SOCKET);
   const authtoken = useRecoilValue(AUTHTOKEN);
   if (props.points[0] === undefined) {
     const pointsArray = [];
@@ -232,8 +228,8 @@ function Game() {
 
   const authtoken = useRecoilValue(AUTHTOKEN);
   const [gameScreen, setGameScreen] = useState("ingame");
-  const [screen, setScreen] = useRecoilState(SCREEN);
-  const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+  const setScreen = useSetRecoilState(SCREEN);
+  const setPlayScreen = useSetRecoilState(PLAY_SCREEN);
   const gameSettings = useRecoilValue(GAMESETTINGS);
   const [totalTime, setTotalTime] = useState(40);
   const [totalTimeBeenSet, setTotalTimeBeenSet] = useState(false);
@@ -290,7 +286,6 @@ function Game() {
     };
 
     const answeredCorrectlyListener = (data) => {
-      var video = document.getElementById("hls");
       console.log(data);
       // this.setBuzzTime(time);
       // TODO correct animation
@@ -351,9 +346,11 @@ function Game() {
       }, 5000);
     }
     setPrevState(state);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  const [hls, isParsed] = useQuestion({
+  // const [hls, isParsed] = 
+  useQuestion({
     onCue: (cue) => {
       var div = document.getElementById("transcript-box");
       let splitarr = div.innerHTML.split(" ");

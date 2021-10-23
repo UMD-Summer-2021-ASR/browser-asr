@@ -1,9 +1,8 @@
 import "../styles/Profile.css";
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import { useState } from "react";
 import StatsCardsAccordion from "./StatsCardsAccordion";
 import { useAlert } from 'react-alert';
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { PROFILE } from "../store";
 
 // ASSETS
@@ -11,7 +10,6 @@ import BookIcon from '@material-ui/icons/Book';
 import MusicVideoIcon from '@material-ui/icons/MusicVideo';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 // pfp, username
@@ -46,17 +44,17 @@ function RatingCard(props) {
 }
 
 // 1 stats card
-function StatsCard(props) {
-    return (
-        <div class="profile-statscard-wrapper">
-            {props.label}
-            <ExpandMoreIcon style={{color: "black", height: "25px"}}/>
-        </div>
-    );
-}
+// function StatsCard(props) {
+//     return (
+//         <div class="profile-statscard-wrapper">
+//             {props.label}
+//             <ExpandMoreIcon style={{color: "black", height: "25px"}}/>
+//         </div>
+//     );
+// }
 
 // all the stats cards
-function StatsCards(props) {
+function StatsCards() {
     return (
         <div class="profile-statscards-wrapper">
             <div class="profile-statscards-title-wrapper">
@@ -101,7 +99,7 @@ function HistoryCards(props) {
 // hook for entire profile page
 function Profile(props) {
     const [profileScreen, setProfileScreen] = useState('home')
-    const games = ["PartBallSmellGuiltyCirculation"];
+    // const games = ["PartBallSmellGuiltyCirculation"];
     if (profileScreen === 'changeuserinfo') {
         return (
             <div class="profile-content-wrapper">

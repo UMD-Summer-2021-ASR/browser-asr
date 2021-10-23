@@ -1,14 +1,12 @@
 import "../styles/AnswerBox.css";
-import { React, useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
+import { useState, useEffect } from "react";
 import { useOnlineAnswering } from "online-answering";
 import Switch from "react-switch";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
-import MicOff from "@material-ui/icons/MicOff";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import CloseIcon from "@material-ui/icons/Close";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { AUTHTOKEN, PROFILE, URLS, SOCKET } from "../store";
 import { useAlert } from "react-alert";
 import { Tooltip } from "react-tippy";
@@ -100,14 +98,6 @@ const UseClassifierSwitch = (props) => {
   );
 };
 
-// Legacy function that enables you to store previous state values
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
 
 // Hook for the answer box at the bottom of all games
 function AnswerBox(props) {
@@ -120,7 +110,6 @@ function AnswerBox(props) {
 
   const [ready, setReady] = useState(false);
   const [useClassifier, setUseClassifier] = useState(false);
-  const prevQuestionTime = usePrevious(props.questionTime);
 
   // ASR always picks up the wake word, this function removes it
   function complete(answer) {
@@ -143,9 +132,13 @@ function AnswerBox(props) {
 
   const [
     answer,
+    // eslint-disable-next-line
     listening,
+    // eslint-disable-next-line
     browserSupportsSpeechRecognition,
+    // eslint-disable-next-line
     recordingStatus,
+    // eslint-disable-next-line
     timeLeft,
   ] = useOnlineAnswering({
     audio: {
@@ -177,7 +170,8 @@ function AnswerBox(props) {
         };
 
         //POST TO CLASSIFIER SERVER
-        const response = await axios
+        // const response = 
+        await axios
           .post(urls["socket_flask"] + "/audioanswerupload", formdata, config)
           .then((response) => {
             console.log(response);
@@ -186,7 +180,7 @@ function AnswerBox(props) {
               filename: response.data["filename"], // CHANGE
             });
           })
-          .catch((error) => {
+          .catch(() => {
             alert.error("Classification submission failed");
           });
       } else {
@@ -204,6 +198,7 @@ function AnswerBox(props) {
     if(props.buzzer !== username) {
       props.setAnswer("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.buzzer])
 
   return (
