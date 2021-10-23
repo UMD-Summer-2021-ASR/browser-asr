@@ -132,9 +132,6 @@ function TeamCard(props) {
         </div>
         <div
           onClick={() => {
-            socket.emit("leavelobby", {
-              auth: authtoken
-            });
             setPlayScreen("home");
             setScreen(3);
           }}
@@ -168,7 +165,7 @@ function TeamCard(props) {
       >
         <div class="game-team-title">Scoreboard</div>
         <div class="game-team-body">
-          <div>
+          <div class="game-team-body-singleteam-wrapper">
             Team 1 - {team1pts}
             {pointsArray1.map(([uname, pts]) => (
               <PlayerCard
@@ -179,7 +176,7 @@ function TeamCard(props) {
               />
             ))}
           </div>
-          <div>
+          <div class="game-team-body-singleteam-wrapper">
             Team 2 - {team2pts}
             {pointsArray2.map(([uname, pts]) => (
               <PlayerCard
@@ -190,6 +187,15 @@ function TeamCard(props) {
               />
             ))}
           </div>
+        </div>
+        <div
+          onClick={() => {
+            setPlayScreen("home");
+            setScreen(3);
+          }}
+          class="game-quitbtn"
+        >
+          Quit
         </div>
       </div>
     );
