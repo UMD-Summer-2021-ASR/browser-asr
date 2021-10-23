@@ -101,7 +101,7 @@ function HistoryCards(props) {
 // hook for entire profile page
 function Profile(props) {
     const [profileScreen, setProfileScreen] = useState('home')
-
+    const games = ["PartBallSmellGuiltyCirculation"];
     if (profileScreen === 'changeuserinfo') {
         return (
             <div class="profile-content-wrapper">
@@ -111,7 +111,7 @@ function Profile(props) {
                 </div>
             </div>
         )
-    } else {
+    } else if (profileScreen === 'home') {
         return (
             <div class="profile-content-wrapper">
                 <div class="profile-column">
@@ -124,6 +124,12 @@ function Profile(props) {
                 </div>
             </div>
         );
+    } else if (profileScreen === 'gamehistory') {
+        return (
+            <div class="profile-content-wrapper">
+                
+            </div>
+        )
     }
 }
 

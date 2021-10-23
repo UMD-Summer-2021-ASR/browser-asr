@@ -124,12 +124,16 @@ function StandardLobby() {
             setLobbyScreen("loading");
         }
 
+        const findingMatchListener = (data) => {
+            setLobbyScreen("findingmatch");
+        }
+
         socket.on("lobbystate", lobbyStateListener);
         socket.on("gamestarted", gameStartedListener);
         socket.on("closelobby", closeLobbyListener);
         socket.on("startgamefailed", startGameFailedListener);
         socket.on("lobbyloading", lobbyLoadingListener);
-
+        socket.on("findingmatch", findingMatchListener);
 
         return function cleanSockets() {
             socket.off("lobbystate", lobbyStateListener);
@@ -137,6 +141,7 @@ function StandardLobby() {
             socket.off("closelobby", closeLobbyListener);
             socket.off("startgamefailed", startGameFailedListener);
             socket.off("lobbyloading", lobbyLoadingListener);
+            socket.off("findingmatch", findingMatchListener);
         }
     });
     
@@ -267,12 +272,21 @@ function StandardLobby() {
                 </div>
             </div>
         );
-    } else {
+    } else if (lobbyScreen === "loading") {
         return (
             <div class="lobby-loading-wrapper">
                 Loading game, please wait...
             </div>
         );
+    } else if (lobbyScreen === "findingmatch") {
+        return (
+            <div class="lobby-loading-wrapper">
+                Finding match, please wait...
+                <div class="lobby-findingmatch-quit-btn">
+                    Leave queue
+                </div>
+            </div>
+        )
     }
     
 }
