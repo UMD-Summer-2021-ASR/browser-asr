@@ -4,10 +4,10 @@ import socketIOClient from "socket.io-client";
 const URLS = atom({ // change to real URLS
     key: 'URLS',
     default: {
-        'dataflow': 'http://localhost:5000',
-        'socket': 'http://127.0.0.1:4000',
-        'socket_flask': 'http://localhost:2000',
-        'HLS': 'http://localhost:7000',
+        'dataflow': process.env.REACT_APP_PUBLIC_DATAFLOW_URL,
+        'socket': process.env.REACT_APP_PUBLIC_SOCKET_URL,
+        'socket_flask': process.env.REACT_APP_PUBLIC_SOCKETFLASK_URL,
+        'HLS': process.env.REACT_APP_PUBLIC_HLS_URL,
     }
 })
 
