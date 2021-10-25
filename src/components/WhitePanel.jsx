@@ -78,6 +78,7 @@ function LoginBody() {
     const setScreen = useSetRecoilState(SCREEN);
     const setAuthtoken = useSetRecoilState(AUTHTOKEN);
     useEffect(() => {
+        console.log("FIRING");
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
             if(user) {
                 firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
@@ -93,8 +94,7 @@ function LoginBody() {
             }
         });
         return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [setAuthtoken, setScreen]);
 
     return (
         <div class="main-body">
@@ -240,8 +240,7 @@ function BigWhitePanel() {
         if(screen !== 8) {
             setPrevScreen(screen);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [screen]);
+    }, [screen, setPrevScreen]);
 
     
     // connecting to socket server errors
@@ -299,8 +298,7 @@ function BigWhitePanel() {
           }
         });
         return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [alert, setAuthtoken, setProfile, setScreen, urls]);
 
     // getting transcripts
     useEffect(() => {

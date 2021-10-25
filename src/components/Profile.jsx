@@ -15,7 +15,7 @@ import InsertChartIcon from '@material-ui/icons/InsertChart';
 // pfp, username
 function ProfileCard(props) {
     const profile = useRecoilValue(PROFILE);
-    console.log(profile);
+    // console.log(profile);
     return (
         <div class="profile-profilecard-wrapper" onClick={() => props.setProfileScreen('changeuserinfo')}>
             <div class="profile-profilecard-pfp">

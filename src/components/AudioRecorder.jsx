@@ -29,8 +29,6 @@ const Recorder = (props) => {
   const [audioSrc, setAudioSrc] = useState(null);
   const [duration, setDuration] = useState(0);
   const [placeholder, setPlaceholder] = useState("0");
-  // eslint-disable-next-line
-  const [audio, setAudio] = useState(undefined);
   const controlAudio = (status) => {
     setStatus(status);
   };
@@ -61,7 +59,6 @@ const Recorder = (props) => {
     },
     stopCallback: (e) => {
       setAudioSrc(window.URL.createObjectURL(e));
-      setAudio(e);
       props.setAudio(props.index, e);
       console.log("Duration", duration);
       setDuration(0);

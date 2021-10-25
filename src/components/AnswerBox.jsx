@@ -130,17 +130,7 @@ function AnswerBox(props) {
     props.setAnswer("");
   }
 
-  const [
-    answer,
-    // eslint-disable-next-line
-    listening,
-    // eslint-disable-next-line
-    browserSupportsSpeechRecognition,
-    // eslint-disable-next-line
-    recordingStatus,
-    // eslint-disable-next-line
-    timeLeft,
-  ] = useOnlineAnswering({
+  const answer = useOnlineAnswering({
     audio: {
       buzzin:
         "https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav",
@@ -188,7 +178,7 @@ function AnswerBox(props) {
       }
     },
     onBuzzin: () => buzzin(),
-  });
+  })[0];
 
   useEffect(() => {
     console.log(answer);
@@ -198,8 +188,7 @@ function AnswerBox(props) {
     if(props.buzzer !== username) {
       props.setAnswer("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.buzzer])
+  }, [props,username])
 
   return (
     <div class="answerbox-answering-wrapper">

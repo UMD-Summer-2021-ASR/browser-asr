@@ -346,8 +346,7 @@ function Game() {
       }, 5000);
     }
     setPrevState(state);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, [username, state, prevState.points]);
 
   // const [hls, isParsed] = 
   useQuestion({
