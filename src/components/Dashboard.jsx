@@ -1,8 +1,6 @@
 import "../styles/Dashboard.css";
 import React from "react";
-import ReactDOM from "react-dom";
-import { useAlert } from 'react-alert'
-import axios from 'axios';
+// import { useAlert } from 'react-alert'
 
 
 // ASSETS
@@ -50,7 +48,7 @@ function NewsColumn(props) {
 
 // QuizzrTV Card
 function QuizzrTVCard(props) {
-    const alert = useAlert();
+    // const alert = useAlert();
     
     return (
         <div class="dashboard-quizzrtv-wrapper" 
@@ -84,10 +82,6 @@ function ComingSoonCard(props) {
 
 // class for the dashboard page
 class Dashboard extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div class="dashboard-content-wrapper">

@@ -1,11 +1,7 @@
 import "../styles/Shop.css";
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import { useState } from "react";
 import { useAlert } from 'react-alert';
-import CoinIcon from '../assets/coin_transparent.png';
-import {
-    Tooltip,
-} from 'react-tippy';
+// import CoinIcon from '../assets/coin_transparent.png';
 import 'react-tippy/dist/tippy.css';
 import axios from 'axios';
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -18,19 +14,19 @@ import AudioRecorder from './AudioRecorder.jsx';
 import LoopIcon from '@material-ui/icons/Loop';
 
 // displays bounty in coins for a single task
-function Taskbounty(props) {
-    return (
-        <div class="shop-taskbounty-wrapper">
-            Bounty: 
-            <img class="shop-taskbounty-coin-icon" src={CoinIcon} alt="Coins: "/>
-            {props.bounty}
-        </div>
-    );
-}
+// function Taskbounty(props) {
+//     return (
+//         <div class="shop-taskbounty-wrapper">
+//             Bounty: 
+//             <img class="shop-taskbounty-coin-icon" src={CoinIcon} alt="Coins: "/>
+//             {props.bounty}
+//         </div>
+//     );
+// }
 
 
 // coming soon card under the spending section
-function SpendComingSoon(props) {
+function SpendComingSoon() {
     return (
         <div class="shop-spend-comingsoon-wrapper">
             Coming Soon!
@@ -43,7 +39,7 @@ function TranscriptOption(props) {
 
     function handleRecord() {
         props.setTranscript(props.transcript);
-        props.setAudios(Array.apply(null, Array(props.transcript['tokenizations'].length)).map(function () {}));
+        props.setAudios(Array.apply(null, Array(props.transcript['tokenizations'].length)).map(function () {return undefined}));
         props.setShopScreen("recording");
     }
 
@@ -163,12 +159,12 @@ function Shop() {
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         }
-        const response = await axios.post(urls['dataflow'] + "/audio", formdata, config)
-            .then(response => {
+        await axios.post(urls['dataflow'] + "/audio", formdata, config)
+            .then(() => {
                 setShopScreen("home");
                 alert.success("Submitted recording");
             })
-            .catch(error => {
+            .catch(() => {
                 setShopScreen("home");
                 alert.error("Submission failed");
             });

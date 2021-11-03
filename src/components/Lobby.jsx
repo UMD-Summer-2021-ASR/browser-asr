@@ -1,14 +1,9 @@
 import "../styles/Lobby.css";
-import React from "react";
-import ReactDOM from "react-dom";
 import { useState, useEffect, useReducer } from "react";
-import axios from "axios";
-import socketIOClient from "socket.io-client";
 import PersonIcon from '@material-ui/icons/Person';
-import { useRecoilState, useRecoilValue } from "recoil";
-import { LOBBY_CODE, SOCKET, PLAY_SCREEN, PLAYERS, SCREEN, AUTHTOKEN, PROFILE, GAMESETTINGS } from "../store";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { LOBBY_CODE, SOCKET, PLAY_SCREEN, SCREEN, AUTHTOKEN, PROFILE, GAMESETTINGS } from "../store";
 import Slider from '@material-ui/core/Slider';
-import Select from 'react-dropdown-select';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import {
     Tooltip,
@@ -81,8 +76,8 @@ function Lobby() {
     const username = profile['username'];
     const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
     const socket = useRecoilValue(SOCKET);
-    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [screen, setScreen] = useRecoilState(SCREEN);
+    const setPlayScreen = useSetRecoilState(PLAY_SCREEN);
+    const setScreen = useSetRecoilState(SCREEN);
     const authtoken = useRecoilValue(AUTHTOKEN);
     const [lobbyScreen, setLobbyScreen] = useState("inlobby");
     

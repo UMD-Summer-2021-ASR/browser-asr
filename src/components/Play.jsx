@@ -1,8 +1,7 @@
 import "../styles/Play.css";
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { JOIN_CUSTOM_LOBBY_SCREEN, USERNAME, SOCKET, LOBBY_CODE, PLAY_SCREEN, GAMESETTINGS, PLAYERS, SCREEN, AUTHTOKEN } from "../store";
+import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { SOCKET, LOBBY_CODE, PLAY_SCREEN, GAMESETTINGS, AUTHTOKEN } from "../store";
 import { useEffect } from "react";
 import { useAlert } from 'react-alert'
 
@@ -132,9 +131,9 @@ const gameSettingsList = [
 
 // name = display name, gamemode = gamemode state, layer = layer of button, self = which button on the layer is it
 function GamemodeBtn(props) {
-    function setGamemodeHandler() {
-        props.setGamemode(props.self);
-    }
+    // function setGamemodeHandler() {
+    //     props.setGamemode(props.self);
+    // }
     
     return (
         <div className={"play-gamemode-btn " + (props.gamemode === props.self ? "play-gamemode-btn-selected" : "")} onClick={ () => {
@@ -187,10 +186,10 @@ function GamemodeCard(props) {
 
 // CASUAL LOBBY
 function StartCasualSoloLobbyButton(props) {
-    const [socket, setSocket] = useRecoilState(SOCKET);
-    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
-    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
+    const socket = useRecoilValue(SOCKET);
+    const setLobbyCode = useSetRecoilState(LOBBY_CODE);
+    const setPlayScreen = useSetRecoilState(PLAY_SCREEN);
+    const setGameSettings = useSetRecoilState(GAMESETTINGS);
     const authtoken = useRecoilValue(AUTHTOKEN);
 
 
@@ -231,11 +230,11 @@ function StartCasualSoloLobbyButton(props) {
 }
 
 // CUSTOM LOBBY
-function StartCustomLobbyButton(props) {
-    const [socket, setSocket] = useRecoilState(SOCKET);
-    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
-    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
+function StartCustomLobbyButton() {
+    const socket= useRecoilValue(SOCKET);
+    const setLobbyCode = useSetRecoilState(LOBBY_CODE);
+    const setPlayScreen = useSetRecoilState(PLAY_SCREEN);
+    const setGameSettings = useSetRecoilState(GAMESETTINGS);
     const authtoken = useRecoilValue(AUTHTOKEN);
 
 
@@ -277,11 +276,11 @@ function StartCustomLobbyButton(props) {
 
 function JoinCustomLobbyCard(props) {
     const [text, setText] = useState("");
-    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
+    const setPlayScreen = useSetRecoilState(PLAY_SCREEN);
     const socket = useRecoilValue(SOCKET);
     const authtoken = useRecoilValue(AUTHTOKEN);
-    const [gameSettings, setGameSettings] = useRecoilState(GAMESETTINGS);
-    const [lobbyCode, setLobbyCode] = useRecoilState(LOBBY_CODE);
+    const setGameSettings = useSetRecoilState(GAMESETTINGS);
+    const setLobbyCode = useSetRecoilState(LOBBY_CODE);
 
     useEffect(() => {
         const lobbyStateListener = (data) => {

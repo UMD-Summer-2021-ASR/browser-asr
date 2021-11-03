@@ -1,6 +1,5 @@
 import "../styles/Leaderboards.css";
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import { useState } from "react";
 import {
     Tooltip,
 } from 'react-tippy';
@@ -10,29 +9,29 @@ import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 
 //single user card
-function User(props) {
-    return (
-        <div class="leaderboards-board-user-wrapper">
-            <div class="leaderboards-board-user-rank">
-                {props.rank}
-            </div>
-            <div class="leaderboards-board-user-name">
-                {props.username}
-            </div>
-            <div class="leaderboards-board-user-rating">
-                <Tooltip
-                    // options
-                    title="Rating"
-                    position="top"
-                    trigger="mouseenter"
-                    unmountHTMLWhenHide="true"
-                >
-                    {props.rating}
-                </Tooltip>
-            </div>
-        </div>
-    );
-}
+// function User(props) {
+//     return (
+//         <div class="leaderboards-board-user-wrapper">
+//             <div class="leaderboards-board-user-rank">
+//                 {props.rank}
+//             </div>
+//             <div class="leaderboards-board-user-name">
+//                 {props.username}
+//             </div>
+//             <div class="leaderboards-board-user-rating">
+//                 <Tooltip
+//                     // options
+//                     title="Rating"
+//                     position="top"
+//                     trigger="mouseenter"
+//                     unmountHTMLWhenHide="true"
+//                 >
+//                     {props.rating}
+//                 </Tooltip>
+//             </div>
+//         </div>
+//     );
+// }
 
 
 // topic card

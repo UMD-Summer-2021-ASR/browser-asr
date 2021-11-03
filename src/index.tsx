@@ -1,37 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
-import App from "./App";
 import BigWhitePanel from "./components/WhitePanel";
 import reportWebVitals from "./reportWebVitals";
-import {
-  createMuiTheme,
-  colors,
-  ThemeProvider,
-  CssBaseline,
-} from "@material-ui/core";
 import { RecoilRoot } from "recoil";
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
-
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#1A73E9",
-    },
-    secondary: {
-      main: "#19857b",
-    },
-    error: {
-      main: colors.red.A400,
-    },
-    background: {
-      default: "#fff",
-    },
-  },
-  spacing: 12,
-});
 
 const alertConfig = { // TODO custom style alert
   // you can also just use 'bottom center'
@@ -45,11 +19,9 @@ const alertConfig = { // TODO custom style alert
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
         <AlertProvider template={AlertTemplate} {...alertConfig}>
           <BigWhitePanel/>
         </AlertProvider>
-      </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")

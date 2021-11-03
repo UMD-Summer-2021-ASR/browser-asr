@@ -1,26 +1,17 @@
 import "../styles/WhitePanel.css";
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { useEffect } from "react";
 import CheckIcon from '@material-ui/icons/Check';
-import GoogleLogin from 'react-google-login';
-import AnimatedCard from './AnimatedCard';
-import MagnifyingGlass from '../assets/magnifying-glass.png';
-import Microphone from '../assets/microphone.png';
-import Recorder from './AudioRecorder.jsx'
-import Player from './Player.jsx';
 import Game from './Game.jsx';
 import Tutorial from './Tutorial.jsx';
-import AnswerBox from './AnswerBox.jsx';
 import Lobby from './Lobby.jsx';
-import { useRecoilState, useRecoilValue } from "recoil";
-import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, USERNAME, URLS, TUTORIAL_PIN, SHOW_TUTORIAL, PREVSCREEN, INTERFACE_NAME } from "../store";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, URLS, PREVSCREEN, INTERFACE_NAME } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
 import Profile from './Profile.jsx';
-import Record from './Record.jsx';
 import Shop from './Shop.jsx';
 import Play from './Play.jsx';
 import Leaderboards from './Leaderboards.jsx';
@@ -30,15 +21,14 @@ import CreateAccount from './CreateAccount.jsx';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 // Sidenav
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import StorefrontIcon from '@material-ui/icons/Storefront';
-// Currency
-import EnergyIcon from '../assets/energy.png';
-import CoinIcon from '../assets/coin.png';
+
+// // Currency
+// import EnergyIcon from '../assets/energy.png';
+// import CoinIcon from '../assets/coin.png';
 
 //FIREBASE
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
@@ -84,10 +74,11 @@ function LoginCardItem(props) {
 }
 
 // body of login screen
-function LoginBody(props) {
-    const [screen, setScreen] = useRecoilState(SCREEN);
-    const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
+function LoginBody() {
+    const setScreen = useSetRecoilState(SCREEN);
+    const setAuthtoken = useSetRecoilState(AUTHTOKEN);
     useEffect(() => {
+        console.log("FIRING");
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
             if(user) {
                 firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
@@ -103,7 +94,7 @@ function LoginBody(props) {
             }
         });
         return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-    }, []);
+    }, [setAuthtoken, setScreen]);
 
     return (
         <div class="main-body">
@@ -143,8 +134,8 @@ function SidenavItem(props) {
     );
 }
 
-function TutorialBtn(props) {
-    const [screen, setScreen] = useRecoilState(SCREEN);
+function TutorialBtn() {
+    const setScreen = useSetRecoilState(SCREEN);
     return (
         <div class="whitepanel-tutorial button" onClick={() => {setScreen(8);}}>
             <HelpOutlineIcon className={"whitepanel-tutorial-icon"} style={{color: "grey"}}/>
@@ -154,7 +145,7 @@ function TutorialBtn(props) {
 }
 
 function TutorialBtn2(props) {
-    const [screen, setScreen] = useRecoilState(SCREEN);
+    const setScreen = useSetRecoilState(SCREEN);
     return (
         <div class="whitepanel-tutorial-2 button" onClick={() => {setScreen(8);}}>
             <HelpOutlineIcon className={"whitepanel-tutorial-icon-2"} style={{color: "grey"}}/>
@@ -190,7 +181,7 @@ function Sidenav(props) {
 
 // page header w/ coins, title, and description
 function PageHeader(props) {
-    const [screen, setScreen] = useRecoilState(SCREEN);
+    // const [screen, setScreen] = useRecoilState(SCREEN);
 
     return (
         <div class="page-header-wrapper">
@@ -237,19 +228,19 @@ function PageHeader(props) {
 function BigWhitePanel() {
     const urls = useRecoilValue(URLS);
     const [screen, setScreen] = useRecoilState(SCREEN);
-    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
-    const [profile, setProfile] = useRecoilState(PROFILE);
+    const playScreen = useRecoilValue(PLAY_SCREEN);
+    const setProfile = useSetRecoilState(PROFILE);
     const alert = useAlert();
     const socket = useRecoilValue(SOCKET);
-    const [transcripts, setTranscripts] = useRecoilState(TRANSCRIPTS);
-    const [authtoken, setAuthtoken] = useRecoilState(AUTHTOKEN);
-    const [prevScreen, setPrevScreen] = useRecoilState(PREVSCREEN);
+    const setTranscripts = useSetRecoilState(TRANSCRIPTS);
+    const setAuthtoken = useSetRecoilState(AUTHTOKEN);
+    const setPrevScreen = useSetRecoilState(PREVSCREEN);
 
     useEffect(() => {
-        if(screen != 8) {
+        if(screen !== 8) {
             setPrevScreen(screen);
         }
-    }, [screen]);
+    }, [screen, setPrevScreen]);
 
     
     // connecting to socket server errors
@@ -307,7 +298,7 @@ function BigWhitePanel() {
           }
         });
         return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-    }, []);
+    }, [alert, setAuthtoken, setProfile, setScreen, urls]);
 
     // getting transcripts
     useEffect(() => {
@@ -326,6 +317,7 @@ function BigWhitePanel() {
             .catch(function (error) {
                 alert.error("Getting transcripts failed");
             });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
 

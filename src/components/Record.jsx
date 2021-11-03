@@ -1,9 +1,6 @@
 import "../styles/Record.css";
 import React from "react";
-import ReactDOM from "react-dom";
 import Recorder from './AudioRecorder.jsx';
-import {useState, useEffect} from "react";
-import axios from "axios";
 
 // ASSETS
 import CasinoOutlinedIcon from '@material-ui/icons/CasinoOutlined';

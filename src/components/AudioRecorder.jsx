@@ -1,14 +1,11 @@
 import AudioAnalyser from "react-audio-analyser";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import StopIcon from "@material-ui/icons/Stop";
 import { makeStyles } from "@material-ui/core/styles";
-import { useRecoilState } from "recoil";
-import { AUDIO_BLOB } from "../store";
 import "../styles/AudioRecorder.css";
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -32,7 +29,6 @@ const Recorder = (props) => {
   const [audioSrc, setAudioSrc] = useState(null);
   const [duration, setDuration] = useState(0);
   const [placeholder, setPlaceholder] = useState("0");
-  const [audio, setAudio] = useState(undefined);
   const controlAudio = (status) => {
     setStatus(status);
   };
@@ -63,7 +59,6 @@ const Recorder = (props) => {
     },
     stopCallback: (e) => {
       setAudioSrc(window.URL.createObjectURL(e));
-      setAudio(e);
       props.setAudio(props.index, e);
       console.log("Duration", duration);
       setDuration(0);
