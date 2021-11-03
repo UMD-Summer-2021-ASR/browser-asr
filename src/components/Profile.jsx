@@ -10,14 +10,29 @@ import BookIcon from '@material-ui/icons/Book';
 import MusicVideoIcon from '@material-ui/icons/MusicVideo';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
-
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 // pfp, username
 function ProfileCard(props) {
     const profile = useRecoilValue(PROFILE);
-    // console.log(profile);
+    console.log(profile);
+    // return (
+    //     <div class="profile-profilecard-wrapper" onClick={() => props.setProfileScreen('changeuserinfo')}>
+    //         <div class="profile-profilecard-pfp">
+
+    //         </div>
+    //         <div class="profile-profilecard-text">
+    //             {profile['username']} <br/>
+    //             <div>
+                    
+    //             </div>
+    //             {profile['rating']}
+    //         </div>
+    //     </div>
+    // );
     return (
-        <div class="profile-profilecard-wrapper" onClick={() => props.setProfileScreen('changeuserinfo')}>
+        <div class="profile-profilecard-wrapper">
             <div class="profile-profilecard-pfp">
 
             </div>
@@ -68,6 +83,15 @@ function StatsCards() {
     );
 }
 
+function GameHistoryCard(props) {
+    return (
+        <div onClick={() => props.setProfileScreen('gamehistory')} class="profile-historycard-wrapper" style={{color : props.color, backgroundColor : props.bgcolor}}>
+            {props.icon}
+            {props.label}
+        </div>
+    );
+}
+
 // button for looking at history
 function HistoryCard(props) {
     const alert = useAlert();
@@ -89,17 +113,69 @@ function HistoryCards(props) {
     
     return (
         <div class="profile-historycards-wrapper">
-            <HistoryCard label="Coming soon" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>
+            <GameHistoryCard label="Game History" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}  setProfileScreen={props.setProfileScreen}/>
             <HistoryCard label="Coming soon" color="green" bgcolor="#D2FBD9" icon={<MusicVideoIcon style={{color: "green", height: "3rem", width: "auto"}}/>} />
             <HistoryCard label="Coming soon" color="purple" bgcolor="#F6E1FD" icon={<MailOutlineIcon style={{color: "purple", height: "3rem", width: "auto"}}/>}/>
         </div>
     );
 }
 
+function GameHistory(props) {
+    const games = ["PartBallSmellGuiltyCirculation"];
+    const [gameIdx, setCurrentGameIdx] = useState(0);
+    const [currentGames, setCurrentGames] = useState(games.slice(0,10));
+    const alert = useAlert();
+    const STEPSIZE = 10;
+
+    function getGames(stepSize) {
+        // get new games and move into current games / TODO REPLACE BELOW w/ GET REQUESTS FOR GAMES
+        if(games.slice(gameIdx+stepSize, gameIdx+(2*stepSize)).length == 0) {
+            alert.show("No games left to show");
+        } else {
+            setCurrentGameIdx(gameIdx+stepSize);
+            setCurrentGames(games.slice(gameIdx+stepSize, gameIdx+(2*stepSize)));
+        }
+    }
+
+    return (
+        <div class="profile-gamehistory-wrapper">
+            <div class="profile-gamehistory-gameslist-wrapper">
+                <div class="profile-gamehistory-gameslist-wrapper-2">
+                    Hi
+                </div>
+            </div>
+            <div class="profile-gamehistory-footer-wrapper">
+                <div class="profile-gamehistory-footer-wrapper-space">
+                    <div class="profile-gamehistory-back-btn" onClick={()=>{props.setProfileScreen('home')}}>
+                        Back
+                    </div>
+                </div>
+                
+
+                <div class="profile-gamehistory-navigator-wrapper">
+                    <div class="profile-gamehistory-navigator-btns" onClick={()=>{getGames(-STEPSIZE)}}>
+                        <ArrowLeftIcon style={{color: "white", height: "2rem", width: "auto"}}/>
+                    </div>
+                    <div class="profile-gamehistory-navigator-pgnum">
+                        {/* REPLACE TOTAL LENGTH w/ GAMES PLAYED OR SMTH */}
+                        {gameIdx+1}-{gameIdx+currentGames.length}/{games.length}
+                    </div>
+                    <div class="profile-gamehistory-navigator-btns" onClick={()=>{getGames(STEPSIZE)}}>
+                        <ArrowRightIcon style={{color: "white", height: "2rem", width: "auto"}}/>
+                    </div>
+                </div>
+
+                <div class="profile-gamehistory-footer-wrapper-space"/>
+            </div>
+        </div>
+    )
+}
+
 // hook for entire profile page
 function Profile(props) {
     const [profileScreen, setProfileScreen] = useState('home')
-    // const games = ["PartBallSmellGuiltyCirculation"];
+
+
     if (profileScreen === 'changeuserinfo') {
         return (
             <div class="profile-content-wrapper">
@@ -118,14 +194,14 @@ function Profile(props) {
                 </div>
                 <div class="profile-column">
                     <StatsCards/>
-                    <HistoryCards/>
+                    <HistoryCards setProfileScreen={setProfileScreen}/>
                 </div>
             </div>
         );
     } else if (profileScreen === 'gamehistory') {
         return (
             <div class="profile-content-wrapper">
-                
+                <GameHistory setProfileScreen={setProfileScreen}/>
             </div>
         )
     }
