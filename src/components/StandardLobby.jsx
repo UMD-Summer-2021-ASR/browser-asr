@@ -152,6 +152,7 @@ function StandardLobby() {
             socket.off("joinroom", joinRoomListener);
             socket.off("findingmatch", findingMatchListener);
         }
+        }
     });
     
 

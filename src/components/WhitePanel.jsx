@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SCREEN, PLAY_SCREEN, SOCKET, PROFILE, TRANSCRIPTS, AUTHTOKEN, URLS, PREVSCREEN, INTERFACE_NAME } from "../store";
 import { useAlert } from 'react-alert';
 import axios from 'axios';
+import { useBeforeunload } from 'react-beforeunload';
 
 // PAGES
 import Dashboard from './Dashboard.jsx';
@@ -235,6 +236,10 @@ function BigWhitePanel() {
     const setTranscripts = useSetRecoilState(TRANSCRIPTS);
     const setAuthtoken = useSetRecoilState(AUTHTOKEN);
     const setPrevScreen = useSetRecoilState(PREVSCREEN);
+
+    useBeforeunload((event) => {
+        socket.disconnect();
+    });
 
     useEffect(() => {
         if(screen !== 8) {

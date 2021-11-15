@@ -279,6 +279,7 @@ function Game() {
         buzzer: data[6],
         points: data[7],
       });
+      console.log("rendered");
     };
 
     const answeredIncorrectlyListener = (data) => {

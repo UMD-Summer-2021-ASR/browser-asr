@@ -197,9 +197,14 @@
 
 .profile-gamehistory-gameslist-wrapper-2 {
     flex-grow: 1;
+    flex-basis: 0;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow:auto;
+}
+
+.profile-gamehistory-gameslist-wrapper-2:first-child {
+    margin-top: 1rem;
 }
 
 .profile-gamehistory-navigator-wrapper {
@@ -228,4 +233,29 @@
 
 .profile-gamehistory-footer-wrapper-space {
     flex: 1;
+}
+
+.profile-gamehistory-gameslist-game-wrapper {
+    width: calc(100% - 2rem);
+    height: 10rem;
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+    border: 1px solid #EFF2FC;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    flex-shrink: 0;
+}
+
+.profile-gamehistory-gameslist-game-wrapper-loading {
+    width: calc(100% - 2rem);
+    height: 10rem;
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #EFF2FC;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    flex-shrink: 0;
 }

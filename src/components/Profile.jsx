@@ -3,7 +3,8 @@ import { useState } from "react";
 import StatsCardsAccordion from "./StatsCardsAccordion";
 import { useAlert } from 'react-alert';
 import { useRecoilValue } from "recoil";
-import { PROFILE } from "../store";
+import { PROFILE, URLS } from "../store";
+import axios from 'axios';
 
 // ASSETS
 import BookIcon from '@material-ui/icons/Book';
@@ -120,8 +121,39 @@ function HistoryCards(props) {
     );
 }
 
+function GamePlayedCard(props) {
+    const [loaded, setLoaded] = useState(false);
+    const [gameData, setGameData] = useState([]);
+    const urls = useRecoilValue(URLS);
+    // send http request for game information
+
+    axios.get(urls['dataflow'] + '/game/' + props.gameid)
+        .then(function (response) {
+            // handle success
+            setGameData(response['data']);
+            setLoaded(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+    if(!loaded) {
+        return (
+            <div class="profile-gamehistory-gameslist-game-wrapper-loading">
+                Loading {props.gamecode}...
+            </div>
+        )
+    } else {
+        return (
+            <div class="profile-gamehistory-gameslist-game-wrapper">
+                {JSON.stringify(gameData)}
+            </div>
+        )
+    }
+}
+
 function GameHistory(props) {
-    const games = ["PartBallSmellGuiltyCirculation"];
+    const games = ["DogsledImprovementGoldGrainBuzzard", "DogsledImprovementGoldGrainBuzzard", "DogsledImprovementGoldGrainBuzzard"];
     const [gameIdx, setCurrentGameIdx] = useState(0);
     const [currentGames, setCurrentGames] = useState(games.slice(0,10));
     const alert = useAlert();
@@ -141,7 +173,9 @@ function GameHistory(props) {
         <div class="profile-gamehistory-wrapper">
             <div class="profile-gamehistory-gameslist-wrapper">
                 <div class="profile-gamehistory-gameslist-wrapper-2">
-                    Hi
+                    {currentGames.map(game => (
+                        <GamePlayedCard key={game} gameid={game}/>
+                    ))}
                 </div>
             </div>
             <div class="profile-gamehistory-footer-wrapper">

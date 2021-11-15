@@ -1,5 +1,6 @@
+import { TIMEOUT } from "dns";
 import { atom } from "recoil";
-import socketIOClient from "socket.io-client";
+import socketIOClient, { io, Manager } from "socket.io-client";
 
 const URLS = atom({ // change to real URLS
     key: 'URLS',
@@ -46,10 +47,13 @@ const LOBBY_CODE = atom({
     default: ""
 })
 
-const SOCKET_ENDPOINT = 'http://127.0.0.1:4000';
+const manager = new Manager(process.env.REACT_APP_PUBLIC_SOCKET_URL, {
+  timeout: 60000
+});
+
 const SOCKET = atom({
     key: 'SOCKET',
-    default: socketIOClient(SOCKET_ENDPOINT)
+    default: manager.socket("/")
 })
 
 const PLAYERS = atom({

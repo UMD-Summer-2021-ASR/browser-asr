@@ -7,6 +7,7 @@ import { RecoilRoot } from "recoil";
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 
+
 const alertConfig = { // TODO custom style alert
   // you can also just use 'bottom center'
   position: positions.BOTTOM_CENTER,

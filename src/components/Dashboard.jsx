@@ -7,6 +7,8 @@ import React from "react";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import TvIcon from '@material-ui/icons/Tv';
+import { useRecoilValue } from "recoil";
+import { SOCKET } from "../store";
 
 
 // card in the news column
@@ -49,10 +51,12 @@ function NewsColumn(props) {
 // QuizzrTV Card
 function QuizzrTVCard(props) {
     // const alert = useAlert();
+    const socket = useRecoilValue(SOCKET);
     
     return (
         <div class="dashboard-quizzrtv-wrapper" 
         onClick={() => {
+            socket.disconnect();
             // Deletes your account
             // axios.delete('http://localhost:5000/profile')
             //     .then(function (response) {
