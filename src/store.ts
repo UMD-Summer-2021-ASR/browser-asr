@@ -46,7 +46,7 @@ const LOBBY_CODE = atom({
     default: ""
 })
 
-const SOCKET_ENDPOINT = 'http://127.0.0.1:4000';
+const SOCKET_ENDPOINT = process.env.REACT_APP_PUBLIC_SOCKET_URL || 'http://127.0.0.1:4000';
 const SOCKET = atom({
     key: 'SOCKET',
     default: socketIOClient(SOCKET_ENDPOINT)
