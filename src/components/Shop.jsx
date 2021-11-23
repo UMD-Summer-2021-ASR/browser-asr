@@ -104,7 +104,7 @@ function Shop() {
         let transcriptsArray = [[],[],[]];
         let requestsArray = [];
         for(let i = 0; i < 4; i++) {
-            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=1')
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=0')
                 .then(function (response) {
                     transcriptsArray[0].push(response['data']['results'][0]);
                 }));
