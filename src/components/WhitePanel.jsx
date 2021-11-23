@@ -302,12 +302,24 @@ function BigWhitePanel() {
 
     // getting transcripts
     useEffect(() => {
-        let transcriptsArray = [];
+        let transcriptsArray = [[],[],[]];
         let requestsArray = [];
         for(let i = 0; i < 4; i++) {
-            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec')
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=1')
                 .then(function (response) {
-                    transcriptsArray.push(response['data']['results'][0]);
+                    transcriptsArray[0].push(response['data']['results'][0]);
+                }));
+        }
+        for(let i = 0; i < 4; i++) {
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=1')
+                .then(function (response) {
+                    transcriptsArray[1].push(response['data']['results'][0]);
+                }));
+        }
+        for(let i = 0; i < 4; i++) {
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=2')
+                .then(function (response) {
+                    transcriptsArray[2].push(response['data']['results'][0]);
                 }));
         }
         axios.all(requestsArray)

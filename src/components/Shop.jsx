@@ -101,12 +101,24 @@ function Shop() {
 
     function rerollTranscripts() {
         setShopScreen("loading");
-        let transcriptsArray = [];
+        let transcriptsArray = [[],[],[]];
         let requestsArray = [];
         for(let i = 0; i < 4; i++) {
-            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec')
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=1')
                 .then(function (response) {
-                    transcriptsArray.push(response['data']['results'][0]);
+                    transcriptsArray[0].push(response['data']['results'][0]);
+                }));
+        }
+        for(let i = 0; i < 4; i++) {
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=1')
+                .then(function (response) {
+                    transcriptsArray[1].push(response['data']['results'][0]);
+                }));
+        }
+        for(let i = 0; i < 4; i++) {
+            requestsArray.push(axios.get(urls['dataflow'] + '/question/unrec?difficultyType=2')
+                .then(function (response) {
+                    transcriptsArray[2].push(response['data']['results'][0]);
                 }));
         }
         axios.all(requestsArray)
@@ -232,12 +244,12 @@ function Shop() {
                     Select {difficulty==="easy" ? "an" : "a"} {difficulty} difficulty transcript to record
                 </div>
                 <div class="shop-selectingtranscript-layer-wrapper">
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[0]} setAudios={setAudios}/>
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[1]} setAudios={setAudios}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={difficulty === "easy" ? transcripts[0][0] : (difficulty === "medium" ? transcripts[1][0] : transcripts[2][0])} setAudios={setAudios}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={difficulty === "easy" ? transcripts[0][1] : (difficulty === "medium" ? transcripts[1][1] : transcripts[2][1])} setAudios={setAudios}/>
                 </div>
                 <div class="shop-selectingtranscript-layer-wrapper">
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[2]} setAudios={setAudios}/>
-                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={transcripts[3]} setAudios={setAudios}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={difficulty === "easy" ? transcripts[0][2] : (difficulty === "medium" ? transcripts[1][2] : transcripts[2][2])} setAudios={setAudios}/>
+                    <TranscriptOption bounty={50} setShopScreen={setShopScreen} setTranscript={setTranscript} transcript={difficulty === "easy" ? transcripts[0][3] : (difficulty === "medium" ? transcripts[1][3] : transcripts[2][3])} setAudios={setAudios}/>
                 </div>
                 <div class="shop-selectingtranscript-footer-wrapper">
                     <div class="shop-selectingtranscript-placeholder"></div>

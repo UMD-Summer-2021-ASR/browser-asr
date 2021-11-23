@@ -65,10 +65,24 @@ const PROFILE = atom({
 const TRANSCRIPTS = atom({
     key: 'TRANSCRIPTS',
     default: [
-        {"transcript": ""},
-        {"transcript": ""},
-        {"transcript": ""},
-        {"transcript": ""},
+        [
+            {"transcript": ""},
+            {"transcript": ""},
+            {"transcript": ""},
+            {"transcript": ""},
+        ],
+        [
+            {"transcript": ""},
+            {"transcript": ""},
+            {"transcript": ""},
+            {"transcript": ""},
+        ],
+        [
+            {"transcript": ""},
+            {"transcript": ""},
+            {"transcript": ""},
+            {"transcript": ""},
+        ]
     ]
 })
 

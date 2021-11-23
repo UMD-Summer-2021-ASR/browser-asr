@@ -266,3 +266,79 @@
 .game-buzzedin-blur {
   opacity: 30%;
 }
+
+#game-rate-popup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+}
+
+.game-rate-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-rate-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-rate-header-title {
+  
+}
+
+.game-rate-close {
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.game-rate-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.game-rate-btn {
+  border: 1px solid lightgrey;
+  padding: 0.4rem 0.5rem 0.3rem 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.game-rate-btn-green {
+  border-color: #B0F5AB;
+}
+
+.game-rate-btn-red {
+  border-color: #FC94A1;
+}
+
+.game-right-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-prevanswers-wrapper {
+  margin-top: 1rem;
+}
+
+.game-prevanswers-card-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.game-prevanswers-card-answer {
+  margin-left: 0.25rem;
+  font-weight: normal;
+  font-size: 1rem;
+  color: black;
+}

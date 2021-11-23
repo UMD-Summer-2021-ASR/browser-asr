@@ -13,7 +13,15 @@ import {
   GAMESETTINGS,
 } from "../store";
 import AnswerBox from "./AnswerBox.jsx";
+import axios from 'axios';
+
+// icons
 import PersonIcon from "@material-ui/icons/Person";
+import CloseIcon from '@material-ui/icons/Close';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import CheckIcon from '@material-ui/icons/Check';
+
 import { useQuestion } from "online-answering";
 import { Tooltip } from "react-tippy";
 import {
@@ -22,6 +30,134 @@ import {
 } from "../pkg/StackedProgressBar";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
+
+function PreviousAnswerCard(props) {
+  return (
+    <div class="game-prevanswers-card-wrapper">
+      {props.correct && 
+        <CheckIcon style={{ color:"#B0F5AB" }}/>
+      }
+      {!props.correct && 
+        <CloseIcon style={{ color:"#FC94A1" }}/>
+      }
+      <div class="game-prevanswers-card-answer">
+        {props.answer}
+      </div>
+    </div>
+  )
+}
+
+function PreviousAnswers(props) {
+  return (
+    <div class="game-team-wrapper game-team-standings game-prevanswers-wrapper">
+      <div class="game-team-title">Answers</div>
+        <div class="game-team-body">
+          {props.answers.map(([answer, correct]) => (
+            <PreviousAnswerCard
+              answer={answer}
+              correct={correct}
+            />
+          ))}
+        </div>
+    </div>
+  )
+}
+
+function GameRatePopup(props) {
+  const [showing, setShowing] = useState("hidden");
+  const [hoverUp, setHoverUp] = useState(false);
+  const [hoverDown, setHoverDown] = useState(false);
+  const socket = useRecoilValue(SOCKET);
+  const authtoken = useRecoilValue(AUTHTOKEN);
+  const [prevQ, setPrevQ] = useState(props.state.question);
+
+  useEffect(() => {
+    if(props.finished) {
+      setShowing("vote");
+    }
+  },[props.finished])
+
+  useEffect(() => {
+    if(props.state.question !== prevQ && props.state.question > 1) {
+      setPrevQ(props.state.question);
+      setShowing("vote");
+    }
+  },[props.state])
+
+  useEffect(()=> {
+    setHoverUp(false);
+    setHoverDown(false);
+  }, [showing])
+
+  function UpClick() {
+    setShowing("thanks");
+    socket.emit("feedback", {
+      auth: authtoken,
+      vote: "good"
+    });
+  }
+
+  function DownClick() {
+    setShowing("thanks");
+    socket.emit("feedback", {
+      auth: authtoken,
+      vote: "bad"
+    });
+  }
+
+  if(showing === "vote") {
+    return (
+      <div id="game-rate-popup">
+        <div class="game-rate-wrapper">
+          <div class="game-rate-header">
+            <div class="game-rate-header-title">
+              How was that recording?
+            </div>
+          </div>
+          <div class="game-rate-btn-wrapper">
+            {!hoverUp &&
+              <div class="game-rate-btn" onMouseEnter={()=>{setHoverUp(true)}} onMouseLeave={()=>{setHoverUp(false)}} onClick={UpClick}>
+                <ThumbUpIcon style={{ color:"lightgray" }}/>
+              </div>
+            }
+            {hoverUp &&
+              <div class="game-rate-btn game-rate-btn-green" onMouseEnter={()=>{setHoverUp(true)}} onMouseLeave={()=>{setHoverUp(false)}} onClick={UpClick}>
+                <ThumbUpIcon style={{ color:"#B0F5AB" }}/>
+              </div>
+            }
+            
+            {!hoverDown &&
+              <div class="game-rate-btn" onMouseEnter={()=>{setHoverDown(true)}} onMouseLeave={()=>{setHoverDown(false)}} onClick={DownClick}>
+                <ThumbDownIcon style={{ color:"lightgray" }}/>
+              </div>
+            }
+            {hoverDown &&
+              <div class="game-rate-btn game-rate-btn-red" onMouseEnter={()=>{setHoverDown(true)}} onMouseLeave={()=>{setHoverDown(false)}} onClick={DownClick}>
+                <ThumbDownIcon style={{ color:"#FC94A1" }}/>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    )
+  } else if(showing === "thanks") {
+    return (
+      <div id="game-rate-popup">
+        <div class="game-rate-wrapper">
+          <div class="game-rate-header">
+            <div class="game-rate-header-title">
+              Thank you for your feedback! 
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div></div>
+    )
+  }
+}
 
 // player display w/ score in-game
 function PlayerCard(props) {
@@ -208,6 +344,7 @@ function Game() {
       gapTime: 0,
       inGame: true,
       answerText: "",
+      prevAnswers: [],
       socket: useRecoilValue(SOCKET),
       points: new Map([[username, 0]]),
       lobby: useRecoilValue(LOBBY_CODE),
@@ -272,6 +409,7 @@ function Game() {
         gapTime: data[5].toFixed(1),
         buzzer: data[6],
         points: data[7],
+        prevAnswers: data[8],
       });
     };
 
@@ -394,6 +532,8 @@ function Game() {
             </div>
           </div>
 
+          <GameRatePopup state={state} finished={false}/>
+
           <div class="game1-big-white-panel">
             <div class="game1-content-wrapper">
               <div class="game-content-wrapper">
@@ -498,12 +638,17 @@ function Game() {
               </div>
             </div>
           </div>
-          <TeamCard
-            color="standings"
-            points={state.points}
-            buzzer={state.buzzer}
-            buzzTime={state.buzzTime}
-          />
+          <div class="game-right-wrapper">
+            <TeamCard
+              color="standings"
+              points={state.points}
+              buzzer={state.buzzer}
+              buzzTime={state.buzzTime}
+            />
+            {state.prevAnswers.length > 0 && 
+              <PreviousAnswers answers={state.prevAnswers}/>
+            }
+          </div>
         </div>
       </React.Fragment>
     );
@@ -517,6 +662,7 @@ function Game() {
 
       return (
         <div class="big-white-panel-wrapper">
+          <GameRatePopup state={state} finished={true}/>
           <div class="big-white-panel">
             <div class="game-postgame-content-wrapper">
               <div class="game-postgame-standings-title">Final Standings</div>
@@ -554,6 +700,7 @@ function Game() {
 
       return (
         <div class="big-white-panel-wrapper">
+          <GameRatePopup state={state} finished={true}/>
           <div class="big-white-panel">
             <div class="game-postgame-content-wrapper">
               <div class="game-postgame-standings-title">Final Standings</div>
