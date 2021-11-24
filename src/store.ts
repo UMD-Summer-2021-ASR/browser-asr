@@ -13,7 +13,7 @@ const URLS = atom({ // change to real URLS
 
 const INTERFACE_NAME = atom({
     key: 'INTERFACE_NAME',
-    default: "AQuA"
+    default: "Earudite"
 })
 
 const AUDIO_BLOB = atom<Blob | undefined>({
