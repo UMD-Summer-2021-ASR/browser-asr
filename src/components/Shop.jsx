@@ -136,7 +136,7 @@ function Shop() {
         let b = true;
         audios.forEach(element => {
             if(element == null && b) {
-                alert.error("Recordings Incomplete");
+                alert.error("Please record all sentences before submitting");
                 b = false;
             }
         });
@@ -287,7 +287,11 @@ function Shop() {
     
         return (
             <div class="shop-content-wrapper">
+                
                 <div class="shop-sentences-wrapper">
+                    <div class="shop-recording-instructions">
+                        <b>Instructions:</b> Read through the sentence before recording to ensure you are prepared to speak smoothly and consistently. All sentences must be recorded to submit, and upon submission they will pass through a pre-screening process. You will be notified in your profile if it passes. 
+                    </div>
                     {sentences.map((sentence, index) =>
                         <Sentence transcript={sentence} key={sentence} setAudio={setAudio} index={index}/>
                     )}

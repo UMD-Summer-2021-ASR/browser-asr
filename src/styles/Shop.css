@@ -325,3 +325,13 @@
     margin-left: 1rem;
     cursor: pointer;
 }
+
+.shop-recording-instructions {
+    width: 100%;
+    text-align: left;
+    border-radius: 1rem;
+    border: 1px solid #6287F6;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
