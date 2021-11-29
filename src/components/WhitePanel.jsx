@@ -275,7 +275,7 @@ function BigWhitePanel() {
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);
-                        setScreen(6);
+                        setScreen(2);
                     })
                     .catch(function (error) {
                         if(!error.response) {
