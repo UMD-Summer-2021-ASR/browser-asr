@@ -37,3 +37,36 @@
     font-size: 1.25rem;
     cursor: pointer;
 }
+
+.answerbox-answering-bigger-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.answerbox-answering-voice-instructions {
+    color: #6287F7;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+}
+
+.answerbox-answering-voice-instructions-highlight {
+    display: inline-block;
+    color: white;
+    background-color: #3f5aa8;
+    padding: 0.08rem 0.15rem 0.15rem 0.15rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    margin: 0 0.15rem 0 0.15rem;
+}
+
+.answerbox-answering-voice-instructions-btn-highlight {
+    display: inline-block;
+    color: white;
+    background-color: #6287F7;
+    padding: 0.08rem 0.15rem 0.15rem 0.15rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    margin: 0 0.15rem 0 0.15rem;
+}

@@ -130,6 +130,15 @@ function AnswerBox(props) {
     props.setAnswer("");
   }
 
+  function setReady2(nextValue) {
+    if(nextValue) {
+      setReady(true);
+    } else {
+      setReady(false);
+      setUseClassifier(false);
+    }
+  }
+
   const answer = useOnlineAnswering({
     audio: {
       buzzin:
@@ -191,50 +200,72 @@ function AnswerBox(props) {
   }, [props,username])
 
   return (
-    <div class="answerbox-answering-wrapper">
-      <form class="answerbox-textbox">
-        <label>
-          <input
-            disabled={props.buzzer !== username}
-            type="text"
-            name="name"
-            value={props.answer}
-            onChange={setAnswer2}
-            className={"answerbox-textbox-text"}
-          />
-        </label>
-      </form>
-      <div class="answerbox-switch-wrapper">
-        <Tooltip
-          // options
-          title="Use voice commands"
-          position="top"
-          trigger="mouseenter"
-          unmountHTMLWhenHide="true"
-        >
-          <VoiceBuzzSwitch setVoice={setReady} />
-        </Tooltip>
-        {ready && props.classifiable && (
-          <div>
-            <Tooltip
-              // options
-              title="Use classifier"
-              position="top"
-              trigger="mouseenter"
-              unmountHTMLWhenHide="true"
-            >
-              <UseClassifierSwitch setVoice={setUseClassifier} />
-            </Tooltip>
-          </div>
-        )}
-      </div>
+    <div class="answerbox-answering-bigger-wrapper">
+      <div class="answerbox-answering-wrapper">
+        <form class="answerbox-textbox">
+          <label>
+            <input
+              disabled={props.buzzer !== username}
+              type="text"
+              name="name"
+              value={props.answer}
+              onChange={setAnswer2}
+              className={"answerbox-textbox-text"}
+            />
+          </label>
+        </form>
+        <div class="answerbox-switch-wrapper">
+          <Tooltip
+            // options
+            title="Use voice commands"
+            position="top"
+            trigger="mouseenter"
+            unmountHTMLWhenHide="true"
+          >
+            <VoiceBuzzSwitch setVoice={setReady2} />
+          </Tooltip>
+          {ready && props.classifiable && (
+            <div>
+              <Tooltip
+                // options
+                title="Use classifier"
+                position="top"
+                trigger="mouseenter"
+                unmountHTMLWhenHide="true"
+              >
+                <UseClassifierSwitch setVoice={setUseClassifier} />
+              </Tooltip>
+            </div>
+          )}
+        </div>
 
-      <div class="answerbox-button" onClick={buzzin}>
-        Buzz
+        <div class="answerbox-button" onClick={buzzin}>
+          Buzz
+        </div>
+        <div class="answerbox-button" onClick={submit}>
+          Submit
+        </div>
       </div>
-      <div class="answerbox-button" onClick={submit}>
-        Submit
-      </div>
+      {ready && !useClassifier &&
+        <div class="answerbox-answering-voice-instructions">
+          Say 
+          <div class="answerbox-answering-voice-instructions-highlight">Go</div> 
+          to begin speech recognition, say  
+          <div class="answerbox-answering-voice-instructions-highlight">Stop</div>  
+          for the transcript, press 
+          <div class="answerbox-answering-voice-instructions-btn-highlight">Submit</div>
+          to submit
+        </div>
+      }
+      {ready && useClassifier &&
+        <div class="answerbox-answering-voice-instructions">
+          Say 
+          <div class="answerbox-answering-voice-instructions-highlight">Go</div> 
+          to begin recording audio, say  
+          <div class="answerbox-answering-voice-instructions-highlight">Stop</div>  
+          to submit and classify (judge via audio)
+        </div>
+      }
     </div>
   );
 }
