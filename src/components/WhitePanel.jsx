@@ -169,7 +169,7 @@ function Sidenav(props) {
                 <SidenavItem label="Profile" icon={<AccountCircleIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(1); document.location.hash = "profile";}} textColor={MainColor}/>
                 <SidenavItem label="Dashboard" icon={<DashboardIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(2); document.location.hash = "dashboard";}} textColor={MainColor}/>
                 <SidenavItem label="Play" icon={<OfflineBoltIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(3); document.location.hash = "play";}} textColor={MainColor}/>
-                <SidenavItem label="Shop" icon={<StorefrontIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(4); document.location.hash = "shop";}} textColor={MainColor}/>
+                <SidenavItem label="Record" icon={<StorefrontIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(4); document.location.hash = "shop";}} textColor={MainColor}/>
                 {/* <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(5); document.location.hash = "leaderboards";}} textColor={MainColor}/> */}
                 <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor} setScreen={() => firebase.auth().signOut()}/>
             </div>
@@ -445,7 +445,7 @@ function BigWhitePanel() {
                     <div class="content-wrapper">
                         <Sidenav setScreen={setScreen}/>
                         <div class="page-body-wrapper">
-                            <PageHeader title="Shop" caption="Earn and spend coins in the shop!"/>
+                            <PageHeader title="Record" caption="Record questions for other users to play!"/>
                             <div class="page-body-content-wrapper">
                                 <Shop/>
                             </div>

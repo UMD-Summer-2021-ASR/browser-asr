@@ -514,7 +514,7 @@ function Game() {
   }
 
   function answer(txt) {
-    console.log("answered");
+    console.log("answered",txt);
     state.socket.emit("answer", {
       auth: authtoken,
       answer: txt,

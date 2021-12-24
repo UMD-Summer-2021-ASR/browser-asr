@@ -1,6 +1,6 @@
 import "../styles/AnswerBox.css";
 import { useState, useEffect } from "react";
-import { useOnlineAnswering } from "online-answering";
+import { useOnlineAnswering } from "asr-answering";
 import Switch from "react-switch";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
@@ -12,91 +12,87 @@ import { useAlert } from "react-alert";
 import { Tooltip } from "react-tippy";
 import axios from "axios";
 
-// Switch that toggles voice buzzin
-const VoiceBuzzSwitch = (props) => {
-  const [checked, setChecked] = useState(false);
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
-    props.setVoice(nextChecked);
+function useKeyPress(targetKey, fnCall, deps) {
+  const [keyPressed, setKeyPressed] = useState(false);
+  function downHandler({ key }) {
+    if (key === targetKey) {
+      setKeyPressed(true);
+    }
+  }
+  const upHandler = ({ key }) => {
+    if (key === targetKey) {
+      fnCall();
+      setKeyPressed(false);
+    }
   };
+  useEffect(() => {
+    window.addEventListener("keydown", downHandler);
+    window.addEventListener("keyup", upHandler);
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+      window.removeEventListener("keyup", upHandler);
+    };
+  }, [deps]);
+  return keyPressed;
+}
 
+function VoiceButtonVolume(props) {
+  const volumeRange = [0,10];
   return (
-    <div>
-      <label class="answerbox-toggle-wrapper">
-        <Switch
-          onChange={handleChange}
-          checked={checked}
-          className={"answerbox-toggle-content"}
-          checkedIcon={
-            <MicIcon
-              style={{
-                color: "white",
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-              }}
-            />
-          }
-          uncheckedIcon={
-            <MicOffIcon
-              style={{
-                color: "white",
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-              }}
-            />
-          }
-        />
-      </label>
+    <div class="answerbox-voicebutton-volume-wrapper">
+      <div class="answerbox-voicebutton-volume-slider" style={{"height":((Math.min(Math.max(volumeRange[0],props.volume),volumeRange[1])-volumeRange[0])/(volumeRange[1]-volumeRange[0])*0.3+0.4).toString()+"rem"}}></div>
+      <div class="answerbox-voicebutton-volume-slider" style={{"height":((Math.min(Math.max(volumeRange[0],props.volume),volumeRange[1])-volumeRange[0])/(volumeRange[1]-volumeRange[0])*1.1+0.4).toString()+"rem"}}></div>
+      <div class="answerbox-voicebutton-volume-slider" style={{"height":((Math.min(Math.max(volumeRange[0],props.volume),volumeRange[1])-volumeRange[0])/(volumeRange[1]-volumeRange[0])*0.3+0.4).toString()+"rem"}}></div>
     </div>
-  );
-};
+  )
+}
 
-// switch that toggles the classifier
-const UseClassifierSwitch = (props) => {
-  const [checked, setChecked] = useState(false);
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
-    props.setVoice(nextChecked);
-  };
+function VoiceButton(props) {
 
-  return (
-    <div>
-      <label class="answerbox-toggle-wrapper-2">
-        <Switch
-          onChange={handleChange}
-          checked={checked}
-          className={"answerbox-toggle-content-2"}
-          checkedIcon={
-            <DoneOutlineIcon
-              style={{
-                color: "white",
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-              }}
-            />
-          }
-          uncheckedIcon={
-            <CloseIcon
-              style={{
-                color: "white",
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-              }}
-            />
-          }
+  function handleChange() {
+    if(props.canClassify) props.setMode(m => ((m+1)%3));
+    else props.setMode(m => ((m+1)%2));
+    
+    if(props.mode === 0) { // off
+
+    } else if(props.mode === 1) { // ASR
+
+    } else { // mode === 2, classifier
+
+    }
+  }
+
+  if(props.mode === 0) {
+    return (
+      <div class="answerbox-voicebutton-wrapper answerbox-hvr-grow" onClick={handleChange}>
+        <MicOffIcon
+          style={{
+            color: "white",
+            width: "60%",
+            height: "60%",
+          }}
         />
-      </label>
-    </div>
-  );
-};
+      </div>
+    )
+  } else if(props.mode === 1) {
+    return (
+      <div class="answerbox-voicebutton-wrapper answerbox-hvr-grow" style={{"background-color":"#6287F6"}} onClick={handleChange}>
+        <VoiceButtonVolume volume={0}/>
+      </div>
+    )
+  } else {
+    return (
+      <div class="answerbox-voicebutton-wrapper answerbox-hvr-grow" style={{"background-color":"#90E99C"}} onClick={handleChange}>
+        <VoiceButtonVolume volume={props.volume}/>
+      </div>
+    )
+  }
+  
+}
+
+async function initialize2(foo) {
+  await foo();
+}
 
 
 // Hook for the answer box at the bottom of all games
@@ -108,8 +104,7 @@ function AnswerBox(props) {
   const alert = useAlert();
   const socket = useRecoilValue(SOCKET);
 
-  const [ready, setReady] = useState(false);
-  const [useClassifier, setUseClassifier] = useState(false);
+  const [speechMode, setSpeechMode] = useState(0);
 
   // ASR always picks up the wake word, this function removes it
   function complete(answer) {
@@ -125,21 +120,30 @@ function AnswerBox(props) {
     props.buzz();
   }
 
-  function submit() {
+  useEffect(()=> {
+    console.log(props.answer);
+  },[props.answer]);
+
+  function submit1() {
+    console.log(props.answer);
     props.submit(props.answer);
     props.setAnswer("");
   }
 
-  function setReady2(nextValue) {
-    if(nextValue) {
-      setReady(true);
-    } else {
-      setReady(false);
-      setUseClassifier(false);
-    }
-  }
-
-  const answer = useOnlineAnswering({
+  const {
+    initialize,
+    startListening,
+    stopListening,
+    listening,
+    recordingState,
+    timeLeft,
+    voiceState,
+    volume,
+    answer,
+    permissions,
+    error,
+    errormsg
+  } = useOnlineAnswering({
     audio: {
       buzzin:
         "https://assets.mixkit.co/sfx/download/mixkit-game-show-wrong-answer-buzz-950.wav",
@@ -148,9 +152,9 @@ function AnswerBox(props) {
     },
     onAudioData: () => {},
     timeout: 6000,
-    isReady: ready,
+    isReady: (speechMode > 0),
     onComplete: async (answer, blob) => {
-      if (useClassifier) {
+      if (speechMode === 2) {
         const formdata = new FormData();
         formdata.append("audio", blob);
         formdata.append("auth", authtoken);
@@ -187,7 +191,8 @@ function AnswerBox(props) {
       }
     },
     onBuzzin: () => buzzin(),
-  })[0];
+    ASRthreshold: 0.8,
+  });
 
   useEffect(() => {
     console.log(answer);
@@ -199,22 +204,30 @@ function AnswerBox(props) {
     }
   }, [props,username])
 
+  useEffect(()=> {
+    console.log("HI");
+    initialize2(initialize);
+    startListening();
+  },[]);
+
+  const enterPressed = useKeyPress("Enter", submit1, [props.answer]);
+
   return (
     <div class="answerbox-answering-bigger-wrapper">
       <div class="answerbox-answering-wrapper">
-        <form class="answerbox-textbox">
-          <label>
-            <input
-              disabled={props.buzzer !== username}
-              type="text"
-              name="name"
-              value={props.answer}
-              onChange={setAnswer2}
-              className={"answerbox-textbox-text"}
-            />
-          </label>
-        </form>
+        <input
+          disabled={props.buzzer !== username}
+          type="text"
+          name="name"
+          value={props.answer}
+          onChange={setAnswer2}
+          className={"answerbox-textbox-text"}
+        />
         <div class="answerbox-switch-wrapper">
+          <VoiceButton mode={speechMode} setMode={setSpeechMode}/>
+        </div>
+        
+        {/* <div class="answerbox-switch-wrapper">
           <Tooltip
             // options
             title="Use voice commands"
@@ -237,29 +250,29 @@ function AnswerBox(props) {
               </Tooltip>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div class="answerbox-button" onClick={buzzin}>
           Buzz
         </div>
-        <div class="answerbox-button" onClick={submit}>
+        <div class="answerbox-button" onClick={submit1}>
           Submit
         </div>
       </div>
-      {ready && !useClassifier &&
+      {speechMode === 1 &&
         <div class="answerbox-answering-voice-instructions">
-          Say 
+          Speech Recognition: Say
           <div class="answerbox-answering-voice-instructions-highlight">Go</div> 
-          to begin speech recognition, say  
+          to begin,
           <div class="answerbox-answering-voice-instructions-highlight">Stop</div>  
           for the transcript, press 
           <div class="answerbox-answering-voice-instructions-btn-highlight">Submit</div>
           to submit
         </div>
       }
-      {ready && useClassifier &&
+      {speechMode === 2 &&
         <div class="answerbox-answering-voice-instructions">
-          Say 
+          Classifier: Say 
           <div class="answerbox-answering-voice-instructions-highlight">Go</div> 
           to begin recording audio, say  
           <div class="answerbox-answering-voice-instructions-highlight">Stop</div>  
