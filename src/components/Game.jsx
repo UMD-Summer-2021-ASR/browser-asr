@@ -13,7 +13,7 @@ import {
   GAMESETTINGS,
 } from "../store";
 import AnswerBox from "./AnswerBox.jsx";
-import axios from 'axios';
+// import axios from 'axios';
 
 // icons
 import PersonIcon from "@material-ui/icons/Person";
@@ -82,7 +82,7 @@ function GameRatePopup(props) {
       setPrevQ(props.state.question);
       setShowing("vote");
     }
-  },[props.state])
+  },[props.state, prevQ])
 
   useEffect(()=> {
     setHoverUp(false);

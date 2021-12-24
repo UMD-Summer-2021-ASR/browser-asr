@@ -1,15 +1,10 @@
 import "../styles/AnswerBox.css";
 import { useState, useEffect } from "react";
 import { useOnlineAnswering } from "asr-answering";
-import Switch from "react-switch";
-import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
-import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import CloseIcon from "@material-ui/icons/Close";
 import { useRecoilValue } from "recoil";
 import { AUTHTOKEN, PROFILE, URLS, SOCKET } from "../store";
 import { useAlert } from "react-alert";
-import { Tooltip } from "react-tippy";
 import axios from "axios";
 
 function useKeyPress(targetKey, fnCall, deps) {
@@ -32,6 +27,7 @@ function useKeyPress(targetKey, fnCall, deps) {
       window.removeEventListener("keydown", downHandler);
       window.removeEventListener("keyup", upHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deps]);
   return keyPressed;
 }
@@ -205,12 +201,11 @@ function AnswerBox(props) {
   }, [props,username])
 
   useEffect(()=> {
-    console.log("HI");
     initialize2(initialize);
     startListening();
-  },[]);
+  },[initialize, startListening]);
 
-  const enterPressed = useKeyPress("Enter", submit1, [props.answer]);
+  useKeyPress("Enter", submit1, [props.answer]);
 
   return (
     <div class="answerbox-answering-bigger-wrapper">
