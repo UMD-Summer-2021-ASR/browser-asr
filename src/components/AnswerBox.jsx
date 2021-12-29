@@ -119,9 +119,9 @@ function AnswerBox(props) {
     setTimeout(()=>{textAnswer.current.focus();}, 100);
   }
 
-  useEffect(()=> {
-    console.log(props.answer);
-  },[props.answer]);
+  // useEffect(()=> {
+  //   console.log(props.answer);
+  // },[props.answer]);
 
   function submit1() {
     console.log(props.answer);
@@ -132,15 +132,25 @@ function AnswerBox(props) {
   const {
     initialize,
     startListening,
+    // eslint-disable-next-line
     stopListening,
+    // eslint-disable-next-line
     listening,
+    // eslint-disable-next-line
     recordingState,
+    // eslint-disable-next-line
     timeLeft,
+    // eslint-disable-next-line
     voiceState,
+    // eslint-disable-next-line
     volumeUnused,
+    // eslint-disable-next-line
     answer,
+    // eslint-disable-next-line
     permissions,
+    // eslint-disable-next-line
     error,
+    // eslint-disable-next-line
     errormsg
   } = useOnlineAnswering({
     audio: {
@@ -207,6 +217,7 @@ function AnswerBox(props) {
   useEffect(()=> {
     initialize2(initialize);
     startListening();
+    // eslint-disable-next-line
   },[]);
 
   useKeyPress("Enter", submit1, [props.answer]);
@@ -214,40 +225,42 @@ function AnswerBox(props) {
 
   const [volume, setVolume] = useState(0);
   
-  useEffect(async () => {
-    try {
-      const audioStream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: true
-        }
-      });
-      const audioContext = new AudioContext();
-      const audioSource = audioContext.createMediaStreamSource(audioStream);
-      const analyser = audioContext.createAnalyser();
-      analyser.fftSize = 512;
-      analyser.minDecibels = -127;
-      analyser.maxDecibels = 0;
-      analyser.smoothingTimeConstant = 0.4;
-      audioSource.connect(analyser);
-      const volumes = new Uint8Array(analyser.frequencyBinCount);
-      const volumeCallback = () => {
-        analyser.getByteFrequencyData(volumes);
-        let volumeSum = 0;
-        for(const volume of volumes)
-          volumeSum += volume;
-        setVolume(volumeSum / volumes.length);
-      };
-      const volumeInterval = setInterval(() => {
-        volumeCallback();
-      }, 100);
-      return () => clearInterval(volumeInterval);
-    } catch(e) {
-      console.error("Microphone not detected: ", e);
-      alert.error('Microphone not detected');
+  useEffect(() => {
+    async function getVolume() {
+      try {
+        const audioStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true
+          }
+        });
+        const audioContext = new AudioContext();
+        const audioSource = audioContext.createMediaStreamSource(audioStream);
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = 512;
+        analyser.minDecibels = -127;
+        analyser.maxDecibels = 0;
+        analyser.smoothingTimeConstant = 0.4;
+        audioSource.connect(analyser);
+        const volumes = new Uint8Array(analyser.frequencyBinCount);
+        const volumeCallback = () => {
+          analyser.getByteFrequencyData(volumes);
+          let volumeSum = 0;
+          for(const volume of volumes)
+            volumeSum += volume;
+          setVolume(volumeSum / volumes.length);
+        };
+        const volumeInterval = setInterval(() => {
+          volumeCallback();
+        }, 100);
+        return () => clearInterval(volumeInterval);
+      } catch(e) {
+        setSpeechMode(0);
+        console.error("Microphone not detected: ", e);
+        alert.error('Microphone not detected');
+      }
     }
-
-    
-  }, []);
+    getVolume();
+  }, [alert]);
 
   return (
     <div class="answerbox-answering-bigger-wrapper">
