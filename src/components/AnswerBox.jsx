@@ -1,5 +1,5 @@
 import "../styles/AnswerBox.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useOnlineAnswering } from "asr-answering";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import { useRecoilValue } from "recoil";
@@ -33,7 +33,7 @@ function useKeyPress(targetKey, fnCall, deps) {
 }
 
 function VoiceButtonVolume(props) {
-  const volumeRange = [0,10];
+  const volumeRange = [20,80];
   return (
     <div class="answerbox-voicebutton-volume-wrapper">
       <div class="answerbox-voicebutton-volume-slider" style={{"height":((Math.min(Math.max(volumeRange[0],props.volume),volumeRange[1])-volumeRange[0])/(volumeRange[1]-volumeRange[0])*0.3+0.4).toString()+"rem"}}></div>
@@ -73,7 +73,7 @@ function VoiceButton(props) {
   } else if(props.mode === 1) {
     return (
       <div class="answerbox-voicebutton-wrapper answerbox-hvr-grow" style={{"background-color":"#6287F6"}} onClick={handleChange}>
-        <VoiceButtonVolume volume={0}/>
+        <VoiceButtonVolume volume={props.volume}/>
       </div>
     )
   } else {
@@ -112,8 +112,11 @@ function AnswerBox(props) {
     props.setAnswer(event.target.value);
   }
 
+  const textAnswer = useRef(null);
+
   function buzzin() {
     props.buzz();
+    setTimeout(()=>{textAnswer.current.focus();}, 100);
   }
 
   useEffect(()=> {
@@ -134,7 +137,7 @@ function AnswerBox(props) {
     recordingState,
     timeLeft,
     voiceState,
-    volume,
+    volumeUnused,
     answer,
     permissions,
     error,
@@ -186,13 +189,14 @@ function AnswerBox(props) {
         complete(answer);
       }
     },
+    gameTime: 9000000,
     onBuzzin: () => buzzin(),
     ASRthreshold: 0.8,
   });
 
-  useEffect(() => {
-    console.log(answer);
-  }, [answer]);
+  useEffect(()=> {
+    console.log((speechMode > 0));
+  },[speechMode]);
 
   useEffect(() => {
     if(props.buzzer !== username) {
@@ -203,9 +207,47 @@ function AnswerBox(props) {
   useEffect(()=> {
     initialize2(initialize);
     startListening();
-  },[initialize, startListening]);
+  },[]);
 
   useKeyPress("Enter", submit1, [props.answer]);
+  useKeyPress(" ", buzzin);
+
+  const [volume, setVolume] = useState(0);
+  
+  useEffect(async () => {
+    try {
+      const audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true
+        }
+      });
+      const audioContext = new AudioContext();
+      const audioSource = audioContext.createMediaStreamSource(audioStream);
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 512;
+      analyser.minDecibels = -127;
+      analyser.maxDecibels = 0;
+      analyser.smoothingTimeConstant = 0.4;
+      audioSource.connect(analyser);
+      const volumes = new Uint8Array(analyser.frequencyBinCount);
+      const volumeCallback = () => {
+        analyser.getByteFrequencyData(volumes);
+        let volumeSum = 0;
+        for(const volume of volumes)
+          volumeSum += volume;
+        setVolume(volumeSum / volumes.length);
+      };
+      const volumeInterval = setInterval(() => {
+        volumeCallback();
+      }, 100);
+      return () => clearInterval(volumeInterval);
+    } catch(e) {
+      console.error("Microphone not detected: ", e);
+      alert.error('Microphone not detected');
+    }
+
+    
+  }, []);
 
   return (
     <div class="answerbox-answering-bigger-wrapper">
@@ -217,9 +259,10 @@ function AnswerBox(props) {
           value={props.answer}
           onChange={setAnswer2}
           className={"answerbox-textbox-text"}
+          ref={textAnswer}
         />
         <div class="answerbox-switch-wrapper">
-          <VoiceButton mode={speechMode} setMode={setSpeechMode}/>
+          <VoiceButton mode={speechMode} setMode={setSpeechMode} volume={volume}/>
         </div>
         
         {/* <div class="answerbox-switch-wrapper">

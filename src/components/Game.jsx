@@ -350,7 +350,7 @@ function Game() {
       lobby: useRecoilValue(LOBBY_CODE),
     }
   );
-
+    
   navigator.mediaSession.setActionHandler("play", async function () {
     console.log('> User clicked "Play" icon.');
     // await video.play();
