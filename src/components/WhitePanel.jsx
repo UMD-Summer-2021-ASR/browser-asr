@@ -1,5 +1,5 @@
 import "../styles/WhitePanel.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CheckIcon from '@material-ui/icons/Check';
 import Game from './Game.jsx';
 import Tutorial from './Tutorial.jsx';
@@ -332,8 +332,27 @@ function BigWhitePanel() {
             // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
-
-    if(screen === -1){ // Loading
+    const [approvedDevice, setApprovedDevice] = useState(
+        !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime) // chrome 1-71
+        && window.innerWidth > 0.7*window.innerHeight
+        );
+    
+    if(!approvedDevice) {
+        return (
+            <div class="big-white-panel-wrapper">
+                <div class="big-white-panel">
+                    <div class="content-wrapper">
+                        <div class="whitepanel-approveddevice">
+                            Please use Chrome and/or a device with an appropriate width-height ratio for the best experience! Other browsers may not be supported.
+                            <div class="whitepanel-approveddevice-continue" onClick={()=>{setApprovedDevice(true)}}>
+                                PLAY ANYWAYS
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    } else if(screen === -1){ // Loading
         return (
             <div class="big-white-panel-wrapper">
                 <div class="big-white-panel">
