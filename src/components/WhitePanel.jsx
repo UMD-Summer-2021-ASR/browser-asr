@@ -331,11 +331,46 @@ function BigWhitePanel() {
             });
             // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    function isChrome() {
+        var isChromium = window.chrome;
+        var winNav = window.navigator;
+        var vendorName = winNav.vendor;
+        var isOpera = typeof window.opr !== "undefined";
+        var isIEedge = winNav.userAgent.indexOf("Edg") > -1;
+        var isIOSChrome = winNav.userAgent.match("CriOS");
+
+        if (isIOSChrome) {
+            return false;
+        } else if(
+            isChromium !== null &&
+            typeof isChromium !== "undefined" &&
+            vendorName === "Google Inc." &&
+            isOpera === false &&
+            isIEedge === false
+        ) {
+            return true;
+        } else { 
+            return false;
+        }
+    }
+
+    function getChromeVersion () {     
+        var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+    
+        return raw ? parseInt(raw[2], 10) : false;
+    }
     
     const [approvedDevice, setApprovedDevice] = useState(
-        !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime) // chrome 1-71
-        && window.innerWidth > 0.7*window.innerHeight
+        isChrome()
+        && getChromeVersion() > 73
+        && (0.7*window.innerWidth > window.innerHeight || (window.innerWidth > 950 && window.innerHeight > 700))
         );
+
+    console.log(isChrome());
+    console.log(getChromeVersion());
+    console.log("WIDTH: ", window.innerWidth);
+    console.log("HEIGHT: ", window.innerHeight);
     
     if(!approvedDevice) {
         return (
@@ -343,7 +378,7 @@ function BigWhitePanel() {
                 <div class="big-white-panel">
                     <div class="content-wrapper">
                         <div class="whitepanel-approveddevice">
-                            Please use Chrome and/or a device with an appropriate width-height ratio for the best experience! Other browsers may not be supported.
+                            Please use Chrome 73+ and/or a device with an appropriate width-height ratio for the best experience! Other browsers may not be supported.
                             <div class="whitepanel-approveddevice-continue" onClick={()=>{setApprovedDevice(true)}}>
                                 PLAY ANYWAYS
                             </div>
