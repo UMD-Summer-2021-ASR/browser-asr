@@ -7,7 +7,7 @@ import { AUTHTOKEN, PROFILE, URLS, SOCKET } from "../store";
 import { useAlert } from "react-alert";
 import axios from "axios";
 
-function useKeyPress(targetKey, fnCall, deps) {
+function useKeyPress(targetKey, fnCall, deps, condition) {
   const [keyPressed, setKeyPressed] = useState(false);
   function downHandler({ key }) {
     if (key === targetKey) {
@@ -15,7 +15,7 @@ function useKeyPress(targetKey, fnCall, deps) {
     }
   }
   const upHandler = ({ key }) => {
-    if (key === targetKey) {
+    if ((key === targetKey) && condition) {
       fnCall();
       setKeyPressed(false);
     }
@@ -220,8 +220,8 @@ function AnswerBox(props) {
     // eslint-disable-next-line
   },[]);
 
-  useKeyPress("Enter", submit1, [props.answer]);
-  useKeyPress(" ", buzzin);
+  useKeyPress("Enter", submit1, [props.answer], true);
+  useKeyPress(" ", buzzin, [], document.activeElement !== textAnswer.current);
 
   const [volume, setVolume] = useState(0);
   
