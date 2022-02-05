@@ -1,14 +1,14 @@
 import "../styles/Profile.css";
 import { useState } from "react";
 import StatsCardsAccordion from "./StatsCardsAccordion";
-import { useAlert } from 'react-alert';
+// import { useAlert } from 'react-alert';
 import { useRecoilValue } from "recoil";
 import { PROFILE } from "../store";
 
 // ASSETS
-import BookIcon from '@material-ui/icons/Book';
-import MusicVideoIcon from '@material-ui/icons/MusicVideo';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
+// import BookIcon from '@material-ui/icons/Book';
+// import MusicVideoIcon from '@material-ui/icons/MusicVideo';
+// import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
 
 
@@ -69,32 +69,32 @@ function StatsCards() {
 }
 
 // button for looking at history
-function HistoryCard(props) {
-    const alert = useAlert();
+// function HistoryCard(props) {
+//     const alert = useAlert();
 
-    function comingSoon() {
-        alert.show("This feature is coming soon!");
-    }
+//     function comingSoon() {
+//         alert.show("This feature is coming soon!");
+//     }
 
-    return (
-        <div onClick={comingSoon} class="profile-historycard-wrapper" style={{color : props.color, backgroundColor : props.bgcolor}}>
-            {props.icon}
-            {props.label}
-        </div>
-    );
-}
+//     return (
+//         <div onClick={comingSoon} class="profile-historycard-wrapper" style={{color : props.color, backgroundColor : props.bgcolor}}>
+//             {props.icon}
+//             {props.label}
+//         </div>
+//     );
+// }
 
 // match history + recording history + inbox buttons
-function HistoryCards(props) {
+// function HistoryCards(props) {
     
-    return (
-        <div class="profile-historycards-wrapper">
-            <HistoryCard label="Coming soon" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>
-            <HistoryCard label="Coming soon" color="green" bgcolor="#D2FBD9" icon={<MusicVideoIcon style={{color: "green", height: "3rem", width: "auto"}}/>} />
-            <HistoryCard label="Coming soon" color="purple" bgcolor="#F6E1FD" icon={<MailOutlineIcon style={{color: "purple", height: "3rem", width: "auto"}}/>}/>
-        </div>
-    );
-}
+//     return (
+//         <div class="profile-historycards-wrapper">
+//             <HistoryCard label="Coming soon" color="orange" bgcolor="#FEFDE1" icon={<BookIcon style={{color: "orange", height: "3rem", width: "auto"}}/>}/>
+//             <HistoryCard label="Coming soon" color="green" bgcolor="#D2FBD9" icon={<MusicVideoIcon style={{color: "green", height: "3rem", width: "auto"}}/>} />
+//             <HistoryCard label="Coming soon" color="purple" bgcolor="#F6E1FD" icon={<MailOutlineIcon style={{color: "purple", height: "3rem", width: "auto"}}/>}/>
+//         </div>
+//     );
+// }
 
 // hook for entire profile page
 function Profile(props) {
@@ -118,7 +118,7 @@ function Profile(props) {
                 </div>
                 <div class="profile-column">
                     <StatsCards/>
-                    <HistoryCards/>
+                    {/* <HistoryCards/> */}
                 </div>
             </div>
         );

@@ -26,13 +26,13 @@ import LoopIcon from '@material-ui/icons/Loop';
 
 
 // coming soon card under the spending section
-function SpendComingSoon() {
-    return (
-        <div class="shop-spend-comingsoon-wrapper">
-            Coming Soon!
-        </div>
-    );
-}
+// function SpendComingSoon() {
+//     return (
+//         <div class="shop-spend-comingsoon-wrapper">
+//             Coming Soon!
+//         </div>
+//     );
+// }
 
 // hook for displaying transcript options
 function TranscriptOption(props) {
@@ -186,7 +186,7 @@ function Shop() {
     if(shopScreen === "home") {
         return (
             <div class="shop-content-wrapper">
-                <div class="shop-title">Spend</div>
+                {/* <div class="shop-title">Spend</div>
                 <div class="shop-title-divider"></div>
                 <div class="shop-spend-wrapper">
                     <SpendComingSoon/>
@@ -195,7 +195,7 @@ function Shop() {
                     <SpendComingSoon/>
                 </div>
                 <div class="shop-title">Earn</div>
-                <div class="shop-title-divider"></div>
+                <div class="shop-title-divider"></div> */}
                 <div class="shop-earn-wrapper">
                     
                     <div onClick={() => {activateShopScreen("easy")}} class="shop-earn-selector-wrapper shop-earn-selector-hvr-grow shop-earn-selector-easy">

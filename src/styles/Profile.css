@@ -62,7 +62,7 @@
     box-sizing: border-box;
     border: 5px solid #EFF2FC;
     background-color: white;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     display: flex;
     flex-direction: column;
 }
