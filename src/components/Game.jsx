@@ -352,13 +352,13 @@ function Game() {
   );
     
   navigator.mediaSession.setActionHandler("play", async function () {
-    console.log('> User clicked "Play" icon.');
+    // console.log('> User clicked "Play" icon.');
     // await video.play();
     // Do something more than just playing video...
   });
 
   navigator.mediaSession.setActionHandler("pause", function () {
-    console.log('> User clicked "Pause" icon.');
+    // console.log('> User clicked "Pause" icon.');
     // video.pause();
     // Do something more than just pausing video...
   });
@@ -418,13 +418,13 @@ function Game() {
       if(state.questionTime > gameSettings['post_buzz_time']) {
         video.play();
       }
-      console.log(data);
+      // console.log(data);
       // this.setBuzzTime(time);
       // TODO correct animation
     };
 
     const answeredCorrectlyListener = (data) => {
-      console.log(data);
+      // console.log(data);
       // this.setBuzzTime(time);
       // TODO correct animation
     };
@@ -432,8 +432,8 @@ function Game() {
     const hlsListener = (data) => {
       var div = document.getElementById("transcript-box");
       if (div) div.innerHTML = "";
-      console.log(data["token"]);
-      console.log(data["rid"]);
+      // console.log(data["token"]);
+      // console.log(data["rid"]);
       setToken(data["token"]);
       setRid(data["rid"]);
       setClassifiable(data["classifiable"]);
@@ -514,7 +514,7 @@ function Game() {
   }
 
   function answer(txt) {
-    console.log("answered",txt);
+    // console.log("answered",txt);
     state.socket.emit("answer", {
       auth: authtoken,
       answer: txt,
@@ -673,7 +673,10 @@ function Game() {
               </div>
               <div
                 onClick={() => {
-                  setPlayScreen(0);
+                  state.socket.emit("leavelobby", {
+                    auth: authtoken
+                  });
+                  setPlayScreen("home");
                   setScreen(3);
                 }}
                 class="game-postgame-return-btn"
@@ -716,7 +719,10 @@ function Game() {
               </div>
               <div
                 onClick={() => {
-                  setPlayScreen(0);
+                  state.socket.emit("leavelobby", {
+                    auth: authtoken
+                  });
+                  setPlayScreen("home");
                   setScreen(3);
                 }}
                 class="game-postgame-return-btn"

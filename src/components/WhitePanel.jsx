@@ -24,6 +24,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 
 // // Currency
@@ -78,7 +79,7 @@ function LoginBody() {
     const setScreen = useSetRecoilState(SCREEN);
     const setAuthtoken = useSetRecoilState(AUTHTOKEN);
     useEffect(() => {
-        console.log("FIRING");
+        // console.log("FIRING");
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
             if(user) {
                 firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
@@ -170,7 +171,7 @@ function Sidenav(props) {
                 <SidenavItem label="Dashboard" icon={<DashboardIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(2); document.location.hash = "dashboard";}} textColor={MainColor}/>
                 <SidenavItem label="Play" icon={<OfflineBoltIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(3); document.location.hash = "play";}} textColor={MainColor}/>
                 <SidenavItem label="Record" icon={<StorefrontIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(4); document.location.hash = "shop";}} textColor={MainColor}/>
-                {/* <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(5); document.location.hash = "leaderboards";}} textColor={MainColor}/> */}
+                <SidenavItem label="Leaderboards" icon={<EmojiEventsIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(5); document.location.hash = "leaderboards";}} textColor={MainColor}/>
                 <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor} setScreen={() => firebase.auth().signOut()}/>
             </div>
         </div>
@@ -241,6 +242,10 @@ function BigWhitePanel() {
             setPrevScreen(screen);
         }
     }, [screen, setPrevScreen]);
+
+    // useEffect(() => {
+    //     console.log("PLAYSCREEN:",playScreen);
+    // }, [playScreen]);
 
     
     // connecting to socket server errors
@@ -367,10 +372,10 @@ function BigWhitePanel() {
         && (0.7*window.innerWidth > window.innerHeight || (window.innerWidth > 950 && window.innerHeight > 700))
         );
 
-    console.log(isChrome());
-    console.log(getChromeVersion());
-    console.log("WIDTH: ", window.innerWidth);
-    console.log("HEIGHT: ", window.innerHeight);
+    // console.log(isChrome());
+    // console.log(getChromeVersion());
+    // console.log("WIDTH: ", window.innerWidth);
+    // console.log("HEIGHT: ", window.innerHeight);
     
     if(!approvedDevice) {
         return (

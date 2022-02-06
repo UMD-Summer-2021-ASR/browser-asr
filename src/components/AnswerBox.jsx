@@ -273,6 +273,7 @@ function AnswerBox(props) {
           onChange={setAnswer2}
           className={"answerbox-textbox-text"}
           ref={textAnswer}
+          autocomplete="off"
         />
         <div class="answerbox-switch-wrapper">
           <VoiceButton mode={speechMode} setMode={setSpeechMode} volume={volume}/>
