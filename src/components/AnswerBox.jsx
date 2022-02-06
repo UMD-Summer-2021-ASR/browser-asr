@@ -132,6 +132,7 @@ function AnswerBox(props) {
   const {
     initialize,
     startListening,
+    setIsReady,
     // eslint-disable-next-line
     stopListening,
     // eslint-disable-next-line
@@ -151,7 +152,7 @@ function AnswerBox(props) {
     // eslint-disable-next-line
     error,
     // eslint-disable-next-line
-    errormsg
+    errormsg,
   } = useOnlineAnswering({
     audio: {
       buzzin:
@@ -205,6 +206,7 @@ function AnswerBox(props) {
   });
 
   useEffect(()=> {
+    setIsReady(speechMode > 0);
     console.log((speechMode > 0));
   },[speechMode]);
 

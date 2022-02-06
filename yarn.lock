@@ -3179,10 +3179,10 @@
   dependencies:
     "safer-buffer" "~2.1.0"
 
-"asr-answering@^1.0.2":
-  "integrity" "sha512-ZttNclq3x5ekbzKe2buFBchXkNkuEkb77zrKUKIPZYicV+htuP4KRGkJ0jYibW+5alMy1x8MCf0UoNCNoR2kHA=="
-  "resolved" "https://registry.npmjs.org/asr-answering/-/asr-answering-1.0.2.tgz"
-  "version" "1.0.2"
+"asr-answering@^1.1.0":
+  "integrity" "sha512-wvqMh7YjZ2CwSWYePm+ZJFDqK3HVKnW7shQ1L2Uv6209kTv70dAfQDvyE4L8KGP1158heRaz0NzOxVA0RuSimw=="
+  "resolved" "https://registry.npmjs.org/asr-answering/-/asr-answering-1.1.0.tgz"
+  "version" "1.1.0"
   dependencies:
     "@tensorflow-models/speech-commands" "^0.5.4"
     "@tensorflow/tfjs" "^3.11.0"
