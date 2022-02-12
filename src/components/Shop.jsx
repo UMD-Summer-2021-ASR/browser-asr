@@ -290,7 +290,7 @@ function Shop() {
                 
                 <div class="shop-sentences-wrapper">
                     <div class="shop-recording-instructions">
-                        <b>Instructions:</b> Read through the sentence before recording to ensure you are prepared to speak smoothly and consistently. All sentences must be recorded to submit, and upon submission they will pass through a pre-screening process. You will be notified in your profile if it passes. 
+                        <b>Instructions:</b> Read through the sentence before recording to ensure you are prepared to speak smoothly and consistently. All sentences must be recorded to submit, and upon submission they will pass through a pre-screening process.
                     </div>
                     {sentences.map((sentence, index) =>
                         <Sentence transcript={sentence} key={sentence} setAudio={setAudio} index={index}/>

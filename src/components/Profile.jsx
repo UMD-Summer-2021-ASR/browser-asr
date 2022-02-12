@@ -18,9 +18,6 @@ function ProfileCard(props) {
     // console.log(profile);
     return (
         <div class="profile-profilecard-wrapper" onClick={() => props.setProfileScreen('changeuserinfo')}>
-            <div class="profile-profilecard-pfp">
-
-            </div>
             <div class="profile-profilecard-text">
                 {profile['username']} <br/>
                 <div>

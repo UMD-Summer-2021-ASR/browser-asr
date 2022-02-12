@@ -27,6 +27,7 @@
 
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
@@ -40,7 +41,6 @@
 }
 
 .profile-profilecard-text {
-    margin-left: 1.4rem;
     font-size: 1.3rem;
 }
 

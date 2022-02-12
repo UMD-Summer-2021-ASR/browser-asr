@@ -31,7 +31,7 @@ import StorefrontIcon from '@material-ui/icons/Storefront';
 // import EnergyIcon from '../assets/energy.png';
 // import CoinIcon from '../assets/coin.png';
 
-//FIREBASE
+// FIREBASE
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import StandardLobby from "./StandardLobby";
@@ -229,7 +229,7 @@ function PageHeader(props) {
 function BigWhitePanel() {
     const urls = useRecoilValue(URLS);
     const [screen, setScreen] = useRecoilState(SCREEN);
-    const playScreen = useRecoilValue(PLAY_SCREEN);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const setProfile = useSetRecoilState(PROFILE);
     const alert = useAlert();
     const socket = useRecoilValue(SOCKET);
@@ -271,6 +271,26 @@ function BigWhitePanel() {
 
     // connecting to data flow server errors
     useEffect(() => {
+        // Authorization callback
+        function authCallback() {
+            const windowhash = window.location.hash.substring(1);
+            if (windowhash === "dashboard") {
+                setScreen(2);
+            } else if (windowhash === "profile") {
+                setScreen(1);
+            } else if (windowhash === "play") {
+                setScreen(3);
+                setPlayScreen("home");
+            } else if (windowhash === "shop") {
+                setScreen(4);
+            } else if (windowhash === "leaderboards") {
+                setScreen(5);
+            } else {
+                setScreen(2);
+            }
+            
+        }
+
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
           if(user) {
             firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
@@ -280,7 +300,7 @@ function BigWhitePanel() {
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);
-                        setScreen(2);
+                        authCallback();
                     })
                     .catch(function (error) {
                         if(!error.response) {
@@ -555,7 +575,7 @@ function BigWhitePanel() {
                 </div>
             </div>
         );
-    } else { //dashboard
+    } else { //dashboard (screen === 2)
         return (
             <div class="big-white-panel-wrapper">
                 <div class="big-white-panel">
