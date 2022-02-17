@@ -286,7 +286,8 @@ function BigWhitePanel() {
             } else if (windowhash === "leaderboards") {
                 setScreen(5);
             } else {
-                setScreen(2);
+                // setScreen(2);
+                setScreen(6); // in game
             }
             
         }

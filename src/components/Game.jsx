@@ -31,6 +31,30 @@ import {
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
+function KeybindControlsInstructions(props) {
+  return (
+    <div class="game-keybinds-card-wrapper">
+      Keybinds:
+      <div class="game-keybinds-keybind">
+        <div class="game-keybinds-key-wrapper-space">
+          <div class="game-keybinds-key-space">␣</div>
+        </div>
+        <div class="game-keybinds-key-text">
+          to buzz
+        </div>
+      </div>
+      <div class="game-keybinds-keybind">
+        <div class="game-keybinds-key-wrapper-enter">
+          <div class="game-keybinds-key-enter">Enter ↵</div>
+        </div>
+        <div class="game-keybinds-key-text">
+          to submit
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PreviousAnswerCard(props) {
   return (
     <div class="game-prevanswers-card-wrapper">
@@ -262,6 +286,7 @@ function TeamCard(props) {
             />
           ))}
         </div>
+        <KeybindControlsInstructions/>
         <div
           onClick={() => {
             socket.emit("leavelobby", {
@@ -322,6 +347,19 @@ function TeamCard(props) {
               />
             ))}
           </div>
+        </div>
+        <KeybindControlsInstructions/>
+        <div
+          onClick={() => {
+            socket.emit("leavelobby", {
+              auth: authtoken
+            });
+            setPlayScreen("home");
+            setScreen(3);
+          }}
+          class="game-quitbtn"
+        >
+          Quit
         </div>
       </div>
     );
