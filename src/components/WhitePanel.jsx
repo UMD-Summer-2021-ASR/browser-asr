@@ -287,7 +287,7 @@ function BigWhitePanel() {
                 setScreen(5);
             } else {
                 // setScreen(2);
-                setScreen(6); // in game
+                setScreen(2); // in game
             }
             
         }
