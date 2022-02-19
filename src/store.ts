@@ -47,9 +47,10 @@ const LOBBY_CODE = atom({
 })
 
 const SOCKET_ENDPOINT = process.env.REACT_APP_PUBLIC_SOCKET_URL || 'http://127.0.0.1:4000';
+const SOCKET_PATH = process.env.REACT_APP_PUBLIC_SOCKET_PATH || '/socket.io'
 const SOCKET = atom({
     key: 'SOCKET',
-    default: socketIOClient(SOCKET_ENDPOINT)
+    default: socketIOClient(SOCKET_ENDPOINT,{path:SOCKET_PATH})
 })
 
 const PLAYERS = atom({

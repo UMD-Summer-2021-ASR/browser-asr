@@ -26,13 +26,13 @@ import LoopIcon from '@material-ui/icons/Loop';
 
 
 // coming soon card under the spending section
-function SpendComingSoon() {
-    return (
-        <div class="shop-spend-comingsoon-wrapper">
-            Coming Soon!
-        </div>
-    );
-}
+// function SpendComingSoon() {
+//     return (
+//         <div class="shop-spend-comingsoon-wrapper">
+//             Coming Soon!
+//         </div>
+//     );
+// }
 
 // hook for displaying transcript options
 function TranscriptOption(props) {
@@ -186,7 +186,7 @@ function Shop() {
     if(shopScreen === "home") {
         return (
             <div class="shop-content-wrapper">
-                <div class="shop-title">Spend</div>
+                {/* <div class="shop-title">Spend</div>
                 <div class="shop-title-divider"></div>
                 <div class="shop-spend-wrapper">
                     <SpendComingSoon/>
@@ -195,7 +195,7 @@ function Shop() {
                     <SpendComingSoon/>
                 </div>
                 <div class="shop-title">Earn</div>
-                <div class="shop-title-divider"></div>
+                <div class="shop-title-divider"></div> */}
                 <div class="shop-earn-wrapper">
                     
                     <div onClick={() => {activateShopScreen("easy")}} class="shop-earn-selector-wrapper shop-earn-selector-hvr-grow shop-earn-selector-easy">
@@ -290,7 +290,7 @@ function Shop() {
                 
                 <div class="shop-sentences-wrapper">
                     <div class="shop-recording-instructions">
-                        <b>Instructions:</b> Read through the sentence before recording to ensure you are prepared to speak smoothly and consistently. All sentences must be recorded to submit, and upon submission they will pass through a pre-screening process. You will be notified in your profile if it passes. 
+                        <b>Instructions:</b> Read through the sentence before recording to ensure you are prepared to speak smoothly and consistently. All sentences must be recorded to submit, and upon submission they will pass through a pre-screening process.
                     </div>
                     {sentences.map((sentence, index) =>
                         <Sentence transcript={sentence} key={sentence} setAudio={setAudio} index={index}/>

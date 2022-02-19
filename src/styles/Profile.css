@@ -27,6 +27,7 @@
 
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
@@ -40,7 +41,6 @@
 }
 
 .profile-profilecard-text {
-    margin-left: 1.4rem;
     font-size: 1.3rem;
 }
 
@@ -62,7 +62,7 @@
     box-sizing: border-box;
     border: 5px solid #EFF2FC;
     background-color: white;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     display: flex;
     flex-direction: column;
 }

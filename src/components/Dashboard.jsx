@@ -6,7 +6,7 @@ import React from "react";
 // ASSETS
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import EventNoteIcon from '@material-ui/icons/EventNote';
-import TvIcon from '@material-ui/icons/Tv';
+// import TvIcon from '@material-ui/icons/Tv';
 
 
 // card in the news column
@@ -47,38 +47,38 @@ function NewsColumn(props) {
 
 
 // QuizzrTV Card
-function QuizzrTVCard(props) {
-    // const alert = useAlert();
+// function QuizzrTVCard(props) {
+//     // const alert = useAlert();
     
-    return (
-        <div class="dashboard-quizzrtv-wrapper" 
-        onClick={() => {
-            // Deletes your account
-            // axios.delete('http://localhost:5000/profile')
-            //     .then(function (response) {
-            //         // handle success
-            //         console.log(response);
-            //     })
-            //     .catch(function (error) {
-            //         console.log(error);
-            //     })
+//     return (
+//         <div class="dashboard-quizzrtv-wrapper" 
+//         onClick={() => {
+//             // Deletes your account
+//             // axios.delete('http://localhost:5000/profile')
+//             //     .then(function (response) {
+//             //         // handle success
+//             //         console.log(response);
+//             //     })
+//             //     .catch(function (error) {
+//             //         console.log(error);
+//             //     })
 
-        }}
-        >
-            <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>
-            COMING SOON
-        </div>
-    )
-}
+//         }}
+//         >
+//             <TvIcon style={{color: "white", height: "7rem", width: "auto"}}/>
+//             COMING SOON
+//         </div>
+//     )
+// }
 
 // Card for coming soon
-function ComingSoonCard(props) {
-    return (
-        <div class="dashboard-comingsoon-wrapper">
-            COMING SOON
-        </div>
-    )
-}
+// function ComingSoonCard(props) {
+//     return (
+//         <div class="dashboard-comingsoon-wrapper">
+//             COMING SOON
+//         </div>
+//     )
+// }
 
 // class for the dashboard page
 class Dashboard extends React.Component {
@@ -86,10 +86,10 @@ class Dashboard extends React.Component {
         return (
             <div class="dashboard-content-wrapper">
                 <NewsColumn/>
-                <div class="dashboard-rightcolumn-wrapper">
+                {/* <div class="dashboard-rightcolumn-wrapper">
                     <QuizzrTVCard/>
                     <ComingSoonCard/>
-                </div>
+                </div> */}
             </div>
         );
     }

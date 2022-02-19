@@ -24,13 +24,14 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 
 // // Currency
 // import EnergyIcon from '../assets/energy.png';
 // import CoinIcon from '../assets/coin.png';
 
-//FIREBASE
+// FIREBASE
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import StandardLobby from "./StandardLobby";
@@ -78,7 +79,7 @@ function LoginBody() {
     const setScreen = useSetRecoilState(SCREEN);
     const setAuthtoken = useSetRecoilState(AUTHTOKEN);
     useEffect(() => {
-        console.log("FIRING");
+        // console.log("FIRING");
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
             if(user) {
                 firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
@@ -170,7 +171,7 @@ function Sidenav(props) {
                 <SidenavItem label="Dashboard" icon={<DashboardIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(2); document.location.hash = "dashboard";}} textColor={MainColor}/>
                 <SidenavItem label="Play" icon={<OfflineBoltIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(3); document.location.hash = "play";}} textColor={MainColor}/>
                 <SidenavItem label="Record" icon={<StorefrontIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(4); document.location.hash = "shop";}} textColor={MainColor}/>
-                {/* <SidenavItem label="Leaderboards" icon={<BarChartIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(5); document.location.hash = "leaderboards";}} textColor={MainColor}/> */}
+                <SidenavItem label="Leaderboards" icon={<EmojiEventsIcon style={{color: MainColor}}/>} setScreen={() => {props.setScreen(5); document.location.hash = "leaderboards";}} textColor={MainColor}/>
                 <SidenavItem label="Logout" icon={<ExitToAppIcon style={{color: LogoutColor}}/>} textColor={LogoutColor} setScreen={() => firebase.auth().signOut()}/>
             </div>
         </div>
@@ -228,7 +229,7 @@ function PageHeader(props) {
 function BigWhitePanel() {
     const urls = useRecoilValue(URLS);
     const [screen, setScreen] = useRecoilState(SCREEN);
-    const playScreen = useRecoilValue(PLAY_SCREEN);
+    const [playScreen, setPlayScreen] = useRecoilState(PLAY_SCREEN);
     const setProfile = useSetRecoilState(PROFILE);
     const alert = useAlert();
     const socket = useRecoilValue(SOCKET);
@@ -241,6 +242,10 @@ function BigWhitePanel() {
             setPrevScreen(screen);
         }
     }, [screen, setPrevScreen]);
+
+    // useEffect(() => {
+    //     console.log("PLAYSCREEN:",playScreen);
+    // }, [playScreen]);
 
     
     // connecting to socket server errors
@@ -266,6 +271,27 @@ function BigWhitePanel() {
 
     // connecting to data flow server errors
     useEffect(() => {
+        // Authorization callback
+        function authCallback() {
+            const windowhash = window.location.hash.substring(1);
+            if (windowhash === "dashboard") {
+                setScreen(2);
+            } else if (windowhash === "profile") {
+                setScreen(1);
+            } else if (windowhash === "play") {
+                setScreen(3);
+                setPlayScreen("home");
+            } else if (windowhash === "shop") {
+                setScreen(4);
+            } else if (windowhash === "leaderboards") {
+                setScreen(5);
+            } else {
+                // setScreen(2);
+                setScreen(2); // in game
+            }
+            
+        }
+
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
           if(user) {
             firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
@@ -275,7 +301,7 @@ function BigWhitePanel() {
                     .then(function (response) {
                         // handle success
                         setProfile(response['data']);
-                        setScreen(2);
+                        authCallback();
                     })
                     .catch(function (error) {
                         if(!error.response) {
@@ -367,10 +393,10 @@ function BigWhitePanel() {
         && (0.7*window.innerWidth > window.innerHeight || (window.innerWidth > 950 && window.innerHeight > 700))
         );
 
-    console.log(isChrome());
-    console.log(getChromeVersion());
-    console.log("WIDTH: ", window.innerWidth);
-    console.log("HEIGHT: ", window.innerHeight);
+    // console.log(isChrome());
+    // console.log(getChromeVersion());
+    // console.log("WIDTH: ", window.innerWidth);
+    // console.log("HEIGHT: ", window.innerHeight);
     
     if(!approvedDevice) {
         return (
@@ -550,7 +576,7 @@ function BigWhitePanel() {
                 </div>
             </div>
         );
-    } else { //dashboard
+    } else { //dashboard (screen === 2)
         return (
             <div class="big-white-panel-wrapper">
                 <div class="big-white-panel">

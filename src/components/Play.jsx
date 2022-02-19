@@ -332,15 +332,15 @@ function JoinCustomLobbyCard(props) {
 
 // play page hook
 function Play(props) {
-    const [gamemode, setGamemode] = useState("casual");
+    const [gamemode, setGamemode] = useState("custom");
 
     return (
         <div class="play-content-wrapper">
             <div class="play-gamemode-wrapper">
-                <GamemodeBtn name={"Casual"} self={"casual"} gamemode={gamemode} setGamemode={setGamemode}/>
-                <GamemodeBtn name={"Ranked"} self={"ranked"} gamemode={gamemode} setGamemode={setGamemode}/>
-                <GamemodeBtn name={"Solo"} self={"solo"} gamemode={gamemode} setGamemode={setGamemode}/>
                 <GamemodeBtn name={"Custom"} self={"custom"} gamemode={gamemode} setGamemode={setGamemode}/>
+                {/* <GamemodeBtn name={"Casual"} self={"casual"} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Ranked"} self={"ranked"} gamemode={gamemode} setGamemode={setGamemode}/>
+                <GamemodeBtn name={"Solo"} self={"solo"} gamemode={gamemode} setGamemode={setGamemode}/> */}
             </div>
 
             <div class="play-gamemodecards-wrapper">
